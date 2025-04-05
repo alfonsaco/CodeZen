@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class SettingsActivity extends AppCompatActivity {
 
     private ImageView btnVolverDesdeAjustes;
+    //a
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
