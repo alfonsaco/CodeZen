@@ -1,12 +1,16 @@
 package edu.alfonsaco.codezen;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -14,7 +18,9 @@ import androidx.core.view.WindowInsetsCompat;
 public class SettingsActivity extends AppCompatActivity {
 
     private ImageView btnVolverDesdeAjustes;
-    //a
+
+    private RadioButton rdClaro, rdOscuro;
+    private SharedPreferences preferencesTema;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +37,29 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        // Gestión del tema de la aplicación
+        rdClaro=findViewById(R.id.rdClaro);
+        rdOscuro=findViewById(R.id.rdOscuro);
+
+        preferencesTema=getSharedPreferences("tema", MODE_PRIVATE);
+        String temaGuardado=preferencesTema.getString("modo_tema", "claro");
+        verificarTema(temaGuardado);
+
+        rdClaro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                guardarPreferencias("claro");
+                cambiarTema("claro");
+            }
+        });
+
+        rdOscuro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                guardarPreferencias("oscuro");
+                cambiarTema("oscuro");
+            }
+        });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -38,4 +67,29 @@ public class SettingsActivity extends AppCompatActivity {
             return insets;
         });
     }
+
+    // ******************* MÉTODOS PARA CAMBIAR EL TEMA CLARO OSCURO **********************
+    // Para verificar si el tema guardado es claro u oscuro, y seleccioanr los RadioButtons
+    private void verificarTema(String tema) {
+        if(tema.equals("claro")) {
+            rdClaro.setChecked(true);
+        } else {
+            rdOscuro.setChecked(true);
+        }
+    }
+
+    private void guardarPreferencias(String tema) {
+        SharedPreferences.Editor editor=preferencesTema.edit();
+        editor.putString("modo_tema", tema);
+        editor.apply();
+    }
+
+    private void cambiarTema(String tema) {
+        if(tema.equals("claro")) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+    }
+    // ************************************************************************************
 }
