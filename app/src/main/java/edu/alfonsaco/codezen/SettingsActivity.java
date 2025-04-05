@@ -1,9 +1,9 @@
-package edu.alfonsaco.codezen.auth;
+package edu.alfonsaco.codezen;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,28 +11,25 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import edu.alfonsaco.codezen.R;
+public class SettingsActivity extends AppCompatActivity {
 
-public class RegisterActivity extends AppCompatActivity {
-
-    private Button btnCambiarAInicio;
+    private ImageView btnVolverDesdeAjustes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_settings);
 
-        btnCambiarAInicio=findViewById(R.id.btnCambiarAInicio);
-
-        btnCambiarAInicio.setOnClickListener(new View.OnClickListener() {
+        // Botón para volver a la ventana de Fragments
+        btnVolverDesdeAjustes=findViewById(R.id.btnVolverDesdeAjustes);
+        btnVolverDesdeAjustes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(intent);
                 finish();
             }
         });
+
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

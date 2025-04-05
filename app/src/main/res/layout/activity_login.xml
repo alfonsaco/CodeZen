@@ -81,7 +81,7 @@
         app:layout_constraintTop_toBottomOf="@+id/etxtEmail" />
 
     <Button
-        android:id="@+id/btnCrearCuenta"
+        android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -96,12 +96,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:text="O"
-        app:layout_constraintBottom_toTopOf="@+id/btnGoogleRegistro"
+        app:layout_constraintBottom_toTopOf="@+id/btnGoogleIniciar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.gms.common.SignInButton
-        android:id="@+id/btnGoogleRegistro"
+        android:id="@+id/btnGoogleIniciar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
