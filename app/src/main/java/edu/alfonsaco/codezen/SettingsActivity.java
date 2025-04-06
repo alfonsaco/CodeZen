@@ -20,7 +20,8 @@ public class SettingsActivity extends AppCompatActivity {
     private ImageView btnVolverDesdeAjustes;
 
     private RadioButton rdClaro, rdOscuro;
-    private SharedPreferences preferencesTema;
+    public SharedPreferences preferencesTema;
+    public String temaGuardado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,9 @@ public class SettingsActivity extends AppCompatActivity {
         rdOscuro=findViewById(R.id.rdOscuro);
 
         preferencesTema=getSharedPreferences("tema", MODE_PRIVATE);
-        String temaGuardado=preferencesTema.getString("modo_tema", "claro");
+        temaGuardado=preferencesTema.getString("modo_tema", "claro");
+
+        // Verificar el tema guardado por defecto
         verificarTema(temaGuardado);
 
         rdClaro.setOnClickListener(new View.OnClickListener() {
@@ -70,12 +73,14 @@ public class SettingsActivity extends AppCompatActivity {
 
     // ******************* MÉTODOS PARA CAMBIAR EL TEMA CLARO OSCURO **********************
     // Para verificar si el tema guardado es claro u oscuro, y seleccioanr los RadioButtons
-    private void verificarTema(String tema) {
+    public void verificarTema(String tema) {
         if(tema.equals("claro")) {
             rdClaro.setChecked(true);
         } else {
             rdOscuro.setChecked(true);
         }
+
+        cambiarTema(tema);
     }
 
     private void guardarPreferencias(String tema) {

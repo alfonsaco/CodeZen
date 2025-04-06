@@ -1,12 +1,14 @@
 package edu.alfonsaco.codezen;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -19,11 +21,20 @@ public class AuthSelectActivity extends AppCompatActivity {
     private Button btnIrRegistro;
     private Button btnIrIniciarSesion;
 
+    // Cambiar modo
+    private SharedPreferences temaPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        aplicarTema();
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_auth_select);
+
+        // ----CAMBIAR TEMA CLARO OSCURO ----
+        temaPreferences = getSharedPreferences("tema", MODE_PRIVATE);
+        // ----------------------------------
 
         // Botones para ir al Registro o a Iniciar Sesión
         btnIrRegistro = findViewById(R.id.btnIrRegistro);
@@ -51,4 +62,18 @@ public class AuthSelectActivity extends AppCompatActivity {
             return insets;
         });
     }
+
+    // Método para aplicar el tema claro u oscuro
+    private void aplicarTema() {
+        SharedPreferences tema=getSharedPreferences("tema", MODE_PRIVATE);
+        String modoTema=tema.getString("modo_tema", "claro");
+
+        if(modoTema.equals("claro")) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+
+    }
+
 }

@@ -1,6 +1,7 @@
 package edu.alfonsaco.codezen;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,6 +10,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -21,12 +23,22 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
+    private SharedPreferences preferencesTema;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Se aplica el tema antes de realizar cualquier otra acción
+        aplicarTema();
+
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // ----CAMBIAR TEMA CLARO OSCURO ----
+        preferencesTema = getSharedPreferences("tema", MODE_PRIVATE);
+        // ----------------------------------
+
 
         // ToolBar de los fragments
         Toolbar toolbar = binding.toolbar;
@@ -70,5 +82,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void aplicarTema() {
+        SharedPreferences preferencias=getSharedPreferences("tema", MODE_PRIVATE);
+        String tema = preferencias.getString("modo_tema", "claro");
+
+        if (tema.equals("claro")) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
     }
 }
