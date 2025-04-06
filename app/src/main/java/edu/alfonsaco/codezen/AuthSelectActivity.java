@@ -13,6 +13,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import edu.alfonsaco.codezen.auth.LoginActivity;
 import edu.alfonsaco.codezen.auth.RegisterActivity;
 
@@ -23,6 +26,9 @@ public class AuthSelectActivity extends AppCompatActivity {
 
     // Cambiar modo
     private SharedPreferences temaPreferences;
+
+    // Firebase
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +62,9 @@ public class AuthSelectActivity extends AppCompatActivity {
             }
         });
 
+        // Firebase
+        firebaseAuth=FirebaseAuth.getInstance();
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -76,4 +85,17 @@ public class AuthSelectActivity extends AppCompatActivity {
 
     }
 
+    // Comprobamos si ya se ha iniciado sesión con Firebase
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser usuario=firebaseAuth.getCurrentUser();
+
+        if(usuario != null) {
+            Intent intent=new Intent(AuthSelectActivity.this, MainActivity.class);
+            startActivity(intent);
+
+            finish();
+        }
+    }
 }

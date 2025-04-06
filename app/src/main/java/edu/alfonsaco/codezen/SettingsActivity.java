@@ -1,5 +1,6 @@
 package edu.alfonsaco.codezen;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +17,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class SettingsActivity extends AppCompatActivity {
 
     private ImageView btnVolverDesdeAjustes;
@@ -22,6 +26,9 @@ public class SettingsActivity extends AppCompatActivity {
     private RadioButton rdClaro, rdOscuro;
     public SharedPreferences preferencesTema;
     public String temaGuardado;
+
+    private Button btnCerrarSesion;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +71,18 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        // Cerrar sesión en FireBase
+        btnCerrarSesion=findViewById(R.id.btnCerrarSesión);
+        firebaseAuth=FirebaseAuth.getInstance();
+
+        btnCerrarSesion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firebaseAuth.signOut();
+                volverAInicio();
+            }
+        });
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -95,6 +114,21 @@ public class SettingsActivity extends AppCompatActivity {
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
+    }
+    // ************************************************************************************
+
+
+    // **************************** MÉTODOS PARA EL SIGN OUT ******************************
+    private void volverAInicio() {
+        Intent intent=new Intent(SettingsActivity.this, AuthSelectActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                Intent.FLAG_ACTIVITY_NEW_TASK |
+                Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        startActivity(intent);
+
+        Toast.makeText(this, "Sesión cerrada correctamente", Toast.LENGTH_SHORT).show();
+        finish();
     }
     // ************************************************************************************
 }

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         // ----------------------------------
 
 
-        // ToolBar de los fragments
+        // --------------------------- TOOLBAR DE LOS FRAMENTS --------------------------------
         Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
         // Ocultamos el texto del Toolbar
@@ -66,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
         // (Para cambiar el tamaño del icono, ir a settings.xml)
+        // -----------------------------------------------------------------------------------
+
+
+        // ------------------------- OBTENER DATOS DEL INTENT --------------------------------
+
     }
 
     // Inflar el ToolBar
@@ -93,5 +99,15 @@ public class MainActivity extends AppCompatActivity {
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent intentDatosUsuario=getIntent();
+        String nombreUsuario=intentDatosUsuario.getStringExtra("nombre");
+        String emailUsuario=intentDatosUsuario.getStringExtra("email");
+
+        Toast.makeText(this, "HA INICIADO SESIÓN EL USUARIO "+nombreUsuario+" CON EL EMAIL "+emailUsuario, Toast.LENGTH_SHORT).show();
     }
 }
