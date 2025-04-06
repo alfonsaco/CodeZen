@@ -1,4 +1,4 @@
-package edu.alfonsaco.codezen.ui.dashboard;
+package edu.alfonsaco.codezen.ui.meditation;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import edu.alfonsaco.codezen.databinding.FragmentDashboardBinding;
+import edu.alfonsaco.codezen.databinding.FragmentMeditateBinding;
 
-public class DashboardFragment extends Fragment {
+public class MeditateFragment extends Fragment {
 
-    private FragmentDashboardBinding binding;
+    private FragmentMeditateBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        DashboardViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        HomeViewModel homeViewModel =
+                new ViewModelProvider(this).get(HomeViewModel.class);
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentMeditateBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textHome;
+        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

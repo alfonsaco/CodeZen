@@ -9,11 +9,70 @@
 
     <ImageView
         android:id="@+id/btnVolverDesdeAjustes"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/go_back_arrow" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/viewTema"
+                android:background="#D8D8D8"
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:orientation="vertical"
+                android:layout_height="wrap_content" >
+
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="18sp"
+                    android:textColor="#272727"
+                    android:text="Cambiar tema de la aplicación" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+
+                    <RadioButton
+                        android:id="@+id/rdClaro"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Claro" />
+
+                    <RadioButton
+                        android:id="@+id/rdOscuro"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Oscuro" />
+                </RadioGroup>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
