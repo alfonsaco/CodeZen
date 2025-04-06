@@ -30,10 +30,12 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import edu.alfonsaco.codezen.MainActivity;
 import edu.alfonsaco.codezen.R;
+import edu.alfonsaco.codezen.utils.Verifications;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private Button btnCambiarAInicio;
+    private Button btnCrearCuenta;
 
     // Firebase
     private SignInButton btnGoogleRegistro;
@@ -45,6 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText etxtUsuario;
     private EditText etxtEmail;
     private EditText etxtContra;
+    private Verifications verifications;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,8 +99,15 @@ public class RegisterActivity extends AppCompatActivity {
         etxtUsuario=findViewById(R.id.etxtUsuario);
         etxtEmail=findViewById(R.id.etxtEmail);
         etxtContra=findViewById(R.id.etxtContra);
+        btnCrearCuenta=findViewById(R.id.btnCrearCuenta);
+        verifications=new Verifications();
 
-
+        btnCrearCuenta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                crearCuentaEmail();
+            }
+        });
         // *******************************************************
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -138,6 +148,36 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 });
     }
+    // Email y contraseña
+    private void crearCuentaEmail() {
+        String nombreUsuario=String.valueOf(etxtUsuario.getText());
+        String email=String.valueOf(etxtEmail.getText());
+        String contra=String.valueOf(etxtContra.getText());
+
+        // Verificaciones
+        if(nombreUsuario.isEmpty() || email.isEmpty() || contra.isEmpty()) {
+            Toast.makeText(this, "Rellene todos los campos", Toast.LENGTH_SHORT);
+            return;
+        }
+
+        if(nombreUsuario.length() < 5) {
+            Toast.makeText(this, "El nombre de usuario debe contener al menos 5 caracteres", Toast.LENGTH_SHORT);
+            return;
+        }
+
+        if(contra.length() < 5) {
+            Toast.makeText(this, "La contraseña es demasiado corta", Toast.LENGTH_SHORT);
+            return;
+        }
+
+        if(!verifications.esEmail(email)) {
+            Toast.makeText(this, "El email insertado no es válido", Toast.LENGTH_SHORT);
+            return;
+        }
+
+
+    }
+
     // ***************************************************************************************************
 
 
