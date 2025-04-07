@@ -27,6 +27,7 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import edu.alfonsaco.codezen.MainActivity;
 import edu.alfonsaco.codezen.R;
@@ -156,26 +157,50 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Verificaciones
         if(nombreUsuario.isEmpty() || email.isEmpty() || contra.isEmpty()) {
-            Toast.makeText(this, "Rellene todos los campos", Toast.LENGTH_SHORT);
+            Toast.makeText(this, "Rellene todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if(nombreUsuario.length() < 5) {
-            Toast.makeText(this, "El nombre de usuario debe contener al menos 5 caracteres", Toast.LENGTH_SHORT);
+            Toast.makeText(this, "El nombre de usuario debe contener al menos 5 caracteres", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if(contra.length() < 5) {
-            Toast.makeText(this, "La contraseña es demasiado corta", Toast.LENGTH_SHORT);
+            Toast.makeText(this, "La contraseña es demasiado corta", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if(!verifications.esEmail(email)) {
-            Toast.makeText(this, "El email insertado no es válido", Toast.LENGTH_SHORT);
+            Toast.makeText(this, "El email insertado no es válido", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        firebaseAuth.createUserWithEmailAndPassword(email, contra).addOnCompleteListener(this, task -> {
+            // Verificar email repetido
+            if(task.getException() != null && task.getException().getMessage().contains("email-already-in-use")) {
+                Toast.makeText(this, "Ya existe una cuenta asociada a este email", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
+            // Verificar usuario repetido
+
+
+            if(task.isSuccessful()) {
+                FirebaseUser usuario=firebaseAuth.getCurrentUser();
+
+                // Agregar el username al usuario creado
+                UserProfileChangeRequest cambioDatos= new UserProfileChangeRequest.Builder().setDisplayName(nombreUsuario).build();
+                Toast.makeText(this, "Usuario creado correctamente", Toast.LENGTH_SHORT).show();
+
+                Intent intent=new Intent(this, MainActivity.class);
+                startActivity(intent);
+                finish();
+
+            } else {
+                Toast.makeText(this, "Error al crear la cuenta", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     // ***************************************************************************************************
