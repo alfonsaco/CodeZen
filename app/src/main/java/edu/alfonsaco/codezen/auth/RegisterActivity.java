@@ -177,8 +177,8 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         firebaseAuth.createUserWithEmailAndPassword(email, contra).addOnCompleteListener(this, task -> {
-            // Verificar email repetido
-            if(task.getException() != null && task.getException().getMessage().contains("email-already-in-use")) {
+            // Verificar email repetido. Esto lo hace directamente el FirebaseAuth
+            if(task.getException() != null && task.getException().getMessage().contains("email address is already in use by another account")) {
                 Toast.makeText(this, "Ya existe una cuenta asociada a este email", Toast.LENGTH_SHORT).show();
                 return;
             }
