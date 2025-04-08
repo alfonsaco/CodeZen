@@ -106,6 +106,12 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Valorar App en Play Store" />
+
+            <Button
                 android:id="@+id/btnCerrarSesión"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

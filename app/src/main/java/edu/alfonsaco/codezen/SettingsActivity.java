@@ -18,6 +18,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -29,6 +32,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private Button btnCerrarSesion;
     private FirebaseAuth firebaseAuth;
+    private GoogleSignInClient googleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,12 +78,18 @@ public class SettingsActivity extends AppCompatActivity {
         // Cerrar sesión en FireBase
         btnCerrarSesion=findViewById(R.id.btnCerrarSesión);
         firebaseAuth=FirebaseAuth.getInstance();
+        // Para que nos deje elegir usuario diferente cada vez que cerremos sesión
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        googleSignInClient = GoogleSignIn.getClient(this, gso);
 
         btnCerrarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 firebaseAuth.signOut();
-                volverAInicio();
+                // Cerrar cliente, para poder seleccionar otra cuenta distinta
+                googleSignInClient.signOut().addOnCompleteListener(task -> {
+                    volverAInicio();
+                });
             }
         });
 
