@@ -52,13 +52,13 @@
                     app:srcCompat="@drawable/brain_icon" />
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/txtUsername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Datos del usuario" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/txtEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Email del usuario" />
@@ -104,6 +104,12 @@
                 </RadioGroup>
 
             </LinearLayout>
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Valorar App en Play Store" />
 
             <Button
                 android:id="@+id/btnCerrarSesión"
