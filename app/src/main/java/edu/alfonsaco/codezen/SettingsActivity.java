@@ -5,9 +5,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -26,6 +26,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private ImageView btnVolverDesdeAjustes;
 
+    // Tema claro / oscuro
     private RadioButton rdClaro, rdOscuro;
     public SharedPreferences preferencesTema;
     public String temaGuardado;
@@ -33,6 +34,13 @@ public class SettingsActivity extends AppCompatActivity {
     private Button btnCerrarSesion;
     private FirebaseAuth firebaseAuth;
     private GoogleSignInClient googleSignInClient;
+
+    // Componentes
+    private TextView txtEmail;
+    private TextView txtUsername;
+
+    private String username;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +101,16 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+
+        // Obtener los datos del Usuario
+        txtUsername=findViewById(R.id.txtUsername);
+        txtEmail=findViewById(R.id.txtEmail);
+
+        Intent intent=getIntent();
+        username=intent.getStringExtra("username");
+        email=intent.getStringExtra("email");
+
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -141,4 +159,13 @@ public class SettingsActivity extends AppCompatActivity {
         finish();
     }
     // ************************************************************************************
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        txtUsername.setText(username);
+        txtEmail.setText(email);
+    }
 }

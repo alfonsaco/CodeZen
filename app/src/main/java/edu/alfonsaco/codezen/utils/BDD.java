@@ -13,7 +13,7 @@ import java.util.Map;
 public class BDD {
     private FirebaseAuth firebaseAuth;
 
-    private BDD() {
+    public BDD() {
         firebaseAuth=FirebaseAuth.getInstance();
     }
 
@@ -24,6 +24,8 @@ public class BDD {
         usuario.put("username", username);
         usuario.put("email", email);
         usuario.put("fecha_creacion", new Date());
+        usuario.put("cont_habitos", 0);
+        usuario.put("cont_meditaciones", 0);
         usuario.put("id", firebaseAuth.getCurrentUser().getUid());
 
         FirebaseFirestore.getInstance()
@@ -33,6 +35,5 @@ public class BDD {
                 .addOnSuccessListener(aVoid -> Log.d("Registro (Clase BDD)", "Usuario guardado en Firestore"))
                 .addOnFailureListener(e -> Log.e("Registro (Clase BDD)", "Error al guardar el usuario en Firestore"));
 
-        
     }
 }

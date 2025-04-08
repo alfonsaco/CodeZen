@@ -26,19 +26,22 @@ public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences preferencesTema;
 
+    // Datos del Intent
+    private String email;
+    private String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Se aplica el tema antes de realizar cualquier otra acción
         aplicarTema();
 
         super.onCreate(savedInstanceState);
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // ----CAMBIAR TEMA CLARO OSCURO ----
+        // ------------------------ CAMBIAR TEMA DE CLAR A OSCURO ----------------------------
         preferencesTema = getSharedPreferences("tema", MODE_PRIVATE);
-        // ----------------------------------
+        // -----------------------------------------------------------------------------------
 
 
         // --------------------------- TOOLBAR DE LOS FRAMENTS --------------------------------
@@ -71,7 +74,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         // ------------------------- OBTENER DATOS DEL INTENT --------------------------------
-
+        Intent intent=getIntent();
+        username=intent.getStringExtra("username");
+        email=intent.getStringExtra("email");
     }
 
     // Inflar el ToolBar

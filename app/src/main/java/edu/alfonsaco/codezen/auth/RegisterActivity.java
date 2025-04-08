@@ -31,6 +31,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 
 import edu.alfonsaco.codezen.MainActivity;
 import edu.alfonsaco.codezen.R;
+import edu.alfonsaco.codezen.utils.BDD;
 import edu.alfonsaco.codezen.utils.Verifications;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -48,6 +49,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText etxtUsuario;
     private EditText etxtEmail;
     private EditText etxtContra;
+
+    private BDD baseDeDatos;
     private Verifications verifications;
 
     @Override
@@ -110,6 +113,8 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
         // *******************************************************
+
+        baseDeDatos=new BDD();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -188,12 +193,18 @@ public class RegisterActivity extends AppCompatActivity {
 
             if(task.isSuccessful()) {
                 FirebaseUser usuario=firebaseAuth.getCurrentUser();
+                String usernameString=usuario.getDisplayName();
 
                 // Agregar el username al usuario creado
                 UserProfileChangeRequest cambioDatos= new UserProfileChangeRequest.Builder().setDisplayName(nombreUsuario).build();
                 Toast.makeText(this, "Usuario creado correctamente", Toast.LENGTH_SHORT).show();
 
+                // Agregamos el usuario a FireStore
+                baseDeDatos.guardarUsuarioEnFirebase(nombreUsuario, email);
+
                 Intent intent=new Intent(this, MainActivity.class);
+                intent.putExtra("username", nombreUsuario);
+                intent.putExtra("email", email);
                 startActivity(intent);
                 finish();
 
