@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "220780883024",
+    "project_id": "codezen-bcfaa",
+    "storage_bucket": "codezen-bcfaa.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:220780883024:android:2180495403efd6a2547555",
+        "android_client_info": {
+          "package_name": "edu.alfonsaco.codezen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "220780883024-tnot9fq4ufs3ghkejptfs6cqsm2cbrl0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.alfonsaco.codezen",
+            "certificate_hash": "24a141a1a047e1f356d584477bc66345510c3408"
+          }
+        },
+        {
+          "client_id": "220780883024-t1j7ejdjgll35bqt5omgtk88gp1hv8am.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVdrFl-oCefAgiN54ZaertN_a1oi5Pl6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "220780883024-t1j7ejdjgll35bqt5omgtk88gp1hv8am.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
