@@ -39,8 +39,8 @@ public class SettingsActivity extends AppCompatActivity {
     private TextView txtEmail;
     private TextView txtUsername;
 
-    private String username;
-    private String email;
+    private String username=MainActivity.username;
+    private String email=MainActivity.email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,11 +105,6 @@ public class SettingsActivity extends AppCompatActivity {
         // Obtener los datos del Usuario
         txtUsername=findViewById(R.id.txtUsername);
         txtEmail=findViewById(R.id.txtEmail);
-
-        Intent intent=getIntent();
-        username=intent.getStringExtra("username");
-        email=intent.getStringExtra("email");
-
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

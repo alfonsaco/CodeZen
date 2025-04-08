@@ -193,20 +193,23 @@ public class RegisterActivity extends AppCompatActivity {
 
             if(task.isSuccessful()) {
                 FirebaseUser usuario=firebaseAuth.getCurrentUser();
-                String usernameString=usuario.getDisplayName();
 
                 // Agregar el username al usuario creado
                 UserProfileChangeRequest cambioDatos= new UserProfileChangeRequest.Builder().setDisplayName(nombreUsuario).build();
                 Toast.makeText(this, "Usuario creado correctamente", Toast.LENGTH_SHORT).show();
 
-                // Agregamos el usuario a FireStore
-                baseDeDatos.guardarUsuarioEnFirebase(nombreUsuario, email);
+                usuario.updateProfile(cambioDatos).addOnCompleteListener(taskPerfil -> {
+                    if(taskPerfil.isSuccessful()) {
+                        // Agregamos el usuario a FireStore
+                        baseDeDatos.guardarUsuarioEnFirebase(nombreUsuario, email);
 
-                Intent intent=new Intent(this, MainActivity.class);
-                intent.putExtra("username", nombreUsuario);
-                intent.putExtra("email", email);
-                startActivity(intent);
-                finish();
+                        Intent intent=new Intent(this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(this, "Error al crear la cuenta y agregar el Display Name", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
             } else {
                 Toast.makeText(this, "Error al crear la cuenta", Toast.LENGTH_SHORT).show();
