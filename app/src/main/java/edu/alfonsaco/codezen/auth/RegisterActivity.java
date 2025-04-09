@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private Button btnCambiarAInicio;
     private Button btnCrearCuenta;
+    private ImageView btnVolverInicio;
 
     // Firebase
     private SignInButton btnGoogleRegistro;
@@ -115,6 +117,14 @@ public class RegisterActivity extends AppCompatActivity {
         // *******************************************************
 
         baseDeDatos=new BDD();
+
+        btnVolverInicio=findViewById(R.id.btnVolverInicio);
+        btnVolverInicio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

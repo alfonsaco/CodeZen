@@ -49,7 +49,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         // Botón para volver a la ventana de Fragments
-        btnVolverDesdeAjustes=findViewById(R.id.btnVolverDesdeAjustes);
+        btnVolverDesdeAjustes=findViewById(R.id.btnVolverInicio);
         btnVolverDesdeAjustes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

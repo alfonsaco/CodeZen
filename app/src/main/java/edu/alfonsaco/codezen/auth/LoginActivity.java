@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private Button btnCambiarARegistro;
     private Button btnLogin;
+    private ImageView btnVolverInicio;
     private TextView txtBotonRecuperarContra;
 
     // Firebase
@@ -120,6 +122,15 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent=new Intent(LoginActivity.this, PasswordRecoverActivity.class);
                 startActivity(intent);
+                finish();
+            }
+        });
+
+
+        btnVolverInicio=findViewById(R.id.btnVolverInicio);
+        btnVolverInicio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 finish();
             }
         });
