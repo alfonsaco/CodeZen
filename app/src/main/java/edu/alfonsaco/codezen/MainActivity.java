@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,8 +28,10 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences preferencesTema;
 
     // Datos del Intent
-    private String email;
-    private String username;
+    public static String email;
+    public static String username;
+
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,10 +76,10 @@ public class MainActivity extends AppCompatActivity {
         // -----------------------------------------------------------------------------------
 
 
-        // ------------------------- OBTENER DATOS DEL INTENT --------------------------------
-        Intent intent=getIntent();
-        username=intent.getStringExtra("username");
-        email=intent.getStringExtra("email");
+        // ------------------------- OBTENER DATOS DEL USUARIO --------------------------------
+        firebaseAuth=FirebaseAuth.getInstance();
+        email=firebaseAuth.getCurrentUser().getEmail();
+        username=firebaseAuth.getCurrentUser().getDisplayName();
     }
 
     // Inflar el ToolBar
