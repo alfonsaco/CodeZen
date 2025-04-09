@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="56dp"
+    android:paddingTop="56dp"
     tools:context=".ui.habits.HabitsFragment">
     <!--El padding bottom es por el nav, ya que sino los elementos quedarían ocultos debajo-->
 
@@ -25,10 +26,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:background="#43000000"
         app:layout_constraintBottom_toTopOf="@+id/btnAgregarHabito"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

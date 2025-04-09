@@ -1,5 +1,6 @@
 package edu.alfonsaco.codezen.ui.habits;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +34,8 @@ public class HabitsFragment extends Fragment {
         btnAgregarHabito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Has pulsado en el botón", Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(getActivity(), CreateHabitActivity.class);
+                startActivity(intent);
             }
         });
         btnAgregarHabito.setTooltipText("Crear un nuevo hábito");
