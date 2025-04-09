@@ -31,6 +31,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import edu.alfonsaco.codezen.MainActivity;
 import edu.alfonsaco.codezen.R;
+import edu.alfonsaco.codezen.utils.Verifications;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -48,11 +49,16 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etxtEmail;
     private EditText etxtContra;
 
+    // Verificar email
+    private Verifications verifications;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
+
+        verifications=new Verifications();
 
         // Cambiar al Registro
         btnCambiarARegistro=findViewById(R.id.btnCambiarARegistro);
@@ -69,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                loginEmailContra();
             }
         });
 
@@ -151,27 +157,42 @@ public class LoginActivity extends AppCompatActivity {
 
                         String emailUsuario=firebaseAuth.getCurrentUser().getEmail();
                         String nombreUsuario=firebaseAuth.getCurrentUser().getDisplayName();
-                        irAMainActivity(nombreUsuario, emailUsuario);
+                        Intent intent=new Intent(this, MainActivity.class);
+                        finish();
 
                     } else {
                         Toast.makeText(this, "Error en la autenticación", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
+
     // Email y contraseña
     private void loginEmailContra() {
-        String nombre=firebaseAuth.getCurrentUser().getDisplayName();
         String email=String.valueOf(etxtEmail.getText());
+        String contra=String.valueOf(etxtContra.getText());
 
-        irAMainActivity(nombre, email);
-    }
+        // Verificaciones
+        if(email.isEmpty() || contra.isEmpty()) {
+            Toast.makeText(this, "Rellene todos los campos", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-    private void irAMainActivity(String nombre, String email) {
-        Intent intent=new Intent(this, MainActivity.class);
-        intent.putExtra("nombre", firebaseAuth.getCurrentUser().getDisplayName());
-        intent.putExtra("email", firebaseAuth.getCurrentUser().getEmail());
+        if(!verifications.esEmail(email)) {
+            Toast.makeText(this, "El email insertado no es válido", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        finish();
+        // Iniciar sesión
+        firebaseAuth.signInWithEmailAndPassword(email, contra).addOnCompleteListener(task -> {
+            if(task.isSuccessful()) {
+                Toast.makeText(this, "Sesión iniciada con éxito", Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(this, "Email o contraseña incorrectos", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     // ***************************************************************************************************
 
