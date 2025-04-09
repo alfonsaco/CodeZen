@@ -111,15 +111,16 @@ public class LoginActivity extends AppCompatActivity {
         // Email y Contraseña
         etxtEmail=findViewById(R.id.etxtEmail);
         etxtContra=findViewById(R.id.etxtContra);
-
-
         // *******************************************************
 
+        // Recuperar contraseña
         txtBotonRecuperarContra=findViewById(R.id.txtBotonRecuperarContra);
         txtBotonRecuperarContra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent=new Intent(LoginActivity.this, PasswordRecoverActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -195,6 +196,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
     // ***************************************************************************************************
+
 
     @Override
     protected void onStart() {
