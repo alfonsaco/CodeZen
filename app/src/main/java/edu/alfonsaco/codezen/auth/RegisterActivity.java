@@ -109,7 +109,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnCrearCuenta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                crearCuentaEmail();
+                verificacionesCrearCuenta();
             }
         });
         // *******************************************************
@@ -155,7 +155,7 @@ public class RegisterActivity extends AppCompatActivity {
                 });
     }
     // Email y contraseña
-    private void crearCuentaEmail() {
+    private void verificacionesCrearCuenta() {
         String nombreUsuario=String.valueOf(etxtUsuario.getText());
         String email=String.valueOf(etxtEmail.getText());
         String contra=String.valueOf(etxtContra.getText());
@@ -181,6 +181,20 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        // Verificar usuario repetido
+        baseDeDatos.getUsuariosCollection().whereEqualTo("username", nombreUsuario)
+                .get()
+                .addOnCompleteListener(taskUsername -> {
+                    if(taskUsername.isSuccessful()) {
+                        if(!taskUsername.getResult().isEmpty()) {
+                            Toast.makeText(this,"Ya existe un usuario con este nombre de usuario", Toast.LENGTH_SHORT).show();
+                        } else {
+                            crearCuentaEmail(email, contra, nombreUsuario);
+                        }
+                    }
+                });
+    }
+    private void crearCuentaEmail(String email, String contra, String nombreUsuario) {
         firebaseAuth.createUserWithEmailAndPassword(email, contra).addOnCompleteListener(this, task -> {
             // Verificar email repetido. Esto lo hace directamente el FirebaseAuth
             if(task.getException() != null && task.getException().getMessage().contains("email address is already in use by another account")) {
@@ -188,9 +202,7 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            // Verificar usuario repetido
-
-
+            // Se crea la cuenta
             if(task.isSuccessful()) {
                 FirebaseUser usuario=firebaseAuth.getCurrentUser();
 
@@ -216,7 +228,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
     // ***************************************************************************************************
 
 

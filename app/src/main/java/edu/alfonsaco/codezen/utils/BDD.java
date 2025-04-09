@@ -4,6 +4,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.Map;
 
 public class BDD {
     private FirebaseAuth firebaseAuth;
+    private final FirebaseFirestore db=FirebaseFirestore.getInstance();
 
     public BDD() {
         firebaseAuth=FirebaseAuth.getInstance();
@@ -35,5 +37,9 @@ public class BDD {
                 .addOnSuccessListener(aVoid -> Log.d("Registro (Clase BDD)", "Usuario guardado en Firestore"))
                 .addOnFailureListener(e -> Log.e("Registro (Clase BDD)", "Error al guardar el usuario en Firestore"));
 
+    }
+    // Obtener los usuarios
+    public CollectionReference getUsuariosCollection() {
+        return db.collection("usuarios");
     }
 }
