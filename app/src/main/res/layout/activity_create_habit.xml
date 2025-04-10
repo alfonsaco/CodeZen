@@ -42,7 +42,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-
             android:padding="20dp"
             android:orientation="vertical" >
 
@@ -57,7 +56,7 @@
                 tools:layout_editor_absoluteY="28dp" />
 
             <EditText
-                android:id="@+id/editTextText2"
+                android:id="@+id/txtDescripcion"
                 android:layout_width="match_parent"
                 android:layout_height="127dp"
                 android:ems="10"

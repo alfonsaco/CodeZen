@@ -1,7 +1,10 @@
 package edu.alfonsaco.codezen.ui.habits;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
@@ -9,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import edu.alfonsaco.codezen.R;
 
@@ -16,6 +20,9 @@ public class CreateHabitActivity extends AppCompatActivity {
 
     // Componentes
     private ImageView btnVolverInicio;
+    private Button btnAgregarNuevoHabito;
+    private EditText etxtNombreHabito;
+    private EditText txtDescripcion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +40,35 @@ public class CreateHabitActivity extends AppCompatActivity {
         });
 
 
+        btnAgregarNuevoHabito=findViewById(R.id.btnAgregarNuevoHabito);
+        etxtNombreHabito=findViewById(R.id.etxtNombreHabito);
+        txtDescripcion=findViewById(R.id.txtDescripcion);
+
+        btnAgregarNuevoHabito.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                agregarHabito();
+            }
+        });
+
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    private void agregarHabito() {
+        String nombreHabito=String.valueOf(etxtNombreHabito.getText());
+        String descripcion=String.valueOf(txtDescripcion.getText());
+
+        Habit habito=new Habit();
+        habito.setNombre(nombreHabito);
+        habito.setDescripcion(descripcion);
+
+        Intent intent=new Intent(this, HabitsFragment.class);
+        intent.putExtra("habito", habito);
+        startActivity(intent);
     }
 }
