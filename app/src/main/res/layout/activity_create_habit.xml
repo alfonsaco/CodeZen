@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btnVolverInicio" />
 
     <ScrollView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="631dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
@@ -57,7 +57,7 @@
                 tools:layout_editor_absoluteY="28dp" />
 
             <EditText
-                android:id="@+id/editTextText2"
+                android:id="@+id/txtDescripcion"
                 android:layout_width="match_parent"
                 android:layout_height="127dp"
                 android:layout_marginTop="15dp"
