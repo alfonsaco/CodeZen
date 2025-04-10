@@ -51,6 +51,15 @@ public class HabitsFragment extends Fragment {
         binding = FragmentHabitsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        // --------- CONFIGURAR RECYCLERVIEW ----------
+        listaHabitos=new ArrayList<>();
+        recyclerHabitos=binding.recyclerHabitos;
+        habitAdapter=new HabitAdapter(listaHabitos, requireContext());
+        recyclerHabitos.setAdapter(habitAdapter);
+
+        recyclerHabitos.setLayoutManager(new LinearLayoutManager(getContext()));
+        // --------------------------------------------
+
         // Botón para agregar Hábito
         btnAgregarHabito= binding.btnAgregarHabito;
         btnAgregarHabito.setOnClickListener(new View.OnClickListener() {
@@ -58,24 +67,18 @@ public class HabitsFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent=new Intent(requireActivity(), CreateHabitActivity.class);
                 launcherHabitos.launch(intent);
+
             }
         });
         btnAgregarHabito.setTooltipText("Crear un nuevo hábito");
 
-
-        // --------- CONFIGURAR RECYCLERVIEW ----------
-        recyclerHabitos=binding.recyclerHabitos;
-        listaHabitos=new ArrayList<>();
-
-        recyclerHabitos.setLayoutManager(new LinearLayoutManager(getContext()));
-        // --------------------------------------------
 
         return root;
     }
 
     private void agregarHabitoALista(Habit habitoNuevo) {
         listaHabitos.add(habitoNuevo);
-
+        habitAdapter.notifyItemInserted(listaHabitos.size() - 1);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package edu.alfonsaco.codezen.ui.habits;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -67,8 +68,9 @@ public class CreateHabitActivity extends AppCompatActivity {
         habito.setNombre(nombreHabito);
         habito.setDescripcion(descripcion);
 
-        Intent intent=new Intent(this, HabitsFragment.class);
-        intent.putExtra("habito", habito);
-        startActivity(intent);
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("habito", habito);
+        setResult(Activity.RESULT_OK, resultIntent);
+        finish();
     }
 }

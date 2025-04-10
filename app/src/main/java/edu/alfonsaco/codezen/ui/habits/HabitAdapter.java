@@ -19,7 +19,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
     private List<Habit> listaHabitos;
     private Context context;
 
-    public HabitAdapter(List<Habit> listaHabitos) {
+    public HabitAdapter(List<Habit> listaHabitos, Context context) {
         this.listaHabitos = listaHabitos;
         this.context = context;
     }
