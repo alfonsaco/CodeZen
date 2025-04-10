@@ -48,9 +48,13 @@ dependencies {
     implementation(libs.credentials)
     implementation(libs.credentials.play.services.auth)
     implementation(libs.googleid)
+    implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    // Nueva versión para evitar errores de Gradle
+    implementation ("com.google.guava:guava:33.0.0-android")
 
     // Botón Google
     implementation("com.google.android.gms:play-services-auth:20.7.0")

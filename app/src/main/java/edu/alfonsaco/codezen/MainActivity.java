@@ -3,11 +3,13 @@ package edu.alfonsaco.codezen;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,19 +28,24 @@ public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences preferencesTema;
 
+    // Datos del Intent
+    public static String email;
+    public static String username;
+
+    private FirebaseAuth firebaseAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Se aplica el tema antes de realizar cualquier otra acción
         aplicarTema();
 
         super.onCreate(savedInstanceState);
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // ----CAMBIAR TEMA CLARO OSCURO ----
+        // ------------------------ CAMBIAR TEMA DE CLAR A OSCURO ----------------------------
         preferencesTema = getSharedPreferences("tema", MODE_PRIVATE);
-        // ----------------------------------
+        // -----------------------------------------------------------------------------------
 
 
         // --------------------------- TOOLBAR DE LOS FRAMENTS --------------------------------
@@ -70,8 +77,10 @@ public class MainActivity extends AppCompatActivity {
         // -----------------------------------------------------------------------------------
 
 
-        // ------------------------- OBTENER DATOS DEL INTENT --------------------------------
-
+        // ------------------------- OBTENER DATOS DEL USUARIO --------------------------------
+        firebaseAuth=FirebaseAuth.getInstance();
+        email=firebaseAuth.getCurrentUser().getEmail();
+        username=firebaseAuth.getCurrentUser().getDisplayName();
     }
 
     // Inflar el ToolBar

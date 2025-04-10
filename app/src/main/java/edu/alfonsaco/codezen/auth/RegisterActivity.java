@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,12 +32,14 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 
 import edu.alfonsaco.codezen.MainActivity;
 import edu.alfonsaco.codezen.R;
+import edu.alfonsaco.codezen.utils.BDD;
 import edu.alfonsaco.codezen.utils.Verifications;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private Button btnCambiarAInicio;
     private Button btnCrearCuenta;
+    private ImageView btnVolverInicio;
 
     // Firebase
     private SignInButton btnGoogleRegistro;
@@ -48,6 +51,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText etxtUsuario;
     private EditText etxtEmail;
     private EditText etxtContra;
+
+    private BDD baseDeDatos;
     private Verifications verifications;
 
     @Override
@@ -106,10 +111,20 @@ public class RegisterActivity extends AppCompatActivity {
         btnCrearCuenta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                crearCuentaEmail();
+                verificacionesCrearCuenta();
             }
         });
         // *******************************************************
+
+        baseDeDatos=new BDD();
+
+        btnVolverInicio=findViewById(R.id.btnVolverInicio);
+        btnVolverInicio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -150,7 +165,7 @@ public class RegisterActivity extends AppCompatActivity {
                 });
     }
     // Email y contraseña
-    private void crearCuentaEmail() {
+    private void verificacionesCrearCuenta() {
         String nombreUsuario=String.valueOf(etxtUsuario.getText());
         String email=String.valueOf(etxtEmail.getText());
         String contra=String.valueOf(etxtContra.getText());
@@ -176,6 +191,20 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        // Verificar usuario repetido
+        baseDeDatos.getUsuariosCollection().whereEqualTo("username", nombreUsuario)
+                .get()
+                .addOnCompleteListener(taskUsername -> {
+                    if(taskUsername.isSuccessful()) {
+                        if(!taskUsername.getResult().isEmpty()) {
+                            Toast.makeText(this,"Ya existe un usuario con este nombre de usuario", Toast.LENGTH_SHORT).show();
+                        } else {
+                            crearCuentaEmail(email, contra, nombreUsuario);
+                        }
+                    }
+                });
+    }
+    private void crearCuentaEmail(String email, String contra, String nombreUsuario) {
         firebaseAuth.createUserWithEmailAndPassword(email, contra).addOnCompleteListener(this, task -> {
             // Verificar email repetido. Esto lo hace directamente el FirebaseAuth
             if(task.getException() != null && task.getException().getMessage().contains("email address is already in use by another account")) {
@@ -183,9 +212,7 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            // Verificar usuario repetido
-
-
+            // Se crea la cuenta
             if(task.isSuccessful()) {
                 FirebaseUser usuario=firebaseAuth.getCurrentUser();
 
@@ -193,16 +220,24 @@ public class RegisterActivity extends AppCompatActivity {
                 UserProfileChangeRequest cambioDatos= new UserProfileChangeRequest.Builder().setDisplayName(nombreUsuario).build();
                 Toast.makeText(this, "Usuario creado correctamente", Toast.LENGTH_SHORT).show();
 
-                Intent intent=new Intent(this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                usuario.updateProfile(cambioDatos).addOnCompleteListener(taskPerfil -> {
+                    if(taskPerfil.isSuccessful()) {
+                        // Agregamos el usuario a FireStore
+                        baseDeDatos.guardarUsuarioEnFirebase(nombreUsuario, email);
+
+                        Intent intent=new Intent(this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(this, "Error al crear la cuenta y agregar el Display Name", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
             } else {
                 Toast.makeText(this, "Error al crear la cuenta", Toast.LENGTH_SHORT).show();
             }
         });
     }
-
     // ***************************************************************************************************
 
 
