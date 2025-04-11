@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +30,7 @@ public class CreateHabitActivity extends AppCompatActivity {
 
     private String colorSeleccionado;
     private ArrayList<View> listaColores;
+    private boolean haSeleccionadoColor=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +76,8 @@ public class CreateHabitActivity extends AppCompatActivity {
             color.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    haSeleccionadoColor=true;
+
                     String tagColor=color.getTag().toString();
                     colorSeleccionado=tagColor;
                 }
@@ -99,6 +103,18 @@ public class CreateHabitActivity extends AppCompatActivity {
         String nombreHabito=String.valueOf(etxtNombreHabito.getText());
         String descripcion=String.valueOf(etxtDescripcion.getText());
 
+        // Verificaciones
+        if(nombreHabito.isEmpty() ||descripcion.isEmpty())  {
+            Toast.makeText(this, "Rellena los campos de nombre y descripción", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(!haSeleccionadoColor) {
+            Toast.makeText(this, "Debes seleccionar un color para tu hábito", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Creamos el nuevo hábito que vamos a añadir
         Habit habito=new Habit(nombreHabito, descripcion, colorSeleccionado);
 
         Intent resultIntent = new Intent();
