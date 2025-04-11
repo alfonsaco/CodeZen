@@ -2,6 +2,7 @@ package edu.alfonsaco.codezen.ui.habits;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +60,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         Habit habito=listaHabitos.get(position);
         holder.txtNombreHabito.setText(habito.getNombre());
         holder.txtDescripcionHabito.setText(habito.getDescripcion());
-        //holder.btnHabitoCompletado.setBackgroundColor(habito.getC);
+        holder.btnHabitoCompletado.setBackgroundColor(Color.parseColor(habito.getColor()));
     }
 
     @Override
