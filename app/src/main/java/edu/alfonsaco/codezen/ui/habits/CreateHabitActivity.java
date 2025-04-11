@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.RecyclerView;
 
 import edu.alfonsaco.codezen.R;
 
@@ -23,7 +22,7 @@ public class CreateHabitActivity extends AppCompatActivity {
     private ImageView btnVolverInicio;
     private Button btnAgregarNuevoHabito;
     private EditText etxtNombreHabito;
-    private EditText txtDescripcion;
+    private EditText etxtDescripcion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +42,7 @@ public class CreateHabitActivity extends AppCompatActivity {
 
         btnAgregarNuevoHabito=findViewById(R.id.btnAgregarNuevoHabito);
         etxtNombreHabito=findViewById(R.id.etxtNombreHabito);
-        txtDescripcion=findViewById(R.id.txtDescripcion);
+        etxtDescripcion=findViewById(R.id.etxtDescripcion);
 
         btnAgregarNuevoHabito.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,11 +61,9 @@ public class CreateHabitActivity extends AppCompatActivity {
 
     private void agregarHabito() {
         String nombreHabito=String.valueOf(etxtNombreHabito.getText());
-        String descripcion=String.valueOf(txtDescripcion.getText());
+        String descripcion=String.valueOf(etxtDescripcion.getText());
 
-        Habit habito=new Habit();
-        habito.setNombre(nombreHabito);
-        habito.setDescripcion(descripcion);
+        Habit habito=new Habit(nombreHabito, descripcion, "");
 
         Intent resultIntent = new Intent();
         resultIntent.putExtra("habito", habito);

@@ -57,7 +57,7 @@
                 tools:layout_editor_absoluteY="28dp" />
 
             <EditText
-                android:id="@+id/txtDescripcion"
+                android:id="@+id/etxtDescripcion"
                 android:layout_width="match_parent"
                 android:layout_height="127dp"
                 android:layout_marginTop="15dp"

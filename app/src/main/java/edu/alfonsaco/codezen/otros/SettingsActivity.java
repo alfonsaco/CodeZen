@@ -1,4 +1,4 @@
-package edu.alfonsaco.codezen;
+package edu.alfonsaco.codezen.otros;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,6 +22,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
+import edu.alfonsaco.codezen.AuthSelectActivity;
+import edu.alfonsaco.codezen.MainActivity;
+import edu.alfonsaco.codezen.R;
+
 public class SettingsActivity extends AppCompatActivity {
 
     private ImageView btnVolverDesdeAjustes;
@@ -39,7 +43,7 @@ public class SettingsActivity extends AppCompatActivity {
     private TextView txtEmail;
     private TextView txtUsername;
 
-    private String username=MainActivity.username;
+    private String username= MainActivity.username;
     private String email=MainActivity.email;
 
     @Override

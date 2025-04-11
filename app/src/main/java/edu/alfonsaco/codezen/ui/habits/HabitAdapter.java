@@ -1,9 +1,11 @@
 package edu.alfonsaco.codezen.ui.habits;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,15 +29,19 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
     // Para declarar los objetos
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtNombreHabito;
+        TextView txtDescripcionHabito;
+        Button btnHabitoCompletado;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtNombreHabito = itemView.findViewById(R.id.txtNombreHabito);
+            txtDescripcionHabito = itemView.findViewById(R.id.txtDescripcionHabito);
+            btnHabitoCompletado = itemView.findViewById(R.id.btnHabitoCompletado);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(itemView.getContext(), "Has pulsado en un hábito", Toast.LENGTH_SHORT).show();
+                    //Intent intent=new Intent(getCo)
                 }
             });
         }
@@ -50,10 +56,10 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull HabitAdapter.ViewHolder holder, int position) {
-
-        holder.txtNombreHabito.setText("TEXTO DE EJEMPLO");
-
-
+        Habit habito=listaHabitos.get(position);
+        holder.txtNombreHabito.setText(habito.getNombre());
+        holder.txtDescripcionHabito.setText(habito.getDescripcion());
+        //holder.btnHabitoCompletado.setBackgroundColor(habito.getC);
     }
 
     @Override
