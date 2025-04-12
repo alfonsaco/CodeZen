@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.transition.Hold;
+
 import java.util.List;
 
 import edu.alfonsaco.codezen.R;
@@ -34,6 +36,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         TextView txtNombreHabito;
         TextView txtDescripcionHabito;
         Button btnHabitoCompletado;
+        String idHabito;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -57,6 +60,8 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
 
                     HabitOptionsBottomSheet habitOptionsBottomSheet=new HabitOptionsBottomSheet();
                     Bundle bundle=new Bundle();
+                    bundle.putString("id", idHabito);
+                    habitOptionsBottomSheet.setArguments(bundle);
 
                     if (context instanceof AppCompatActivity) {
                         habitOptionsBottomSheet.show(((AppCompatActivity) context).getSupportFragmentManager(), "HabitBottomSheet");
@@ -83,6 +88,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         holder.txtNombreHabito.setText(habito.getNombre());
         holder.txtDescripcionHabito.setText(habito.getDescripcion());
         holder.btnHabitoCompletado.setBackgroundColor(Color.parseColor(habito.getColor()));
+        holder.idHabito="ID_habit_"+habito.getNombre();
     }
 
     @Override

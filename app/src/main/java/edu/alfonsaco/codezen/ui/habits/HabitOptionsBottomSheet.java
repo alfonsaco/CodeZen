@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import edu.alfonsaco.codezen.R;
+import edu.alfonsaco.codezen.utils.BDD;
 
 // DIÁLOGO BOTTOM SHEET QUE SE MUESTRA AL HACER ON LONG CLICK EN CADA HÁBITO
 public class HabitOptionsBottomSheet extends BottomSheetDialogFragment {
@@ -23,6 +24,8 @@ public class HabitOptionsBottomSheet extends BottomSheetDialogFragment {
     private LinearLayout btnEliminarHabito;
     private LinearLayout btnIrAEditarHabito;
 
+    private BDD bd;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -30,6 +33,11 @@ public class HabitOptionsBottomSheet extends BottomSheetDialogFragment {
 
         btnEliminarHabito=view.findViewById(R.id.btnEliminarHabito);
         btnIrAEditarHabito=view.findViewById(R.id.btnIrAEditarHabito);
+
+        // DATOS PARA ELIMINAR EL HÁBITO
+        bd=new BDD();
+        Bundle bundle=getArguments();
+        String idHabito=bundle.getString("id");
 
         //EDITAR HÁBITO
         btnIrAEditarHabito.setOnClickListener(new View.OnClickListener() {
@@ -45,7 +53,8 @@ public class HabitOptionsBottomSheet extends BottomSheetDialogFragment {
         btnEliminarHabito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                bd.borrarHabito(idHabito);
+                dismiss();
             }
         });
 

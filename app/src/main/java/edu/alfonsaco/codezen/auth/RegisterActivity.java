@@ -156,6 +156,8 @@ public class RegisterActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser user = firebaseAuth.getCurrentUser();
+                        baseDeDatos.guardarUsuarioEnFirebase(firebaseAuth.getCurrentUser().getDisplayName(), firebaseAuth.getCurrentUser().getEmail());
+
                         Toast.makeText(this, "Autenticación exitosa", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(this, MainActivity.class));
                         finish();
@@ -181,7 +183,7 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        if(contra.length() < 5) {
+        if(contra.length() < 6) {
             Toast.makeText(this, "La contraseña es demasiado corta", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -192,7 +194,9 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         // Verificar usuario repetido
-        baseDeDatos.getUsuariosCollection().whereEqualTo("username", nombreUsuario)
+        baseDeDatos.getUsuariosCollection()
+                .whereEqualTo("username", nombreUsuario)
+                .limit(1)
                 .get()
                 .addOnCompleteListener(taskUsername -> {
                     if(taskUsername.isSuccessful()) {
