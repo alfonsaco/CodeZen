@@ -20,7 +20,7 @@ import edu.alfonsaco.codezen.R;
 public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> {
 
     private List<Habit> listaHabitos;
-    private Context context;
+    private static Context context;
 
     public HabitAdapter(List<Habit> listaHabitos, Context context) {
         this.listaHabitos = listaHabitos;
@@ -42,7 +42,8 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Intent intent=new Intent(getCo)
+                    Intent intent=new Intent(context, ShowHabitActivity.class);
+                    context.startActivity(intent);
                 }
             });
         }
