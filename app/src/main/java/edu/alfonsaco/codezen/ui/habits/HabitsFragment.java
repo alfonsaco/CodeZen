@@ -67,7 +67,6 @@ public class HabitsFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent=new Intent(requireActivity(), CreateHabitActivity.class);
                 launcherHabitos.launch(intent);
-
             }
         });
         btnAgregarHabito.setTooltipText("Crear un nuevo hábito");

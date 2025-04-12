@@ -36,7 +36,7 @@ public class AuthSelectActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_auth_select);
+        setContentView(R.layout.auth_select_activity);
 
         // ----CAMBIAR TEMA CLARO OSCURO ----
         temaPreferences = getSharedPreferences("tema", MODE_PRIVATE);

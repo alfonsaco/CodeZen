@@ -13,13 +13,19 @@
         android:theme="@style/Theme.CodeZen"
         tools:targetApi="33">
         <activity
+            android:name=".ui.habits.EditHabitActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.habits.ShowHabitActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.habits.CreateHabitActivity"
             android:exported="false" />
         <activity
             android:name=".auth.PasswordRecoverActivity"
             android:exported="false" />
         <activity
-            android:name=".SettingsActivity"
+            android:name=".otros.SettingsActivity"
             android:exported="false" />
         <activity
             android:name=".auth.RegisterActivity"

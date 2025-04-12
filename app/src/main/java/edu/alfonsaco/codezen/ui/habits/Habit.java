@@ -5,11 +5,13 @@ import java.io.Serializable;
 public class Habit implements Serializable {
     private String nombre;
     private String descripcion;
+    private String color;
 
     // Constructor
-    public Habit(String nombre, String descripcion) {
+    public Habit(String nombre, String descripcion, String color) {
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.color = color;
     }
     public Habit() {
 
@@ -27,5 +29,11 @@ public class Habit implements Serializable {
     }
     public String getDescripcion() {
         return descripcion;
+    }
+    public String getColor() {
+        return color;
+    }
+    public void setColor(String color) {
+        this.color = color;
     }
 }
