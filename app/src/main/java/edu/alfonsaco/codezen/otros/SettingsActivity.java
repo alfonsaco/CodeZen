@@ -50,7 +50,7 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.other_settings_activity);
 
         // Botón para volver a la ventana de Fragments
         btnVolverDesdeAjustes=findViewById(R.id.btnVolverInicio);

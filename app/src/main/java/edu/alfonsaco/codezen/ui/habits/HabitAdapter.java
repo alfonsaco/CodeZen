@@ -3,6 +3,7 @@ package edu.alfonsaco.codezen.ui.habits;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -39,11 +41,30 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
             txtDescripcionHabito = itemView.findViewById(R.id.txtDescripcionHabito);
             btnHabitoCompletado = itemView.findViewById(R.id.btnHabitoCompletado);
 
+            // Mostrar hábitos y estadísticas
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent=new Intent(context, ShowHabitActivity.class);
                     context.startActivity(intent);
+                }
+            });
+
+            // Mostrar opciones de editar o borrar hábito
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    HabitOptionsBottomSheet habitOptionsBottomSheet=new HabitOptionsBottomSheet();
+                    Bundle dunble=new Bundle();
+
+                    if (context instanceof AppCompatActivity) {
+                        habitOptionsBottomSheet.show(((AppCompatActivity) context).getSupportFragmentManager(), "HabitBottomSheet");
+                    } else {
+                        Toast.makeText(context, "No se pudo abrir el menú", Toast.LENGTH_SHORT).show();
+                    }
+
+                    return false;
                 }
             });
         }

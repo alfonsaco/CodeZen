@@ -59,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.auth_register_activity);
 
         // Cambiar de actividad al Inicio
         btnCambiarAInicio=findViewById(R.id.btnCambiarAInicio);
