@@ -15,9 +15,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
 
 import edu.alfonsaco.codezen.R;
+import edu.alfonsaco.codezen.utils.BDD;
 
 public class CreateHabitActivity extends AppCompatActivity {
 
@@ -27,9 +31,13 @@ public class CreateHabitActivity extends AppCompatActivity {
     private EditText etxtNombreHabito;
     private EditText etxtDescripcion;
 
+    // Selección de color
     private String colorSeleccionado;
     private ArrayList<View> listaColores;
     private boolean haSeleccionadoColor=false;
+
+    // FirebaseAuth
+    private BDD bd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +45,11 @@ public class CreateHabitActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.habit_create_activity);
 
-        // Botón para volver atrás
+        btnAgregarNuevoHabito=findViewById(R.id.btnAgregarNuevoHabito);
+        etxtNombreHabito=findViewById(R.id.etxtNombreHabito);
+        etxtDescripcion=findViewById(R.id.etxtDescripcion);
+
+        // BOTÓN PARA VOLVER ATRÁS
         btnVolverInicio=findViewById(R.id.btnVolverInicio);
         btnVolverInicio.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,11 +57,6 @@ public class CreateHabitActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
-        btnAgregarNuevoHabito=findViewById(R.id.btnAgregarNuevoHabito);
-        etxtNombreHabito=findViewById(R.id.etxtNombreHabito);
-        etxtDescripcion=findViewById(R.id.etxtDescripcion);
 
 
         // SELECCIÓN DE COLOR
@@ -83,6 +90,7 @@ public class CreateHabitActivity extends AppCompatActivity {
             });
         }
 
+
         // AGREGAR EL HÁBITO NUEVO
         btnAgregarNuevoHabito.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +98,10 @@ public class CreateHabitActivity extends AppCompatActivity {
                 agregarHabito();
             }
         });
+
+
+        // AGREGAR HÁBITO A LA BASE DE DATOS
+        bd=new BDD();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -115,6 +127,10 @@ public class CreateHabitActivity extends AppCompatActivity {
 
         // Creamos el nuevo hábito que vamos a añadir
         Habit habito=new Habit(nombreHabito, descripcion, colorSeleccionado);
+
+
+        // Agregar hábito a la Base de Datos
+        bd.guardarHabitoEnUsuario(nombreHabito, descripcion, colorSeleccionado);
 
         Intent resultIntent = new Intent();
         resultIntent.putExtra("habito", habito);

@@ -37,6 +37,7 @@ public class HabitOptionsBottomSheet extends BottomSheetDialogFragment {
             public void onClick(View v) {
                 Intent intent=new Intent(getContext(), EditHabitActivity.class);
                 startActivity(intent);
+                dismiss();
             }
         });
 
@@ -50,7 +51,12 @@ public class HabitOptionsBottomSheet extends BottomSheetDialogFragment {
 
         // CERRAR DIÁLOGO
         btnCloseSheet=view.findViewById(R.id.btnCloseSheet);
-
+        btnCloseSheet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
 
         return view;
     }

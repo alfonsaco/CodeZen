@@ -56,7 +56,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
                 public boolean onLongClick(View v) {
 
                     HabitOptionsBottomSheet habitOptionsBottomSheet=new HabitOptionsBottomSheet();
-                    Bundle dunble=new Bundle();
+                    Bundle bundle=new Bundle();
 
                     if (context instanceof AppCompatActivity) {
                         habitOptionsBottomSheet.show(((AppCompatActivity) context).getSupportFragmentManager(), "HabitBottomSheet");
