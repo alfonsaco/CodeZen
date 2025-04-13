@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -17,56 +16,62 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import edu.alfonsaco.codezen.R;
 import edu.alfonsaco.codezen.utils.BDD;
 
-// DIÁLOGO BOTTOM SHEET QUE SE MUESTRA AL HACER ON LONG CLICK EN CADA HÁBITO
 public class HabitOptionsBottomSheet extends BottomSheetDialogFragment {
 
+    // Componentes
     private ImageView btnCloseSheet;
     private LinearLayout btnEliminarHabito;
     private LinearLayout btnIrAEditarHabito;
 
+    // Clases
+    private HabitOptionsListener listener;
     private BDD bd;
+
+    // INTERFAZ DEL BOTTOM SHEET
+    public static HabitOptionsBottomSheet newInstance(String id, int position, HabitOptionsListener listener) {
+        HabitOptionsBottomSheet fragment = new HabitOptionsBottomSheet();
+        Bundle args = new Bundle();
+        args.putString("id", id);
+        args.putInt("posicion", position);
+        fragment.setArguments(args);
+        fragment.listener = listener;
+        return fragment;
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.bottom_sheet_dialog_habitos, container, false);
+        View view = inflater.inflate(R.layout.bottom_sheet_dialog_habitos, container, false);
 
-        btnEliminarHabito=view.findViewById(R.id.btnEliminarHabito);
-        btnIrAEditarHabito=view.findViewById(R.id.btnIrAEditarHabito);
+        btnEliminarHabito = view.findViewById(R.id.btnEliminarHabito);
+        btnIrAEditarHabito = view.findViewById(R.id.btnIrAEditarHabito);
+        btnCloseSheet = view.findViewById(R.id.btnCloseSheet);
 
-        // DATOS PARA ELIMINAR EL HÁBITO
-        bd=new BDD();
-        Bundle bundle=getArguments();
-        String idHabito=bundle.getString("id");
+        bd = new BDD();
+        Bundle bundle = getArguments();
+        String idHabito = bundle.getString("id");
+        int posicion = bundle.getInt("posicion");
 
-        //EDITAR HÁBITO
-        btnIrAEditarHabito.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getContext(), EditHabitActivity.class);
-                startActivity(intent);
-                dismiss();
-            }
+        btnIrAEditarHabito.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), EditHabitActivity.class);
+            startActivity(intent);
+            dismiss();
         });
 
-        // ELIMINAR HÁBITO
-        btnEliminarHabito.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bd.borrarHabito(idHabito);
-                dismiss();
+        btnEliminarHabito.setOnClickListener(v -> {
+            bd.borrarHabito(idHabito);
+            if (listener != null) {
+                listener.interfazBorrarHabitoRecycler(posicion);
             }
+            dismiss();
         });
 
-        // CERRAR DIÁLOGO
-        btnCloseSheet=view.findViewById(R.id.btnCloseSheet);
-        btnCloseSheet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        btnCloseSheet.setOnClickListener(v -> dismiss());
 
         return view;
+    }
+
+    public interface HabitOptionsListener {
+        void interfazBorrarHabitoRecycler(int position);
     }
 }

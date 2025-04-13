@@ -6,14 +6,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,13 +22,14 @@ import java.util.List;
 import edu.alfonsaco.codezen.R;
 import edu.alfonsaco.codezen.databinding.FragmentHabitsBinding;
 
-public class HabitsFragment extends Fragment {
+public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.HabitOptionsListener {
 
     private FragmentHabitsBinding binding;
     private List<Habit> listaHabitos;
     private HabitAdapter habitAdapter;
+    private FloatingActionButton btnAgregarHabito;
+    private RecyclerView recyclerHabitos;
 
-    // Launcher para agregar nuevos elementos al Combo
     private final ActivityResultLauncher<Intent> launcherHabitos = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -42,35 +40,23 @@ public class HabitsFragment extends Fragment {
             }
     );
 
-    // Componentes
-    private FloatingActionButton btnAgregarHabito;
-    private RecyclerView recyclerHabitos;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHabitsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        // --------- CONFIGURAR RECYCLERVIEW ----------
-        listaHabitos=new ArrayList<>();
-        recyclerHabitos=binding.recyclerHabitos;
-        habitAdapter=new HabitAdapter(listaHabitos, requireContext());
+        listaHabitos = new ArrayList<>();
+        recyclerHabitos = binding.recyclerHabitos;
+        habitAdapter = new HabitAdapter(listaHabitos, requireContext(), this);
         recyclerHabitos.setAdapter(habitAdapter);
-
         recyclerHabitos.setLayoutManager(new LinearLayoutManager(getContext()));
-        // --------------------------------------------
 
-        // Botón para agregar Hábito
-        btnAgregarHabito= binding.btnAgregarHabito;
-        btnAgregarHabito.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(requireActivity(), CreateHabitActivity.class);
-                launcherHabitos.launch(intent);
-            }
+        btnAgregarHabito = binding.btnAgregarHabito;
+        btnAgregarHabito.setOnClickListener(v -> {
+            Intent intent = new Intent(requireActivity(), CreateHabitActivity.class);
+            launcherHabitos.launch(intent);
         });
         btnAgregarHabito.setTooltipText("Crear un nuevo hábito");
-
 
         return root;
     }
@@ -78,6 +64,15 @@ public class HabitsFragment extends Fragment {
     private void agregarHabitoALista(Habit habitoNuevo) {
         listaHabitos.add(habitoNuevo);
         habitAdapter.notifyItemInserted(listaHabitos.size() - 1);
+    }
+
+    @Override
+    public void interfazBorrarHabitoRecycler(int position) {
+        if (position >= 0 && position < listaHabitos.size()) {
+            listaHabitos.remove(position);
+            habitAdapter.notifyItemRemoved(position);
+            habitAdapter.notifyItemRangeChanged(position, listaHabitos.size() - position);
+        }
     }
 
     @Override
