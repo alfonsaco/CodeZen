@@ -15,12 +15,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 import java.util.ArrayList;
 
 import edu.alfonsaco.codezen.R;
+import edu.alfonsaco.codezen.ui.habits.habit_utils.Habit;
 import edu.alfonsaco.codezen.utils.BDD;
 
 public class CreateHabitActivity extends AppCompatActivity {

@@ -1,7 +1,5 @@
-package edu.alfonsaco.codezen.ui.habits;
+package edu.alfonsaco.codezen.ui.habits.habit_utils;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class DashboardViewModel extends ViewModel {

@@ -27,8 +27,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.alfonsaco.codezen.R;
 import edu.alfonsaco.codezen.databinding.FragmentHabitsBinding;
+import edu.alfonsaco.codezen.ui.habits.habit_utils.Habit;
+import edu.alfonsaco.codezen.ui.habits.habit_utils.HabitAdapter;
+import edu.alfonsaco.codezen.ui.habits.habit_utils.HabitOptionsBottomSheet;
 import edu.alfonsaco.codezen.utils.BDD;
 
 public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.HabitOptionsListener {

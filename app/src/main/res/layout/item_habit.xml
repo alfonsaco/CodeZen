@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/view"
         android:layout_width="0dp"
-        android:layout_height="165dp"
+        android:layout_height="wrap_content"
         android:background="#FFF"
         android:elevation="3dp"
         android:orientation="vertical"
@@ -56,10 +56,13 @@
 
         </LinearLayout>
 
-        <View
-            android:id="@+id/view2"
-            android:layout_width="wrap_content"
-            android:layout_height="180dp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerDiasHabito"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:scrollbars="horizontal"
+            android:scrollbarSize="0dp"
             android:layout_weight="1" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

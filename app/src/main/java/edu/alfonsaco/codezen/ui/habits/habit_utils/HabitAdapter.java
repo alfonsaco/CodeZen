@@ -1,4 +1,4 @@
-package edu.alfonsaco.codezen.ui.habits;
+package edu.alfonsaco.codezen.ui.habits.habit_utils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,15 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.alfonsaco.codezen.R;
+import edu.alfonsaco.codezen.ui.habits.ShowHabitActivity;
 
 public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> {
 
@@ -34,8 +36,11 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         TextView txtNombreHabito;
         TextView txtDescripcionHabito;
         Button btnHabitoCompletado;
+
         String idHabito;
         HabitOptionsBottomSheet.HabitOptionsListener listener;
+
+        RecyclerView recyclerDiasHabito;
 
         public ViewHolder(@NonNull View itemView, HabitOptionsBottomSheet.HabitOptionsListener listener) {
             super(itemView);
@@ -43,6 +48,22 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
             txtNombreHabito = itemView.findViewById(R.id.txtNombreHabito);
             txtDescripcionHabito = itemView.findViewById(R.id.txtDescripcionHabito);
             btnHabitoCompletado = itemView.findViewById(R.id.btnHabitoCompletado);
+
+            // Recycler de dias de cada hábito
+            recyclerDiasHabito=itemView.findViewById(R.id.recyclerDiasHabito);
+            recyclerDiasHabito.setLayoutManager(new GridLayoutManager(itemView.getContext(), 7, GridLayoutManager.HORIZONTAL, false));
+            int spacingPx = (int) (itemView.getContext().getResources().getDisplayMetrics().density * 2);
+            recyclerDiasHabito.addItemDecoration(new RecyclerView.ItemDecoration() {
+                @Override
+                public void getItemOffsets(@NonNull android.graphics.Rect outRect, @NonNull View view,
+                                           @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                    outRect.left = spacingPx;
+                    outRect.right = spacingPx;
+                    outRect.top = 0;
+                    outRect.bottom = 0;
+                }
+            });
+
 
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(itemView.getContext(), ShowHabitActivity.class);
@@ -77,6 +98,18 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         holder.txtDescripcionHabito.setText(habito.getDescripcion());
         holder.btnHabitoCompletado.setBackgroundColor(Color.parseColor(habito.getColor()));
         holder.idHabito = "ID_habit_" + habito.getNombre().replace(" ", "_");
+
+        // Recycler de hábitos
+
+        //List<Day> diasHabitos=habito.getDias();
+        List<Day> diasHabitos=new ArrayList<>();
+        for(int i=0; i<100; i++) {
+            Day dia=new Day();
+            diasHabitos.add(dia);
+        }
+
+        DayAdapter adapterDias=new DayAdapter(diasHabitos);
+        holder.recyclerDiasHabito.setAdapter(adapterDias);
     }
 
     @Override

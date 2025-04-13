@@ -1,4 +1,4 @@
-package edu.alfonsaco.codezen.ui.habits;
+package edu.alfonsaco.codezen.ui.habits.habit_utils;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import edu.alfonsaco.codezen.R;
+import edu.alfonsaco.codezen.ui.habits.EditHabitActivity;
 import edu.alfonsaco.codezen.utils.BDD;
 
 public class HabitOptionsBottomSheet extends BottomSheetDialogFragment {
