@@ -6,13 +6,17 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import edu.alfonsaco.codezen.ui.habits.Habit;
 
 public class BDD {
     private FirebaseAuth firebaseAuth;
@@ -44,9 +48,11 @@ public class BDD {
     public CollectionReference getUsuariosCollection() {
         return db.collection("usuarios");
     }
+    // ****************************************************************************
+
 
     // ********************* GUARDAR HÁBITO EN FIRESTORE **********************
-    public void guardarHabitoEnUsuario(String nombreHabito, String descripcionHabito, String colorHabito) {
+    public void guardarHabitoEnUsuario(String idHabito, String nombreHabito, String descripcionHabito, String colorHabito) {
         Map<String, Object> habito=new HashMap<>();
 
         FirebaseUser usuario=FirebaseAuth.getInstance().getCurrentUser();
@@ -56,6 +62,7 @@ public class BDD {
             return;
         }
 
+        habito.put("id_habito", idHabito);
         habito.put("nombre", nombreHabito);
         habito.put("descripcion", descripcionHabito);
         habito.put("color", colorHabito);
@@ -64,7 +71,7 @@ public class BDD {
         db.collection("usuarios")
                 .document(usuario.getUid())
                 .collection("habitos")
-                .document("ID_PROVICIONAL_"+nombreHabito)
+                .document(idHabito)
                 .set(habito)
                 .addOnSuccessListener(aVoid -> Log.d("Añadir hábito (Clase BDD)", "Hábito guardado en Firestore para el usuario "+usuario.getDisplayName()))
                 .addOnFailureListener(e -> Log.e("Añadir hábito (Clase BDD)", "Error al guardar el hábito en Firestore para el usuario "+usuario.getDisplayName()));
@@ -77,8 +84,29 @@ public class BDD {
                 .addOnFailureListener(e -> Log.e("Cont hábito", "No se pudo aumentar el contador de hábitos"));
     }
 
-    // Obtener todos los hábitos por usuario
-    public CollectionReference getHabitosCollection() {
-        return db.collection("habitos");
+    // Borrar un hábito
+    public void borrarHabito(String idHabito) {
+        FirebaseUser usuario=FirebaseAuth.getInstance().getCurrentUser();
+        // Verificar que haya un usuario autentificado
+        if(usuario == null) {
+            Log.e("Usuario no autentificado", "El usuario no está autentificado. No se puede agregar el hábito a la BDD");
+            return;
+        }
+
+        // Eliminar el hábito
+        db.collection("usuarios")
+                .document(usuario.getUid())
+                .collection("habitos")
+                .document(idHabito)
+                .delete()
+                .addOnSuccessListener(aVoid -> Log.d("Borrar hábito", "Se borró el hábito"))
+                .addOnFailureListener(e -> Log.e("Borrar hábito", "No se pudo borrar el hábito"));
+
+        // Reducir el contador de hábitos del usuario
+        db.collection("usuarios")
+                .document(usuario.getUid())
+                .update("cont_habitos", FieldValue.increment(-1))
+                .addOnSuccessListener(aVoid -> Log.d("Cont hábitos", "Se redujo el contador de hábitos"))
+                .addOnFailureListener(e -> Log.e("Cont hábito", "No se pudo reducir el contador de hábitos"));
     }
 }
