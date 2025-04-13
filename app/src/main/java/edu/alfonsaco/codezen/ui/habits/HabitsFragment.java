@@ -3,6 +3,7 @@ package edu.alfonsaco.codezen.ui.habits;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,23 +11,38 @@ import android.view.ViewGroup;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.alfonsaco.codezen.R;
 import edu.alfonsaco.codezen.databinding.FragmentHabitsBinding;
+import edu.alfonsaco.codezen.utils.BDD;
 
 public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.HabitOptionsListener {
 
     private FragmentHabitsBinding binding;
+
+    // Obtener hábitos usuario
+    private BDD db;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseFirestore firestore;
+
+    // RecyclerView
     private List<Habit> listaHabitos;
     private HabitAdapter habitAdapter;
+
+    // Componentes
     private FloatingActionButton btnAgregarHabito;
     private RecyclerView recyclerHabitos;
 
@@ -39,6 +55,17 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
                 }
             }
     );
+
+    // AGREGAR TODOS LOS HÁBITOS DEL USUARIO DE LA BDD AL INICIAR LA APP
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        db=new BDD();
+        firestore=FirebaseFirestore.getInstance();
+        firebaseAuth=FirebaseAuth.getInstance();
+        listaHabitos=new ArrayList<>();
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -58,9 +85,38 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
         });
         btnAgregarHabito.setTooltipText("Crear un nuevo hábito");
 
+        cargarHabitosUsuario();
+
         return root;
     }
 
+    // ********************** CARGAR HÁBITOS DESDE LA BDD **************************
+    private void cargarHabitosUsuario() {
+        FirebaseUser usuario=firebaseAuth.getCurrentUser();
+        if(usuario == null) {
+            return;
+        }
+
+        firestore.collection("usuarios")
+                .document(firebaseAuth.getCurrentUser().getUid())
+                .collection("habitos")
+                .get()
+                .addOnSuccessListener(query -> {
+                    listaHabitos.clear();
+                    for(DocumentSnapshot doc : query.getDocuments()) {
+                        Habit habito=doc.toObject(Habit.class);
+                        if(habito != null) {
+                            listaHabitos.add(habito);
+                        }
+                        habitAdapter.notifyDataSetChanged();
+                    }
+                })
+                .addOnFailureListener(e -> Log.e("Cargar hábitos", "Error al cargar los hábitos del usuario" + usuario.getDisplayName()));
+    }
+    // ***************************************************************************
+
+
+    // ******************* ELIMINAR Y AGREGAR HÁBITOS ****************************
     private void agregarHabitoALista(Habit habitoNuevo) {
         listaHabitos.add(habitoNuevo);
         habitAdapter.notifyItemInserted(listaHabitos.size() - 1);
@@ -74,6 +130,7 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
             habitAdapter.notifyItemRangeChanged(position, listaHabitos.size() - position);
         }
     }
+    // ***************************************************************************
 
     @Override
     public void onDestroyView() {

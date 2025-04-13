@@ -27,7 +27,7 @@ public class HabitOptionsBottomSheet extends BottomSheetDialogFragment {
     private HabitOptionsListener listener;
     private BDD bd;
 
-    // INTERFAZ DEL BOTTOM SHEET
+    // CONFIGURAR INTERFAZ DEL BOTTOM SHEET
     public static HabitOptionsBottomSheet newInstance(String id, int position, HabitOptionsListener listener) {
         HabitOptionsBottomSheet fragment = new HabitOptionsBottomSheet();
         Bundle args = new Bundle();
@@ -46,6 +46,7 @@ public class HabitOptionsBottomSheet extends BottomSheetDialogFragment {
         btnEliminarHabito = view.findViewById(R.id.btnEliminarHabito);
         btnIrAEditarHabito = view.findViewById(R.id.btnIrAEditarHabito);
         btnCloseSheet = view.findViewById(R.id.btnCloseSheet);
+
 
         bd = new BDD();
         Bundle bundle = getArguments();
@@ -71,6 +72,7 @@ public class HabitOptionsBottomSheet extends BottomSheetDialogFragment {
         return view;
     }
 
+    // INTERFAZ DE BORRAR HÁBITOS DEL RECYCLERVIEW
     public interface HabitOptionsListener {
         void interfazBorrarHabitoRecycler(int position);
     }

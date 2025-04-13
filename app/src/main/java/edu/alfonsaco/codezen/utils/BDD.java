@@ -6,13 +6,17 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import edu.alfonsaco.codezen.ui.habits.Habit;
 
 public class BDD {
     private FirebaseAuth firebaseAuth;
@@ -104,10 +108,5 @@ public class BDD {
                 .update("cont_habitos", FieldValue.increment(-1))
                 .addOnSuccessListener(aVoid -> Log.d("Cont hábitos", "Se redujo el contador de hábitos"))
                 .addOnFailureListener(e -> Log.e("Cont hábito", "No se pudo reducir el contador de hábitos"));
-    }
-
-    // Obtener todos los hábitos por usuario
-    public CollectionReference getHabitosCollection() {
-        return db.collection("habitos");
     }
 }

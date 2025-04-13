@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="165dp"
         android:background="#FFF"
-        android:elevation="5dp"
+        android:elevation="3dp"
         android:orientation="vertical"
         android:padding="15dp"
         app:layout_constraintEnd_toEndOf="parent"
