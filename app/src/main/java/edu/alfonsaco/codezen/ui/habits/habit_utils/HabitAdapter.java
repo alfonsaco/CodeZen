@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import edu.alfonsaco.codezen.R;
@@ -52,17 +54,6 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
             // Recycler de dias de cada hábito
             recyclerDiasHabito=itemView.findViewById(R.id.recyclerDiasHabito);
             recyclerDiasHabito.setLayoutManager(new GridLayoutManager(itemView.getContext(), 7, GridLayoutManager.HORIZONTAL, false));
-            int spacingPx = (int) (itemView.getContext().getResources().getDisplayMetrics().density * 2);
-            recyclerDiasHabito.addItemDecoration(new RecyclerView.ItemDecoration() {
-                @Override
-                public void getItemOffsets(@NonNull android.graphics.Rect outRect, @NonNull View view,
-                                           @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                    outRect.left = spacingPx;
-                    outRect.right = spacingPx;
-                    outRect.top = 0;
-                    outRect.bottom = 0;
-                }
-            });
 
 
             itemView.setOnClickListener(v -> {
@@ -103,7 +94,10 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
 
         //List<Day> diasHabitos=habito.getDias();
         List<Day> diasHabitos=new ArrayList<>();
-        for(int i=0; i<100; i++) {
+
+        // Rellenamos por defecto con una cantidad de días para que el Recycler no quede vacío + días de la semana actual
+        int diaSemana=obtenerDiaSemana();
+        for(int i=0; i< (196 + diaSemana); i++) {
             Day dia=new Day();
             diasHabitos.add(dia);
         }
@@ -115,5 +109,41 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
     @Override
     public int getItemCount() {
         return listaHabitos.size();
+    }
+
+    // Método para obtener el día de la semana, para saber cuantos Divs agregar
+    private int obtenerDiaSemana() {
+        Date dia=new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dia);
+
+        int diaSemana=calendar.get(Calendar.DAY_OF_WEEK);
+        int diaHoy=0;
+
+        switch (diaSemana) {
+            case 1:
+                diaHoy=7;
+                break;
+            case 2:
+                diaHoy=1;
+                break;
+            case 3:
+                diaHoy=2;
+                break;
+            case 4:
+                diaHoy=3;
+                break;
+            case 5:
+                diaHoy=4;
+                break;
+            case 6:
+                diaHoy=5;
+                break;
+            case 7:
+                diaHoy=6;
+                break;
+        }
+
+        return diaHoy;
     }
 }

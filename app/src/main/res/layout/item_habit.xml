@@ -59,9 +59,11 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerDiasHabito"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
             android:scrollbars="horizontal"
             android:scrollbarSize="0dp"
+            android:background="#EDEDED"
             android:layout_weight="1" />
 
     </LinearLayout>
