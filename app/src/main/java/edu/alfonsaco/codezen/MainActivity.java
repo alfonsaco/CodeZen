@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
 
         // Icono de ajustes a la izquierda
+        /*
         toolbar.setNavigationIcon(R.drawable.settings_30dp);
         toolbar.setNavigationContentDescription("Ajustes");
 
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent=new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
         });
+        */
         // (Para cambiar el tamaño del icono, ir a settings.xml)
         // -----------------------------------------------------------------------------------
 
@@ -95,6 +97,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.btnNotificaciones) {
 
+        } else if(item.getItemId() == R.id.btnAjustes) {
+            Intent intent=new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

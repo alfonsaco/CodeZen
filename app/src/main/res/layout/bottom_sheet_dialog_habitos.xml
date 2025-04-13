@@ -18,7 +18,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             app:tint="#5D5D5D"
-            android:layout_gravity="right"
+            android:layout_gravity="start"
             app:srcCompat="@drawable/close" />
 
         <LinearLayout

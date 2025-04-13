@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -45,6 +47,8 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
     // Componentes
     private FloatingActionButton btnAgregarHabito;
     private RecyclerView recyclerHabitos;
+    private ProgressBar progressBarHabitos;
+    private TextView txtCreaTuPrimerHabito;
 
     private final ActivityResultLauncher<Intent> launcherHabitos = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -92,6 +96,14 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
 
     // ********************** CARGAR HÁBITOS DESDE LA BDD **************************
     private void cargarHabitosUsuario() {
+        progressBarHabitos=binding.progressBarHabitos;
+        txtCreaTuPrimerHabito=binding.txtCreaTuPrimerHabito;
+
+        // Placeholder hasta que carguen los hábitos
+        progressBarHabitos.setVisibility(View.VISIBLE);
+        txtCreaTuPrimerHabito.setVisibility(View.GONE);
+        recyclerHabitos.setVisibility(View.GONE);
+
         FirebaseUser usuario=firebaseAuth.getCurrentUser();
         if(usuario == null) {
             return;
@@ -110,6 +122,15 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
                         }
                         habitAdapter.notifyDataSetChanged();
                     }
+
+                    // Quitamos el placeholder
+                    progressBarHabitos.setVisibility(View.GONE);
+                    recyclerHabitos.setVisibility(View.VISIBLE);
+
+                    // Si no hay hábitos, saldrá el texto de crear tu primer hábito
+                    if(listaHabitos.isEmpty()) {
+                        txtCreaTuPrimerHabito.setVisibility(View.VISIBLE);
+                    }
                 })
                 .addOnFailureListener(e -> Log.e("Cargar hábitos", "Error al cargar los hábitos del usuario" + usuario.getDisplayName()));
     }
@@ -120,6 +141,7 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
     private void agregarHabitoALista(Habit habitoNuevo) {
         listaHabitos.add(habitoNuevo);
         habitAdapter.notifyItemInserted(listaHabitos.size() - 1);
+        txtCreaTuPrimerHabito.setVisibility(View.GONE);
     }
 
     @Override
@@ -128,6 +150,7 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
             listaHabitos.remove(position);
             habitAdapter.notifyItemRemoved(position);
             habitAdapter.notifyItemRangeChanged(position, listaHabitos.size() - position);
+            txtCreaTuPrimerHabito.setVisibility(View.VISIBLE);
         }
     }
     // ***************************************************************************

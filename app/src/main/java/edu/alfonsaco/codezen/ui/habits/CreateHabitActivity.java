@@ -130,7 +130,7 @@ public class CreateHabitActivity extends AppCompatActivity {
 
 
         // Agregar hábito a la Base de Datos
-        String id="ID_habit_"+nombreHabito;
+        String id="ID_habit_"+nombreHabito.replace(" ", "_");
         bd.guardarHabitoEnUsuario(id, nombreHabito, descripcion, colorSeleccionado);
 
         Intent resultIntent = new Intent();
