@@ -34,11 +34,13 @@ public class HabitOptionsBottomSheet extends BottomSheetDialogFragment {
     // CONFIGURAR INTERFAZ DEL BOTTOM SHEET
     public static HabitOptionsBottomSheet newInstance(String id, int position, HabitOptionsListener listener) {
         HabitOptionsBottomSheet fragment = new HabitOptionsBottomSheet();
+
         Bundle args = new Bundle();
         args.putString("id", id);
         args.putInt("posicion", position);
         fragment.setArguments(args);
         fragment.listener = listener;
+
         return fragment;
     }
 
@@ -53,14 +55,30 @@ public class HabitOptionsBottomSheet extends BottomSheetDialogFragment {
 
 
         bd = new BDD();
+
+        // OBTENEMOS LOS DATOS DE
         Bundle bundle = getArguments();
         String idHabito = bundle.getString("id");
         int posicion = bundle.getInt("posicion");
 
         btnIrAEditarHabito.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), EditHabitActivity.class);
-            startActivity(intent);
-            dismiss();
+            bd.obtenerHabito(idHabito, new BDD.HabitCallback() {
+                @Override
+                public void onHabitLoaded(Habit habit) {
+                    Intent intent = new Intent(getContext(), EditHabitActivity.class);
+                    intent.putExtra("nombre", habit.getNombre());
+                    intent.putExtra("descripcion", habit.getDescripcion());
+                    intent.putExtra("color", habit.getColor());
+                    intent.putExtra("recordatorio", habit.getRecordatorio());
+                    startActivity(intent);
+                    dismiss();
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    e.printStackTrace();
+                }
+            });
         });
 
         btnEliminarHabito.setOnClickListener(v -> {

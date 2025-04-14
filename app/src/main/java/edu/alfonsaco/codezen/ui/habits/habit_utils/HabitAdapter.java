@@ -57,16 +57,6 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
             recyclerDiasHabito=itemView.findViewById(R.id.recyclerDiasHabito);
             recyclerDiasHabito.setLayoutManager(new GridLayoutManager(itemView.getContext(), 7, GridLayoutManager.HORIZONTAL, false));
 
-            // Configuración del Click, para que al hacer Click en el Recycler, sí permita ir a Show (Antes no dejaba, porque
-            // al estar encima del View de hábito, pillaba su evento antes)
-            recyclerDiasHabito.setOnTouchListener((v, event) -> {
-                // Si es un toque (tap), se lo pasamos al itemView
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    v.performClick(); // Para accesibilidad
-                    itemView.performClick(); // Esto dispara el onClick del ítem
-                }
-                return false; // Permitimos que siga recibiendo scroll
-            });
 
             // VAMOS A SHOWACTIVITY
             itemView.setOnClickListener(v -> {

@@ -5,12 +5,18 @@ import android.util.Log;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.security.auth.callback.Callback;
+
+import edu.alfonsaco.codezen.ui.habits.habit_utils.Habit;
 
 public class BDD {
     private FirebaseAuth firebaseAuth;
@@ -103,5 +109,41 @@ public class BDD {
                 .update("cont_habitos", FieldValue.increment(-1))
                 .addOnSuccessListener(aVoid -> Log.d("Cont hábitos", "Se redujo el contador de hábitos"))
                 .addOnFailureListener(e -> Log.e("Cont hábito", "No se pudo reducir el contador de hábitos"));
+    }
+    // **********************************************************************************************
+
+
+    // ****************************** OBTENER UN DATO EN ESPECÍFICO ********************************
+    public interface HabitCallback {
+        void onHabitLoaded(Habit habit);
+        void onError(Exception e);
+    }
+
+    public void obtenerHabito(String idHabito, HabitCallback callback) {
+        FirebaseUser usuario=FirebaseAuth.getInstance().getCurrentUser();
+        // Verificar que haya un usuario autentificado
+        if(usuario == null) {
+            Log.e("Usuario no autentificado", "El usuario no está autentificado. No se puede agregar el hábito a la BDD");
+            callback.onError(new Exception("Usuario no autenticado"));
+            return;
+        }
+
+        db.collection("usuarios")
+                .document(usuario.getUid())
+                .collection("habitos")
+                .document(idHabito)
+                .get()
+                .addOnSuccessListener(snapshot -> {
+                    if (snapshot.exists()) {
+                        Habit habit = snapshot.toObject(Habit.class);
+                        callback.onHabitLoaded(habit);
+                    } else {
+                        callback.onError(new Exception("Hábito no encontrado"));
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("ERROR", "ERROR AL OBTENER EL HÁBITO");
+                    callback.onError(e);
+                });
     }
 }
