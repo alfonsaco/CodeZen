@@ -1,10 +1,13 @@
 package edu.alfonsaco.codezen.ui.habits.habit_utils;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -61,11 +64,36 @@ public class HabitOptionsBottomSheet extends BottomSheetDialogFragment {
         });
 
         btnEliminarHabito.setOnClickListener(v -> {
-            bd.borrarHabito(idHabito);
-            if (listener != null) {
-                listener.interfazBorrarHabitoRecycler(posicion);
-            }
             dismiss();
+
+            // Dialog personalizado
+            AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
+            View dialogView=LayoutInflater.from(getContext()).inflate(R.layout.dialog_borrar, null);
+            builder.setView(dialogView);
+
+
+            AlertDialog alert=builder.create();
+            alert.show();
+
+            Button btnBorrar=alert.findViewById(R.id.btnBorrar);
+            Button btnCancelar=alert.findViewById(R.id.btnCancelar);
+
+            btnCancelar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alert.dismiss();
+                }
+            });
+            btnBorrar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    bd.borrarHabito(idHabito);
+                    if (listener != null) {
+                        listener.interfazBorrarHabitoRecycler(posicion);
+                    }
+                    alert.dismiss();
+                }
+            });
         });
 
         btnCloseSheet.setOnClickListener(v -> dismiss());

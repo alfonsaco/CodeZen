@@ -68,24 +68,6 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
             }
     );
 
-    // LAUNCHER PARA BORRAR HÁBITO DEL RECYCLER
-    private final ActivityResultLauncher<Intent> launcherBorrarHabito = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                    Intent data=result.getData();
-
-                    if(data.hasExtra("accion") && data.getStringExtra("accion").equals("borrar")) {
-                        int posicion=result.getData().getIntExtra("posicion", -1);
-                        Toast.makeText(getContext(), posicion, Toast.LENGTH_SHORT).show();
-                        if(posicion != -1) {
-                            interfazBorrarHabitoRecycler(posicion);
-                        }
-                    }
-                }
-            }
-    );
-
     // AGREGAR TODOS LOS HÁBITOS DEL USUARIO DE LA BDD AL INICIAR LA APP
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
