@@ -53,21 +53,6 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
     private ProgressBar progressBarHabitos;
     private TextView txtCreaTuPrimerHabito;
 
-    // LAUNCHER PARA CREAR NUEVO HÁBITO EN EL RECYCLER
-    private final ActivityResultLauncher<Intent> launcherHabitos = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                    Intent data=result.getData();
-                    if(data.hasExtra("habito")) {
-                        Habit nuevoHabito = (Habit) data.getSerializableExtra("habito");
-                        agregarHabitoALista(nuevoHabito);
-
-                    }
-                }
-            }
-    );
-
     // AGREGAR TODOS LOS HÁBITOS DEL USUARIO DE LA BDD AL INICIAR LA APP
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,13 +78,50 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
         btnAgregarHabito = binding.btnAgregarHabito;
         btnAgregarHabito.setOnClickListener(v -> {
             Intent intent = new Intent(requireActivity(), CreateHabitActivity.class);
-            launcherHabitos.launch(intent);
+            startActivity(intent);
         });
         btnAgregarHabito.setTooltipText("Crear un nuevo hábito");
 
         cargarHabitosUsuario();
+        // Método para recargar la lista d ehábitos cada vez que se modifique algo
+        setupFirestoreListener();
 
         return root;
+    }
+
+    // RECARGAR LISTA CADA VEZ QUE SE MODIFIQUE ALGO
+    private void setupFirestoreListener() {
+        FirebaseUser usuario = firebaseAuth.getCurrentUser();
+        if (usuario == null) {
+            return;
+        }
+
+        // Acutaliza en tiempo real cada vez que se hace una modificación en hábitos
+        firestore.collection("usuarios")
+                .document(usuario.getUid())
+                .collection("habitos")
+                .addSnapshotListener((value, error) -> {
+                    if (error != null) {
+                        Log.e("HabitsFragment", "Error escuchando cambios", error);
+                        return;
+                    }
+
+                    if (value != null) {
+                        listaHabitos.clear();
+                        for (DocumentSnapshot doc : value.getDocuments()) {
+                            Habit habito = doc.toObject(Habit.class);
+                            if (habito != null) {
+                                listaHabitos.add(habito);
+                            }
+                        }
+                        habitAdapter.notifyDataSetChanged();
+
+                        // Actualizar visibilidad
+                        progressBarHabitos.setVisibility(View.GONE);
+                        recyclerHabitos.setVisibility(listaHabitos.isEmpty() ? View.GONE : View.VISIBLE);
+                        txtCreaTuPrimerHabito.setVisibility(listaHabitos.isEmpty() ? View.VISIBLE : View.GONE);
+                    }
+                });
     }
 
     // ********************** CARGAR HÁBITOS DESDE LA BDD **************************
@@ -172,4 +194,6 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
         super.onDestroyView();
         binding = null;
     }
+
+
 }
