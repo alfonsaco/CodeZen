@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Habit implements Serializable {
+    private String id;
     private String nombre;
     private String descripcion;
     private String color;
@@ -11,7 +12,8 @@ public class Habit implements Serializable {
     private ArrayList<Day> dias;
 
     // CONSTRUCTOR
-    public Habit(String nombre, String descripcion, String color, String recordatorio) {
+    public Habit(String id, String nombre, String descripcion, String color, String recordatorio) {
+        this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.color = color;
@@ -23,6 +25,8 @@ public class Habit implements Serializable {
     }
 
     //  GETTERS Y SETTERS
+    public String getId() {return id;}
+    public void setId(String id) {this.id = id;}
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }

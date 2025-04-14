@@ -153,11 +153,11 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
     }
 
     @Override
-    public void interfazBorrarHabitoRecycler(int position) {
-        if (position >= 0 && position < listaHabitos.size()) {
-            listaHabitos.remove(position);
-            habitAdapter.notifyItemRemoved(position);
-            habitAdapter.notifyItemRangeChanged(position, listaHabitos.size());
+    public void interfazBorrarHabitoRecycler(int posicion) {
+        if (posicion >= 0 && posicion < listaHabitos.size()) {
+            listaHabitos.remove(posicion);
+            habitAdapter.notifyItemRemoved(posicion);
+            habitAdapter.notifyItemRangeChanged(posicion, listaHabitos.size()-posicion);
 
 
             if(listaHabitos.isEmpty()) {

@@ -95,7 +95,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         holder.txtNombreHabito.setText(habito.getNombre().toUpperCase());
         holder.txtDescripcionHabito.setText(habito.getDescripcion());
         holder.btnHabitoCompletado.setBackgroundColor(Color.parseColor(habito.getColor()));
-        holder.idHabito = "ID_habit_" + habito.getNombre().replace(" ", "_");
+        holder.idHabito = habito.getId();
 
         // Recycler de hábitos
 

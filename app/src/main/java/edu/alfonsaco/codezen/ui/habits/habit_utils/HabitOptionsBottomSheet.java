@@ -66,6 +66,7 @@ public class HabitOptionsBottomSheet extends BottomSheetDialogFragment {
                 @Override
                 public void onHabitLoaded(Habit habit) {
                     Intent intent = new Intent(getContext(), EditHabitActivity.class);
+                    intent.putExtra("id", habit.getId());
                     intent.putExtra("nombre", habit.getNombre());
                     intent.putExtra("descripcion", habit.getDescripcion());
                     intent.putExtra("color", habit.getColor());

@@ -19,9 +19,9 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
+import com.google.firebase.firestore.DocumentReference;
 
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import edu.alfonsaco.codezen.R;
 import edu.alfonsaco.codezen.ui.habits.habit_utils.Habit;
@@ -56,7 +56,7 @@ public class CreateHabitActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.habit_create_activity);
 
-        btnAgregarNuevoHabito=findViewById(R.id.btnAgregarNuevoHabito);
+        btnAgregarNuevoHabito=findViewById(R.id.btnEditarHabito);
         etxtNombreHabito=findViewById(R.id.etxtNombreHabito);
         etxtDescripcion=findViewById(R.id.etxtDescripcion);
         switchRecordatorios=findViewById(R.id.switchRecordatorios);
@@ -192,13 +192,18 @@ public class CreateHabitActivity extends AppCompatActivity {
             return;
         }
 
-        // Creamos el nuevo hábito que vamos a añadir
-        Habit habito=new Habit(nombreHabito, descripcion, colorSeleccionado, nuevaHoraRecordatorio);
+        // CREACIÓN AUTOMÁTOCA DEL ID EN FIREBASE
+        DocumentReference nuevoHabitoRef = bd.getDb()
+                .collection("usuarios")
+                .document(bd.getUsuarioID())
+                .collection("habitos")
+                .document();
 
+        // Obtener el ID generado
+        String idHabito=nuevoHabitoRef.getId();
 
-        // Agregar hábito a la Base de Datos
-        String id="ID_habit_"+nombreHabito.replace(" ", "_");
-        bd.guardarHabitoEnUsuario(id, nombreHabito, descripcion, colorSeleccionado, nuevaHoraRecordatorio);
+        Habit habito=new Habit(idHabito, nombreHabito, descripcion, colorSeleccionado, nuevaHoraRecordatorio);
+        bd.guardarHabitoEnUsuario(habito);
 
         Intent resultIntent = new Intent();
         resultIntent.putExtra("habito", habito);
