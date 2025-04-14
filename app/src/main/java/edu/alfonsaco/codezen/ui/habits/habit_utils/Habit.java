@@ -7,13 +7,15 @@ public class Habit implements Serializable {
     private String nombre;
     private String descripcion;
     private String color;
+    private String recordatorio;
     private ArrayList<Day> dias;
 
     // CONSTRUCTOR
-    public Habit(String nombre, String descripcion, String color) {
+    public Habit(String nombre, String descripcion, String color, String recordatorio) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.color = color;
+        this.recordatorio = recordatorio;
         this.dias = new ArrayList<>();
     }
     public Habit() {
@@ -41,4 +43,6 @@ public class Habit implements Serializable {
     }
     public ArrayList<Day> getDias() {return dias;}
     public void setDias(ArrayList<Day> dias) {this.dias = dias;}
+    public String getRecordatorio() {return recordatorio;}
+    public void setRecordatorio(String recordatorio) {this.recordatorio = recordatorio;}
 }

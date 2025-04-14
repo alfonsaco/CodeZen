@@ -46,7 +46,7 @@ public class BDD {
 
 
     // ********************* GUARDAR HÁBITO EN FIRESTORE **********************
-    public void guardarHabitoEnUsuario(String idHabito, String nombreHabito, String descripcionHabito, String colorHabito) {
+    public void guardarHabitoEnUsuario(String idHabito, String nombreHabito, String descripcionHabito, String colorHabito, String recordatorio) {
         Map<String, Object> habito=new HashMap<>();
 
         FirebaseUser usuario=FirebaseAuth.getInstance().getCurrentUser();
@@ -60,6 +60,7 @@ public class BDD {
         habito.put("nombre", nombreHabito);
         habito.put("descripcion", descripcionHabito);
         habito.put("color", colorHabito);
+        habito.put("recordatorio", recordatorio);
 
         // Añadir el hábito
         db.collection("usuarios")

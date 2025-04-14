@@ -43,7 +43,7 @@ public class CreateHabitActivity extends AppCompatActivity {
     private boolean haSeleccionadoColor=false;
 
     // Recordatorio
-    private String nuevaHoraRecordatorio;
+    private String nuevaHoraRecordatorio="";
     private int horas;
     private int minutos;
 
@@ -110,9 +110,12 @@ public class CreateHabitActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(switchRecordatorios.isChecked()) {
                     btnGestionarRecordatorio.setEnabled(true);
+                    nuevaHoraRecordatorio=btnGestionarRecordatorio.getText().toString();
                 } else {
                     btnGestionarRecordatorio.setEnabled(false);
+                    nuevaHoraRecordatorio="";
                 }
+                Toast.makeText(CreateHabitActivity.this, nuevaHoraRecordatorio, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -190,12 +193,12 @@ public class CreateHabitActivity extends AppCompatActivity {
         }
 
         // Creamos el nuevo hábito que vamos a añadir
-        Habit habito=new Habit(nombreHabito, descripcion, colorSeleccionado);
+        Habit habito=new Habit(nombreHabito, descripcion, colorSeleccionado, nuevaHoraRecordatorio);
 
 
         // Agregar hábito a la Base de Datos
         String id="ID_habit_"+nombreHabito.replace(" ", "_");
-        bd.guardarHabitoEnUsuario(id, nombreHabito, descripcion, colorSeleccionado);
+        bd.guardarHabitoEnUsuario(id, nombreHabito, descripcion, colorSeleccionado, nuevaHoraRecordatorio);
 
         Intent resultIntent = new Intent();
         resultIntent.putExtra("habito", habito);

@@ -152,7 +152,10 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
             listaHabitos.remove(position);
             habitAdapter.notifyItemRemoved(position);
             habitAdapter.notifyItemRangeChanged(position, listaHabitos.size() - position);
-            txtCreaTuPrimerHabito.setVisibility(View.VISIBLE);
+
+
+            if(listaHabitos.isEmpty())
+                txtCreaTuPrimerHabito.setVisibility(View.VISIBLE);
         }
     }
     // ***************************************************************************
