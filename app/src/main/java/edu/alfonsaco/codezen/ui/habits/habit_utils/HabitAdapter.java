@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -56,11 +57,26 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
             recyclerDiasHabito=itemView.findViewById(R.id.recyclerDiasHabito);
             recyclerDiasHabito.setLayoutManager(new GridLayoutManager(itemView.getContext(), 7, GridLayoutManager.HORIZONTAL, false));
 
+            // Configuración del Click, para que al hacer Click en el Recycler, sí permita ir a Show (Antes no dejaba, porque
+            // al estar encima del View de hábito, pillaba su evento antes)
+            recyclerDiasHabito.setOnTouchListener((v, event) -> {
+                // Si es un toque (tap), se lo pasamos al itemView
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    v.performClick(); // Para accesibilidad
+                    itemView.performClick(); // Esto dispara el onClick del ítem
+                }
+                return false; // Permitimos que siga recibiendo scroll
+            });
+
             // VAMOS A SHOWACTIVITY
             itemView.setOnClickListener(v -> {
+                String nombre=txtNombreHabito.getText().toString();
+                String descripcion=txtDescripcionHabito.getText().toString();
+
                 Intent intent = new Intent(itemView.getContext(), ShowHabitActivity.class);
                 intent.putExtra("id", idHabito);
-                intent.putExtra("posicion", getAdapterPosition());
+                intent.putExtra("nombre", nombre);
+                intent.putExtra("descripcion", descripcion);
                 itemView.getContext().startActivity(intent);
             });
 

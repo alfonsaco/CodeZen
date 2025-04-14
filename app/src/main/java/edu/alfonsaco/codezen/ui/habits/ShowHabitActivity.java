@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -22,8 +23,9 @@ import edu.alfonsaco.codezen.utils.BDD;
 
 public class ShowHabitActivity extends AppCompatActivity {
 
-    private ImageView btnIrEdit;
     private ImageView btnVolverInicio;
+    private TextView txtNombreShow;
+    private TextView txtDescripcionShow;
 
     private BDD bd;
 
@@ -41,6 +43,18 @@ public class ShowHabitActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        // ********** OBTENER DATOS DEL HÁBITO CON EL INTENT **********
+        txtNombreShow=findViewById(R.id.txtNombreShow);
+        txtDescripcionShow=findViewById(R.id.txtDescripcionShow);
+
+        Intent intent=getIntent();
+        String nombre=intent.getStringExtra("nombre");
+        String descripcion=intent.getStringExtra("descripcion");
+
+        txtNombreShow.setText(nombre);
+        txtDescripcionShow.setText(descripcion);
+        // ************************************************************
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
