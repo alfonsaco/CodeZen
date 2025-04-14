@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -52,12 +53,35 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
     private ProgressBar progressBarHabitos;
     private TextView txtCreaTuPrimerHabito;
 
+    // LAUNCHER PARA CREAR NUEVO HÁBITO EN EL RECYCLER
     private final ActivityResultLauncher<Intent> launcherHabitos = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                    Habit nuevoHabito = (Habit) result.getData().getSerializableExtra("habito");
-                    agregarHabitoALista(nuevoHabito);
+                    Intent data=result.getData();
+                    if(data.hasExtra("habito")) {
+                        Habit nuevoHabito = (Habit) data.getSerializableExtra("habito");
+                        agregarHabitoALista(nuevoHabito);
+
+                    }
+                }
+            }
+    );
+
+    // LAUNCHER PARA BORRAR HÁBITO DEL RECYCLER
+    private final ActivityResultLauncher<Intent> launcherBorrarHabito = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    Intent data=result.getData();
+
+                    if(data.hasExtra("accion") && data.getStringExtra("accion").equals("borrar")) {
+                        int posicion=result.getData().getIntExtra("posicion", -1);
+                        Toast.makeText(getContext(), posicion, Toast.LENGTH_SHORT).show();
+                        if(posicion != -1) {
+                            interfazBorrarHabitoRecycler(posicion);
+                        }
+                    }
                 }
             }
     );
@@ -151,11 +175,12 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
         if (position >= 0 && position < listaHabitos.size()) {
             listaHabitos.remove(position);
             habitAdapter.notifyItemRemoved(position);
-            habitAdapter.notifyItemRangeChanged(position, listaHabitos.size() - position);
+            habitAdapter.notifyItemRangeChanged(position, listaHabitos.size());
 
 
-            if(listaHabitos.isEmpty())
+            if(listaHabitos.isEmpty()) {
                 txtCreaTuPrimerHabito.setVisibility(View.VISIBLE);
+            }
         }
     }
     // ***************************************************************************

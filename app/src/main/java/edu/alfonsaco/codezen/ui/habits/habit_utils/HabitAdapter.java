@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -55,18 +56,18 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
             recyclerDiasHabito=itemView.findViewById(R.id.recyclerDiasHabito);
             recyclerDiasHabito.setLayoutManager(new GridLayoutManager(itemView.getContext(), 7, GridLayoutManager.HORIZONTAL, false));
 
-
+            // VAMOS A SHOWACTIVITY
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(itemView.getContext(), ShowHabitActivity.class);
+                intent.putExtra("id", idHabito);
+                intent.putExtra("posicion", getAdapterPosition());
                 itemView.getContext().startActivity(intent);
             });
 
+            // ABRIMOS OPCIONES DE ELIMINAR Y EDITAR HÁBITO
             itemView.setOnLongClickListener(v -> {
-                HabitOptionsBottomSheet sheet = HabitOptionsBottomSheet.newInstance(
-                        idHabito,
-                        getAdapterPosition(),
-                        listener
-                );
+                HabitOptionsBottomSheet sheet = HabitOptionsBottomSheet.newInstance(idHabito, getAdapterPosition(), listener);
+
                 if (itemView.getContext() instanceof AppCompatActivity) {
                     sheet.show(((AppCompatActivity) itemView.getContext()).getSupportFragmentManager(), "HabitBottomSheet");
                 }
