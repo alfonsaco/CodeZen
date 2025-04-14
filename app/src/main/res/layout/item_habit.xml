@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal|center_vertical"
                 android:layout_weight="1"
-                app:icon="@drawable/ic_notifications_black_24dp" />
+                app:icon="@drawable/tick" />
 
         </LinearLayout>
 
