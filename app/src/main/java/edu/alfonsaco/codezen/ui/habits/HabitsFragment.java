@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -90,13 +91,14 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
     }
 
     // RECARGAR LISTA CADA VEZ QUE SE MODIFIQUE ALGO
+    // Este método no sirve en el momento en el que se borrar algo de la base de datos, porque sino la animación
+    // de eliminación queda mal
     private void setupFirestoreListener() {
         FirebaseUser usuario = firebaseAuth.getCurrentUser();
         if (usuario == null) {
             return;
         }
 
-        // Acutaliza en tiempo real cada vez que se hace una modificación en hábitos
         firestore.collection("usuarios")
                 .document(usuario.getUid())
                 .collection("habitos")
@@ -107,6 +109,22 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
                     }
 
                     if (value != null) {
+                        // Verificar si hay cambios de eliminación
+                        boolean tipoBorrar = false;
+
+                        for (DocumentChange dc : value.getDocumentChanges()) {
+                            if (dc.getType() == DocumentChange.Type.REMOVED) {
+                                tipoBorrar = true;
+                                break;
+                            }
+                        }
+
+                        // Si hay eliminaciones, no actualizamos la lista
+                        if (tipoBorrar) {
+                            return;
+                        }
+
+                        // Procesar otros tipos de cambios (añadidos, modificados)
                         listaHabitos.clear();
                         for (DocumentSnapshot doc : value.getDocuments()) {
                             Habit habito = doc.toObject(Habit.class);
