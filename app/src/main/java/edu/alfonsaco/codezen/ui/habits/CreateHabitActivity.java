@@ -25,7 +25,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import edu.alfonsaco.codezen.R;
 import edu.alfonsaco.codezen.ui.habits.habit_utils.Day;
@@ -220,7 +219,7 @@ public class CreateHabitActivity extends AppCompatActivity {
             Day dia=new Day();
             dia.setId(hoy.minusDays(i).toString());
             dia.setCompletado(false);
-            dia.setColorCompletado(colorSeleccionado);
+            dia.setColor(colorSeleccionado);
 
             diasHabitos.add(dia);
         }

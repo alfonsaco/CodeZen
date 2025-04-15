@@ -6,13 +6,13 @@ public class Day implements Serializable {
     private boolean completado;
     // EL ID SERÁ LA FECHA DEL DÍA
     private String id;
-    private String colorCompletado;
+    private String color;
 
     // CONSTRUCTORES
     public Day(boolean completado, String fecha, String colorCompletado) {
         this.completado = completado;
         this.id = fecha;
-        this.colorCompletado = colorCompletado;
+        this.color = colorCompletado;
     }
     public Day() {
 
@@ -31,6 +31,6 @@ public class Day implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
-    public String getColorCompletado() {return colorCompletado;}
-    public void setColorCompletado(String colorCompletado) {this.colorCompletado = colorCompletado;}
+    public String getColor() {return color;}
+    public void setColor(String color) {this.color = color;}
 }

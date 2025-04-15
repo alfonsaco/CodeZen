@@ -41,14 +41,24 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull DayAdapter.DayViewHolder holder, int position) {
         Day dia=listaDias.get(position);
-        String color=dia.getColorCompletado();
+        String color=dia.getColor();
+
         System.out.println(color);
         System.out.println(dia.getId());
 
         if(dia.isCompletado()) {
-            holder.diaView.setBackgroundColor(new Color().parseColor("#c42318"));
+            holder.diaView.setBackgroundColor(Color.parseColor(color));
+            holder.diaView.setAlpha(1);
         } else {
-            holder.diaView.setBackgroundColor(new Color().parseColor("#000000"));
+            holder.diaView.setBackgroundColor(Color.parseColor(color));
+            holder.diaView.setAlpha(0.3f);
+
+            // borrar esto, solo es para pruebas
+            if(position % 21 == 0 || position % 9 == 0) {
+                // borrar esto, solo es para pruebas
+                holder.diaView.setBackgroundColor(Color.parseColor(color));
+                holder.diaView.setAlpha(1);
+            }
         }
     }
 

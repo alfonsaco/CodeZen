@@ -113,6 +113,7 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
                 });
     }
 
+    // ********************* ACTUALIZAR EN TIEMPO REAL EL RECYCLER, VERIFICANDO LA BDD ***************************
     private void setupFirestoreListener() {
         FirebaseUser usuario = firebaseAuth.getCurrentUser();
         if (usuario == null) return;
@@ -126,6 +127,7 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
                         return;
                     }
 
+                    // Evitamos que se actualice en el caso de borrar, para evitar problemas con la animación de eliminación
                     if (value != null) {
                         for (DocumentChange dc : value.getDocumentChanges()) {
                             switch (dc.getType()) {
@@ -170,7 +172,9 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
                     });
         }
     }
+    // **************************************************************************************************
 
+    //
     private void actualizarHabitoExistente(DocumentSnapshot doc) {
         Habit habito = doc.toObject(Habit.class);
         if (habito != null) {
