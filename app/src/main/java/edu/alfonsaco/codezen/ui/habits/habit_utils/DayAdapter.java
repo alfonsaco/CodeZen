@@ -1,5 +1,6 @@
 package edu.alfonsaco.codezen.ui.habits.habit_utils;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +23,11 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
     }
 
     public static class DayViewHolder extends RecyclerView.ViewHolder {
+        View diaView;
 
         public DayViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            diaView=itemView.findViewById(R.id.dayIndicator);
         }
     }
 
@@ -38,11 +40,27 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull DayAdapter.DayViewHolder holder, int position) {
+        Day dia=listaDias.get(position);
+        String color=dia.getColorCompletado();
+        System.out.println(color);
+        System.out.println(dia.getId());
 
+        if(dia.isCompletado()) {
+            holder.diaView.setBackgroundColor(new Color().parseColor("#c42318"));
+        } else {
+            holder.diaView.setBackgroundColor(new Color().parseColor("#000000"));
+        }
     }
 
     @Override
     public int getItemCount() {
         return listaDias.size();
     }
+
+    // Método para actualizar los datos
+    public void actualizarRecycler(List<Day> newDays) {
+        this.listaDias = newDays;
+        notifyDataSetChanged();
+    }
+
 }

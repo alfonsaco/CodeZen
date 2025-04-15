@@ -5,8 +5,6 @@ import android.util.Log;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
@@ -15,8 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.security.auth.callback.Callback;
-
+import edu.alfonsaco.codezen.ui.habits.habit_utils.Day;
 import edu.alfonsaco.codezen.ui.habits.habit_utils.Habit;
 
 public class BDD {
@@ -59,7 +56,7 @@ public class BDD {
     // ****************************************************************************
 
 
-    // ********************* GUARDAR HÁBITO EN FIRESTORE **********************
+    // *********************** GUARDAR HÁBITO EN FIRESTORE ************************
     public void guardarHabitoEnUsuario(Habit habito) {
         Map<String, Object> habitoBD=new HashMap<>();
 
@@ -85,12 +82,52 @@ public class BDD {
                 .addOnSuccessListener(aVoid -> Log.d("Añadir hábito (Clase BDD)", "Hábito guardado en Firestore para el usuario "+usuario.getDisplayName()))
                 .addOnFailureListener(e -> Log.e("Añadir hábito (Clase BDD)", "Error al guardar el hábito en Firestore para el usuario "+usuario.getDisplayName()));
 
+        // Agregar cada día al hábito
+        for(Day dia : habito.getDias()) {
+            agregarDiasHabitoAlCrear(dia, habito.getId());
+        }
+
         // Aumentar en 1 el contador de hábitos del usuario
         db.collection("usuarios")
                 .document(usuario.getUid())
                 .update("cont_habitos", FieldValue.increment(1))
                 .addOnSuccessListener(aVoid -> Log.d("Cont hábitos", "Se aumento el contador de hábitos"))
                 .addOnFailureListener(e -> Log.e("Cont hábito", "No se pudo aumentar el contador de hábitos"));
+    }
+
+    // Días
+    private void agregarDiasHabitoAlCrear(Day dia, String idHabito) {
+        Map<String, Object> diaDB=new HashMap<>();
+
+        if(getUsuarioID() == null) {
+            Log.e("Usuario no autentificado", "El usuario no está autentificado. No se puede agregar el hábito a la BDD");
+            return;
+        }
+
+        diaDB.put("id", dia.getId());
+        diaDB.put("completado", dia.isCompletado());
+        diaDB.put("color", dia.getColorCompletado());
+
+        db.collection("usuarios")
+                .document(getUsuarioID())
+                .collection("habitos")
+                .document(idHabito)
+                .collection("dias")
+                .document(dia.getId())
+                .set(diaDB)
+                .addOnSuccessListener(a -> {
+                    Log.d("ÉXITO", "SE INSERTARON LOS DIAS DE FORMA TOTALMENTE EXITOSA");
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("ERROR", "ERROR AL AGREGAR EL DÍA AL HÁBITO");
+                });
+    }
+    public CollectionReference getDiasHabito(String idHabito) {
+        return db.collection("usuarios")
+                .document(getUsuarioID())
+                .collection("habitos")
+                .document(idHabito)
+                .collection("dias");
     }
 
     // Borrar un hábito

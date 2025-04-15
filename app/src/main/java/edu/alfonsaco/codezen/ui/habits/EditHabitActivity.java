@@ -20,6 +20,7 @@ import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import edu.alfonsaco.codezen.R;
@@ -200,8 +201,10 @@ public class EditHabitActivity extends AppCompatActivity {
             return;
         }
 
+        //ArrayList dias=db.getDiasHabito();
+
         // Agregar hábito a la Base de Datos
-        Habit habito=new Habit(id, nombreHabito, descripcion, colorSeleccionado, nuevaHoraRecordatorio);
+        Habit habito=new Habit(id, nombreHabito, descripcion, colorSeleccionado, nuevaHoraRecordatorio, null);
         db.editarHabito(habito);
 
         Intent resultIntent = new Intent();
