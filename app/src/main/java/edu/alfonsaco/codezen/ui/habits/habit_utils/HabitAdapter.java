@@ -1,9 +1,10 @@
-package edu.alfonsaco.codezen.ui.habits;
+package edu.alfonsaco.codezen.ui.habits.habit_utils;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -12,11 +13,16 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import edu.alfonsaco.codezen.R;
+import edu.alfonsaco.codezen.ui.habits.ShowHabitActivity;
 
 public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> {
 
@@ -34,8 +40,11 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         TextView txtNombreHabito;
         TextView txtDescripcionHabito;
         Button btnHabitoCompletado;
+
         String idHabito;
         HabitOptionsBottomSheet.HabitOptionsListener listener;
+
+        RecyclerView recyclerDiasHabito;
 
         public ViewHolder(@NonNull View itemView, HabitOptionsBottomSheet.HabitOptionsListener listener) {
             super(itemView);
@@ -44,17 +53,27 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
             txtDescripcionHabito = itemView.findViewById(R.id.txtDescripcionHabito);
             btnHabitoCompletado = itemView.findViewById(R.id.btnHabitoCompletado);
 
+            // Recycler de dias de cada hábito
+            recyclerDiasHabito=itemView.findViewById(R.id.recyclerDiasHabito);
+            recyclerDiasHabito.setLayoutManager(new GridLayoutManager(itemView.getContext(), 7, GridLayoutManager.HORIZONTAL, false));
+
+
+            // VAMOS A SHOWACTIVITY
             itemView.setOnClickListener(v -> {
+                String nombre=txtNombreHabito.getText().toString();
+                String descripcion=txtDescripcionHabito.getText().toString();
+
                 Intent intent = new Intent(itemView.getContext(), ShowHabitActivity.class);
+                intent.putExtra("id", idHabito);
+                intent.putExtra("nombre", nombre);
+                intent.putExtra("descripcion", descripcion);
                 itemView.getContext().startActivity(intent);
             });
 
+            // ABRIMOS OPCIONES DE ELIMINAR Y EDITAR HÁBITO
             itemView.setOnLongClickListener(v -> {
-                HabitOptionsBottomSheet sheet = HabitOptionsBottomSheet.newInstance(
-                        idHabito,
-                        getAdapterPosition(),
-                        listener
-                );
+                HabitOptionsBottomSheet sheet = HabitOptionsBottomSheet.newInstance(idHabito, getAdapterPosition(), listener);
+
                 if (itemView.getContext() instanceof AppCompatActivity) {
                     sheet.show(((AppCompatActivity) itemView.getContext()).getSupportFragmentManager(), "HabitBottomSheet");
                 }
@@ -76,11 +95,62 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         holder.txtNombreHabito.setText(habito.getNombre().toUpperCase());
         holder.txtDescripcionHabito.setText(habito.getDescripcion());
         holder.btnHabitoCompletado.setBackgroundColor(Color.parseColor(habito.getColor()));
-        holder.idHabito = "ID_habit_" + habito.getNombre().replace(" ", "_");
+        holder.idHabito = habito.getId();
+
+        // Recycler de hábitos
+
+        //List<Day> diasHabitos=habito.getDias();
+        List<Day> diasHabitos=new ArrayList<>();
+
+        // Rellenamos por defecto con una cantidad de días para que el Recycler no quede vacío + días de la semana actual
+        int diaSemana=obtenerDiaSemana();
+        for(int i=0; i< (196 + diaSemana); i++) {
+            Day dia=new Day();
+            diasHabitos.add(dia);
+        }
+
+        DayAdapter adapterDias=new DayAdapter(diasHabitos);
+        holder.recyclerDiasHabito.setAdapter(adapterDias);
     }
 
     @Override
     public int getItemCount() {
         return listaHabitos.size();
+    }
+
+    // Método para obtener el día de la semana, para saber cuantos Divs agregar
+    private int obtenerDiaSemana() {
+        Date dia=new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dia);
+
+        int diaSemana=calendar.get(Calendar.DAY_OF_WEEK);
+        int diaHoy=0;
+
+        switch (diaSemana) {
+            case 1:
+                diaHoy=7;
+                break;
+            case 2:
+                diaHoy=1;
+                break;
+            case 3:
+                diaHoy=2;
+                break;
+            case 4:
+                diaHoy=3;
+                break;
+            case 5:
+                diaHoy=4;
+                break;
+            case 6:
+                diaHoy=5;
+                break;
+            case 7:
+                diaHoy=6;
+                break;
+        }
+
+        return diaHoy;
     }
 }

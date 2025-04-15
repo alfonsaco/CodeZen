@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -21,14 +22,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.alfonsaco.codezen.R;
 import edu.alfonsaco.codezen.databinding.FragmentHabitsBinding;
+import edu.alfonsaco.codezen.ui.habits.habit_utils.Habit;
+import edu.alfonsaco.codezen.ui.habits.habit_utils.HabitAdapter;
+import edu.alfonsaco.codezen.ui.habits.habit_utils.HabitOptionsBottomSheet;
 import edu.alfonsaco.codezen.utils.BDD;
 
 public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.HabitOptionsListener {
@@ -49,16 +53,6 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
     private RecyclerView recyclerHabitos;
     private ProgressBar progressBarHabitos;
     private TextView txtCreaTuPrimerHabito;
-
-    private final ActivityResultLauncher<Intent> launcherHabitos = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                    Habit nuevoHabito = (Habit) result.getData().getSerializableExtra("habito");
-                    agregarHabitoALista(nuevoHabito);
-                }
-            }
-    );
 
     // AGREGAR TODOS LOS HÁBITOS DEL USUARIO DE LA BDD AL INICIAR LA APP
     @Override
@@ -85,13 +79,67 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
         btnAgregarHabito = binding.btnAgregarHabito;
         btnAgregarHabito.setOnClickListener(v -> {
             Intent intent = new Intent(requireActivity(), CreateHabitActivity.class);
-            launcherHabitos.launch(intent);
+            startActivity(intent);
         });
         btnAgregarHabito.setTooltipText("Crear un nuevo hábito");
 
         cargarHabitosUsuario();
+        // Método para recargar la lista d ehábitos cada vez que se modifique algo
+        setupFirestoreListener();
 
         return root;
+    }
+
+    // RECARGAR LISTA CADA VEZ QUE SE MODIFIQUE ALGO
+    // Este método no sirve en el momento en el que se borrar algo de la base de datos, porque sino la animación
+    // de eliminación queda mal
+    private void setupFirestoreListener() {
+        FirebaseUser usuario = firebaseAuth.getCurrentUser();
+        if (usuario == null) {
+            return;
+        }
+
+        firestore.collection("usuarios")
+                .document(usuario.getUid())
+                .collection("habitos")
+                .addSnapshotListener((value, error) -> {
+                    if (error != null) {
+                        Log.e("HabitsFragment", "Error escuchando cambios", error);
+                        return;
+                    }
+
+                    if (value != null) {
+                        // Verificar si hay cambios de eliminación
+                        boolean tipoBorrar = false;
+
+                        for (DocumentChange dc : value.getDocumentChanges()) {
+                            if (dc.getType() == DocumentChange.Type.REMOVED) {
+                                tipoBorrar = true;
+                                break;
+                            }
+                        }
+
+                        // Si hay eliminaciones, no actualizamos la lista
+                        if (tipoBorrar) {
+                            return;
+                        }
+
+                        // Procesar otros tipos de cambios (añadidos, modificados)
+                        listaHabitos.clear();
+                        for (DocumentSnapshot doc : value.getDocuments()) {
+                            Habit habito = doc.toObject(Habit.class);
+                            if (habito != null) {
+                                listaHabitos.add(habito);
+                            }
+                        }
+                        habitAdapter.notifyDataSetChanged();
+
+                        // Actualizar visibilidad
+                        progressBarHabitos.setVisibility(View.GONE);
+                        recyclerHabitos.setVisibility(listaHabitos.isEmpty() ? View.GONE : View.VISIBLE);
+                        txtCreaTuPrimerHabito.setVisibility(listaHabitos.isEmpty() ? View.VISIBLE : View.GONE);
+                    }
+                });
     }
 
     // ********************** CARGAR HÁBITOS DESDE LA BDD **************************
@@ -145,12 +193,16 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
     }
 
     @Override
-    public void interfazBorrarHabitoRecycler(int position) {
-        if (position >= 0 && position < listaHabitos.size()) {
-            listaHabitos.remove(position);
-            habitAdapter.notifyItemRemoved(position);
-            habitAdapter.notifyItemRangeChanged(position, listaHabitos.size() - position);
-            txtCreaTuPrimerHabito.setVisibility(View.VISIBLE);
+    public void interfazBorrarHabitoRecycler(int posicion) {
+        if (posicion >= 0 && posicion < listaHabitos.size()) {
+            listaHabitos.remove(posicion);
+            habitAdapter.notifyItemRemoved(posicion);
+            habitAdapter.notifyItemRangeChanged(posicion, listaHabitos.size()-posicion);
+
+
+            if(listaHabitos.isEmpty()) {
+                txtCreaTuPrimerHabito.setVisibility(View.VISIBLE);
+            }
         }
     }
     // ***************************************************************************
@@ -160,4 +212,6 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
         super.onDestroyView();
         binding = null;
     }
+
+
 }

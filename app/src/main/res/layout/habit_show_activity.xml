@@ -17,24 +17,36 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/go_back_arrow" />
 
-    <ImageView
-        android:id="@+id/btnIrDelete"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/delete" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNombreShow" />
 
-    <ImageView
-        android:id="@+id/btnIrEdit"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
+    <TextView
+        android:id="@+id/txtNombreShow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/btnIrDelete"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/edit" />
+        tools:text="Nombre del hábito"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="@+id/calendarView"
+        app:layout_constraintTop_toBottomOf="@+id/btnVolverInicio" />
+
+    <TextView
+        android:id="@+id/txtDescripcionShow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="@+id/calendarView"
+        app:layout_constraintStart_toStartOf="@+id/calendarView"
+        app:layout_constraintTop_toBottomOf="@+id/calendarView"
+        tools:text="Descripción del hábito" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

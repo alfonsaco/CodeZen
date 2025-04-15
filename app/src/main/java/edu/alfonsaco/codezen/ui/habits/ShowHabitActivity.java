@@ -1,22 +1,33 @@
 package edu.alfonsaco.codezen.ui.habits;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import edu.alfonsaco.codezen.R;
+import edu.alfonsaco.codezen.ui.habits.habit_utils.Habit;
+import edu.alfonsaco.codezen.ui.habits.habit_utils.HabitOptionsBottomSheet;
+import edu.alfonsaco.codezen.utils.BDD;
 
 public class ShowHabitActivity extends AppCompatActivity {
 
-    private ImageView btnIrEdit;
     private ImageView btnVolverInicio;
+    private TextView txtNombreShow;
+    private TextView txtDescripcionShow;
+
+    private BDD bd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,16 +44,17 @@ public class ShowHabitActivity extends AppCompatActivity {
             }
         });
 
-        // IR A EDIT ACTIVITY
-        btnIrEdit=findViewById(R.id.btnIrEdit);
-        btnIrEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(ShowHabitActivity.this, EditHabitActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+        // ********** OBTENER DATOS DEL HÁBITO CON EL INTENT **********
+        txtNombreShow=findViewById(R.id.txtNombreShow);
+        txtDescripcionShow=findViewById(R.id.txtDescripcionShow);
+
+        Intent intent=getIntent();
+        String nombre=intent.getStringExtra("nombre");
+        String descripcion=intent.getStringExtra("descripcion");
+
+        txtNombreShow.setText(nombre);
+        txtDescripcionShow.setText(descripcion);
+        // ************************************************************
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

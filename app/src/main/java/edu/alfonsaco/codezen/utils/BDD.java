@@ -1,22 +1,23 @@
 package edu.alfonsaco.codezen.utils;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.alfonsaco.codezen.ui.habits.Habit;
+import javax.security.auth.callback.Callback;
+
+import edu.alfonsaco.codezen.ui.habits.habit_utils.Habit;
 
 public class BDD {
     private FirebaseAuth firebaseAuth;
@@ -24,6 +25,13 @@ public class BDD {
 
     public BDD() {
         firebaseAuth=FirebaseAuth.getInstance();
+    }
+
+    public FirebaseFirestore getDb() {
+        return db;
+    }
+    public String getUsuarioID() {
+        return firebaseAuth.getCurrentUser().getUid();
     }
 
     // ******************* MÉTODOS DE FIRESTORE PARA EL REGISTRO ******************
@@ -52,8 +60,8 @@ public class BDD {
 
 
     // ********************* GUARDAR HÁBITO EN FIRESTORE **********************
-    public void guardarHabitoEnUsuario(String idHabito, String nombreHabito, String descripcionHabito, String colorHabito) {
-        Map<String, Object> habito=new HashMap<>();
+    public void guardarHabitoEnUsuario(Habit habito) {
+        Map<String, Object> habitoBD=new HashMap<>();
 
         FirebaseUser usuario=FirebaseAuth.getInstance().getCurrentUser();
         // Verificar que haya un usuario autentificado
@@ -62,17 +70,18 @@ public class BDD {
             return;
         }
 
-        habito.put("id_habito", idHabito);
-        habito.put("nombre", nombreHabito);
-        habito.put("descripcion", descripcionHabito);
-        habito.put("color", colorHabito);
+        habitoBD.put("id", habito.getId());
+        habitoBD.put("nombre", habito.getNombre());
+        habitoBD.put("descripcion", habito.getDescripcion());
+        habitoBD.put("color", habito.getColor());
+        habitoBD.put("recordatorio", habito.getRecordatorio());
 
         // Añadir el hábito
         db.collection("usuarios")
                 .document(usuario.getUid())
                 .collection("habitos")
-                .document(idHabito)
-                .set(habito)
+                .document(habito.getId())
+                .set(habitoBD)
                 .addOnSuccessListener(aVoid -> Log.d("Añadir hábito (Clase BDD)", "Hábito guardado en Firestore para el usuario "+usuario.getDisplayName()))
                 .addOnFailureListener(e -> Log.e("Añadir hábito (Clase BDD)", "Error al guardar el hábito en Firestore para el usuario "+usuario.getDisplayName()));
 
@@ -108,5 +117,68 @@ public class BDD {
                 .update("cont_habitos", FieldValue.increment(-1))
                 .addOnSuccessListener(aVoid -> Log.d("Cont hábitos", "Se redujo el contador de hábitos"))
                 .addOnFailureListener(e -> Log.e("Cont hábito", "No se pudo reducir el contador de hábitos"));
+    }
+
+    public void editarHabito(Habit habito) {
+        Map<String, Object> habitoBD=new HashMap<>();
+
+        FirebaseUser usuario=FirebaseAuth.getInstance().getCurrentUser();
+        // Verificar que haya un usuario autentificado
+        if(usuario == null) {
+            Log.e("Usuario no autentificado", "El usuario no está autentificado. No se puede agregar el hábito a la BDD");
+            return;
+        }
+
+        habitoBD.put("id", habito.getId());
+        habitoBD.put("nombre", habito.getNombre());
+        habitoBD.put("descripcion", habito.getDescripcion());
+        habitoBD.put("color", habito.getColor());
+        habitoBD.put("recordatorio", habito.getRecordatorio());
+
+        // Añadir el hábito
+        db.collection("usuarios")
+                .document(usuario.getUid())
+                .collection("habitos")
+                .document(habito.getId())
+                .set(habitoBD, SetOptions.merge())
+                .addOnSuccessListener(aVoid -> Log.d("Añadir hábito (Clase BDD)", "Hábito guardado en Firestore para el usuario "+usuario.getDisplayName()))
+                .addOnFailureListener(e -> Log.e("Añadir hábito (Clase BDD)", "Error al guardar el hábito en Firestore para el usuario "+usuario.getDisplayName()));
+
+    }
+    // **********************************************************************************************
+
+
+    // ****************************** OBTENER UN DATO EN ESPECÍFICO ********************************
+    public interface HabitCallback {
+        void onHabitLoaded(Habit habit);
+        void onError(Exception e);
+    }
+
+    public void obtenerHabito(String idHabito, HabitCallback callback) {
+        FirebaseUser usuario=FirebaseAuth.getInstance().getCurrentUser();
+        // Verificar que haya un usuario autentificado
+        if(usuario == null) {
+            Log.e("Usuario no autentificado", "El usuario no está autentificado. No se puede agregar el hábito a la BDD");
+            callback.onError(new Exception("Usuario no autenticado"));
+            return;
+        }
+
+        db.collection("usuarios")
+                .document(usuario.getUid())
+                .collection("habitos")
+                .document(idHabito)
+                .get()
+                .addOnSuccessListener(snapshot -> {
+                    if (snapshot.exists()) {
+                        Habit habit = snapshot.toObject(Habit.class);
+                        callback.onHabitLoaded(habit);
+                    } else {
+                        callback.onError(new Exception("Hábito no encontrado"));
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("ERROR", "ERROR AL OBTENER EL HÁBITO");
+                    callback.onError(e);
+                });
     }
 }

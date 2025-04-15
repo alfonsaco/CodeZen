@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -15,12 +16,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.android.material.materialswitch.MaterialSwitch;
+import com.google.android.material.timepicker.MaterialTimePicker;
+import com.google.android.material.timepicker.TimeFormat;
+import com.google.firebase.firestore.DocumentReference;
 
 import java.util.ArrayList;
 
 import edu.alfonsaco.codezen.R;
+import edu.alfonsaco.codezen.ui.habits.habit_utils.Habit;
 import edu.alfonsaco.codezen.utils.BDD;
 
 public class CreateHabitActivity extends AppCompatActivity {
@@ -30,11 +34,18 @@ public class CreateHabitActivity extends AppCompatActivity {
     private Button btnAgregarNuevoHabito;
     private EditText etxtNombreHabito;
     private EditText etxtDescripcion;
+    private MaterialSwitch switchRecordatorios;
+    private Button btnGestionarRecordatorio;
 
     // Selección de color
     private String colorSeleccionado;
     private ArrayList<View> listaColores;
     private boolean haSeleccionadoColor=false;
+
+    // Recordatorio
+    private String nuevaHoraRecordatorio="";
+    private int horas;
+    private int minutos;
 
     // FirebaseAuth
     private BDD bd;
@@ -45,9 +56,11 @@ public class CreateHabitActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.habit_create_activity);
 
-        btnAgregarNuevoHabito=findViewById(R.id.btnAgregarNuevoHabito);
+        btnAgregarNuevoHabito=findViewById(R.id.btnEditarHabito);
         etxtNombreHabito=findViewById(R.id.etxtNombreHabito);
         etxtDescripcion=findViewById(R.id.etxtDescripcion);
+        switchRecordatorios=findViewById(R.id.switchRecordatorios);
+        btnGestionarRecordatorio=findViewById(R.id.btnGestionarRecordatorio);
 
         // BOTÓN PARA VOLVER ATRÁS
         btnVolverInicio=findViewById(R.id.btnVolverInicio);
@@ -91,6 +104,60 @@ public class CreateHabitActivity extends AppCompatActivity {
         }
 
 
+        // *************************** RECORDATORIOS ********************************
+        switchRecordatorios.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(switchRecordatorios.isChecked()) {
+                    btnGestionarRecordatorio.setEnabled(true);
+                    nuevaHoraRecordatorio=btnGestionarRecordatorio.getText().toString();
+                } else {
+                    btnGestionarRecordatorio.setEnabled(false);
+                    nuevaHoraRecordatorio="";
+                }
+                Toast.makeText(CreateHabitActivity.this, nuevaHoraRecordatorio, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        String horaActual=btnGestionarRecordatorio.getText().toString();
+        horas=Integer.parseInt(horaActual.split(":")[0]);
+        minutos=Integer.parseInt(horaActual.split(":")[1]);
+
+        btnGestionarRecordatorio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MaterialTimePicker timePicker=new MaterialTimePicker.Builder()
+                        .setTimeFormat(TimeFormat.CLOCK_24H)
+                        .setHour(horas)
+                        .setMinute(minutos)
+                        .setTitleText("Selecciona la hora")
+                        .build();
+
+                timePicker.show(getSupportFragmentManager(), "time_picker");
+
+                timePicker.addOnPositiveButtonClickListener(v1 -> {
+                    // Formateamos la hora, para ponerla en el botón
+                    String nuevaHora=String.valueOf(timePicker.getHour());
+                    String nuevoMinuto=String.valueOf(timePicker.getMinute());
+
+                    if(nuevaHora.length() == 1) {
+                        nuevaHora="0"+nuevaHora;
+                    }
+                    if(nuevoMinuto.length() == 1) {
+                        nuevoMinuto="0"+nuevoMinuto;
+                    }
+
+                    horas=Integer.parseInt(nuevaHora);
+                    minutos=Integer.parseInt(nuevoMinuto);
+
+                    nuevaHoraRecordatorio=nuevaHora+":"+nuevoMinuto;
+                    btnGestionarRecordatorio.setText(nuevaHoraRecordatorio);
+                });
+            }
+        });
+        // ***************************************************************************
+
+
         // AGREGAR EL HÁBITO NUEVO
         btnAgregarNuevoHabito.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,13 +192,18 @@ public class CreateHabitActivity extends AppCompatActivity {
             return;
         }
 
-        // Creamos el nuevo hábito que vamos a añadir
-        Habit habito=new Habit(nombreHabito, descripcion, colorSeleccionado);
+        // CREACIÓN AUTOMÁTOCA DEL ID EN FIREBASE
+        DocumentReference nuevoHabitoRef = bd.getDb()
+                .collection("usuarios")
+                .document(bd.getUsuarioID())
+                .collection("habitos")
+                .document();
 
+        // Obtener el ID generado
+        String idHabito=nuevoHabitoRef.getId();
 
-        // Agregar hábito a la Base de Datos
-        String id="ID_habit_"+nombreHabito.replace(" ", "_");
-        bd.guardarHabitoEnUsuario(id, nombreHabito, descripcion, colorSeleccionado);
+        Habit habito=new Habit(idHabito, nombreHabito, descripcion, colorSeleccionado, nuevaHoraRecordatorio);
+        bd.guardarHabitoEnUsuario(habito);
 
         Intent resultIntent = new Intent();
         resultIntent.putExtra("habito", habito);

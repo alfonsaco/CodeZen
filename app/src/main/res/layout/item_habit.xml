@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:elevation="6dp"
     android:layout_marginBottom="15dp">
 
     <LinearLayout
         android:id="@+id/view"
         android:layout_width="0dp"
-        android:layout_height="165dp"
+        android:layout_height="wrap_content"
         android:background="#FFF"
-        android:elevation="3dp"
         android:orientation="vertical"
         android:padding="15dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,14 +52,20 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal|center_vertical"
                 android:layout_weight="1"
-                app:icon="@drawable/ic_notifications_black_24dp" />
+                app:icon="@drawable/tick" />
 
         </LinearLayout>
 
-        <View
-            android:id="@+id/view2"
-            android:layout_width="wrap_content"
-            android:layout_height="180dp"
+        <!-- Recycler de Días -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerDiasHabito"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:scrollbars="horizontal"
+            android:scrollbarSize="0dp"
+            android:background="#EDEDED"
             android:layout_weight="1" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
