@@ -42,36 +42,17 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull DayAdapter.DayViewHolder holder, int position) {
-        Day dia=listaDias.get(position);
-        String color=dia.getColor();
+        Day dia = listaDias.get(position);
+        // Colores del día
+        int alpha = dia.isCompletado() ? 255 : 76;
 
-        if(dia.isCompletado()) {
-            holder.diaView.setBackgroundColor(Color.parseColor(color));
-            holder.diaView.setAlpha(1);
-        } else {
-            holder.diaView.setBackgroundColor(Color.parseColor(color));
-            holder.diaView.setAlpha(0.3f);
+        holder.diaView.setBackgroundColor(Color.parseColor(colorHabito));
+        holder.diaView.setAlpha(alpha / 255f);
 
-            // borrar esto, solo es para pruebas
-            if(position % 21 == 0 || position % 9 == 0) {
-                // borrar esto, solo es para pruebas
-                holder.diaView.setBackgroundColor(Color.parseColor(color));
-                holder.diaView.setAlpha(1);
-            }
-        }
     }
 
     @Override
     public int getItemCount() {
         return listaDias.size();
     }
-
-    // Método para actualizar los datos
-    public void actualizarRecycler(List<Day> nuevosDias, String color) {
-        this.listaDias = nuevosDias;
-        this.colorHabito = color;
-
-        notifyDataSetChanged();
-    }
-
 }

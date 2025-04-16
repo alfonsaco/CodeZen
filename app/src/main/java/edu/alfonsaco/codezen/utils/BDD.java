@@ -107,7 +107,6 @@ public class BDD {
 
         diaDB.put("id", dia.getId());
         diaDB.put("completado", dia.isCompletado());
-        diaDB.put("color", dia.getColor());
 
         db.collection("usuarios")
                 .document(getUsuarioID())
