@@ -96,15 +96,6 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         holder.btnHabitoCompletado.setBackgroundColor(Color.parseColor(habito.getColor()));
         holder.idHabito = habito.getId();
 
-        // FECHAS DE DÍAS DE HÁBITOS
-        /*
-        DayAdapter adapter = (DayAdapter) holder.recyclerDiasHabito.getAdapter();
-        if (adapter == null) {
-            adapter = new DayAdapter(habito.getDias(), habito.getColor());
-            holder.recyclerDiasHabito.setAdapter(adapter);
-        } else {
-            adapter.actualizarRecycler(habito.getDias(), habito.getColor());
-        }*/
         DayAdapter adaptar=new DayAdapter(habito.getDias(), habito.getColor());
         holder.recyclerDiasHabito.setAdapter(adaptar);
     }
