@@ -233,6 +233,23 @@ public class BDD {
                     }
                 });
     }
+    public void cambiarEstadoDia(Boolean estado, String idHabito, String fecha) {
+        if(getUsuarioID() == null) {
+            Log.e("Usuario no autentificado", "El usuario no está autentificado. No se puede agregar el hábito a la BDD");
+            return;
+        }
+
+        db.collection("usuarios")
+                .document(getUsuarioID())
+                .collection("habitos")
+                .document(idHabito)
+                .collection("dias")
+                .document(fecha)
+                .update("completado", estado)
+                .addOnSuccessListener(a -> {
+                    Log.d("PROCESO TERMINADO", "SE ACTUALIZÓ EL ESTADO");
+                });
+    }
     // **********************************************************************************************
 
     // ****************************** OBTENER UN DATO EN ESPECÍFICO ********************************

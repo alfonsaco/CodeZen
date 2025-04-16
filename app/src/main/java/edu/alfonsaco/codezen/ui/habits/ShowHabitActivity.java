@@ -1,6 +1,7 @@
 package edu.alfonsaco.codezen.ui.habits;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CalendarView;
@@ -14,17 +15,24 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.datepicker.DayViewDecorator;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+
 import edu.alfonsaco.codezen.R;
 import edu.alfonsaco.codezen.utils.BDD;
+import edu.alfonsaco.codezen.utils.MyDayDecorator;
 
 public class ShowHabitActivity extends AppCompatActivity {
 
     private ImageView btnVolverInicio;
     private TextView txtNombreShow;
     private TextView txtDescripcionShow;
-    private CalendarView calendarView;
+    private MaterialCalendarView calendarView;
 
     private BDD db;
+    private int colorCompletado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +59,9 @@ public class ShowHabitActivity extends AppCompatActivity {
         String nombre=intent.getStringExtra("nombre");
         String descripcion=intent.getStringExtra("descripcion");
         String id=intent.getStringExtra("id");
+        String color=intent.getStringExtra("color");
+
+        colorCompletado=Color.parseColor(color);
 
         txtNombreShow.setText(nombre);
         txtDescripcionShow.setText(descripcion);
@@ -58,11 +69,12 @@ public class ShowHabitActivity extends AppCompatActivity {
 
         // ******************** CALENDAR VIEW *************************
         calendarView=findViewById(R.id.calendarView);
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+        calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                String dia=String.valueOf(dayOfMonth);
-                String mes=String.valueOf(month+1);
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                String year=String.valueOf(date.getYear());
+                String mes=String.valueOf(date.getMonth());
+                String dia=String.valueOf(date.getDay());
 
                 if(mes.length() == 1) {
                     mes="0"+mes;
@@ -74,12 +86,17 @@ public class ShowHabitActivity extends AppCompatActivity {
                 String diaSeleccionado=year+"-"+mes+"-"+dia;
                 System.out.println(diaSeleccionado);
 
+                // Cambiamos su estado en la base de datos
                 db.verificarCompletadoBoolean(diaSeleccionado, id, completado -> {
                     if(completado) {
                         System.out.println("DIA COMPLETADO");
+                        db.cambiarEstadoDia(false, id, diaSeleccionado);
                     } else {
                         System.out.println("DIA NO COMPLETADO");
+                        db.cambiarEstadoDia(true, id, diaSeleccionado);
                     }
+
+                    widget.addDecorator(new MyDayDecorator(date, completado ? Color.BLACK : colorCompletado));
                 });
             }
         });
