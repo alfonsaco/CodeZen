@@ -20,9 +20,11 @@ import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import edu.alfonsaco.codezen.R;
+import edu.alfonsaco.codezen.ui.habits.habit_utils.Day;
 import edu.alfonsaco.codezen.ui.habits.habit_utils.Habit;
 import edu.alfonsaco.codezen.utils.BDD;
 
@@ -201,7 +203,7 @@ public class EditHabitActivity extends AppCompatActivity {
         }
 
         // Agregar hábito a la Base de Datos
-        Habit habito=new Habit(id, nombreHabito, descripcion, colorSeleccionado, nuevaHoraRecordatorio);
+        Habit habito=new Habit(id, nombreHabito, descripcion, colorSeleccionado, nuevaHoraRecordatorio, null);
         db.editarHabito(habito);
 
         Intent resultIntent = new Intent();

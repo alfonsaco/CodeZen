@@ -21,9 +21,13 @@ import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 import com.google.firebase.firestore.DocumentReference;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import edu.alfonsaco.codezen.R;
+import edu.alfonsaco.codezen.ui.habits.habit_utils.Day;
 import edu.alfonsaco.codezen.ui.habits.habit_utils.Habit;
 import edu.alfonsaco.codezen.utils.BDD;
 
@@ -192,7 +196,7 @@ public class CreateHabitActivity extends AppCompatActivity {
             return;
         }
 
-        // CREACIÓN AUTOMÁTOCA DEL ID EN FIREBASE
+        // CREACIÓN AUTOMÁTICA DEL ID EN FIREBASE
         DocumentReference nuevoHabitoRef = bd.getDb()
                 .collection("usuarios")
                 .document(bd.getUsuarioID())
@@ -202,12 +206,66 @@ public class CreateHabitActivity extends AppCompatActivity {
         // Obtener el ID generado
         String idHabito=nuevoHabitoRef.getId();
 
-        Habit habito=new Habit(idHabito, nombreHabito, descripcion, colorSeleccionado, nuevaHoraRecordatorio);
+
+        // FECHAS DE DÍAS DE HÁBITOS
+        // Obtenemos la fecha de aquí a 196 días
+        ArrayList<Day> diasHabitos=new ArrayList<>();
+        LocalDate hoy=LocalDate.now();
+
+        // Insertamos la fecha de cada uno en cada uno de los "Days"
+        int diaSemana=obtenerDiaSemana();
+
+        for(int i=0; i< (196 + diaSemana); i++) {
+            Day dia=new Day();
+            dia.setId(hoy.minusDays(i).toString());
+            dia.setCompletado(false);
+            dia.setColor(colorSeleccionado);
+
+            diasHabitos.add(dia);
+        }
+
+        Habit habito=new Habit(idHabito, nombreHabito, descripcion, colorSeleccionado, nuevaHoraRecordatorio, diasHabitos);
         bd.guardarHabitoEnUsuario(habito);
 
         Intent resultIntent = new Intent();
         resultIntent.putExtra("habito", habito);
         setResult(Activity.RESULT_OK, resultIntent);
         finish();
+    }
+
+    // Método para obtener el día de la semana, para saber cuantos Divs agregar
+    private int obtenerDiaSemana() {
+        Date dia=new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dia);
+
+        int diaSemana=calendar.get(Calendar.DAY_OF_WEEK);
+        int diaHoy=0;
+
+        switch (diaSemana) {
+            case 1:
+                diaHoy=7;
+                break;
+            case 2:
+                diaHoy=1;
+                break;
+            case 3:
+                diaHoy=2;
+                break;
+            case 4:
+                diaHoy=3;
+                break;
+            case 5:
+                diaHoy=4;
+                break;
+            case 6:
+                diaHoy=5;
+                break;
+            case 7:
+                diaHoy=6;
+                break;
+        }
+
+        return diaHoy;
     }
 }

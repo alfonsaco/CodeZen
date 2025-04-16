@@ -4,18 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -97,20 +96,17 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         holder.btnHabitoCompletado.setBackgroundColor(Color.parseColor(habito.getColor()));
         holder.idHabito = habito.getId();
 
-        // Recycler de hábitos
-
-        //List<Day> diasHabitos=habito.getDias();
-        List<Day> diasHabitos=new ArrayList<>();
-
-        // Rellenamos por defecto con una cantidad de días para que el Recycler no quede vacío + días de la semana actual
-        int diaSemana=obtenerDiaSemana();
-        for(int i=0; i< (196 + diaSemana); i++) {
-            Day dia=new Day();
-            diasHabitos.add(dia);
-        }
-
-        DayAdapter adapterDias=new DayAdapter(diasHabitos);
-        holder.recyclerDiasHabito.setAdapter(adapterDias);
+        // FECHAS DE DÍAS DE HÁBITOS
+        /*
+        DayAdapter adapter = (DayAdapter) holder.recyclerDiasHabito.getAdapter();
+        if (adapter == null) {
+            adapter = new DayAdapter(habito.getDias(), habito.getColor());
+            holder.recyclerDiasHabito.setAdapter(adapter);
+        } else {
+            adapter.actualizarRecycler(habito.getDias(), habito.getColor());
+        }*/
+        DayAdapter adaptar=new DayAdapter(habito.getDias(), habito.getColor());
+        holder.recyclerDiasHabito.setAdapter(adaptar);
     }
 
     @Override
@@ -118,39 +114,5 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         return listaHabitos.size();
     }
 
-    // Método para obtener el día de la semana, para saber cuantos Divs agregar
-    private int obtenerDiaSemana() {
-        Date dia=new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(dia);
 
-        int diaSemana=calendar.get(Calendar.DAY_OF_WEEK);
-        int diaHoy=0;
-
-        switch (diaSemana) {
-            case 1:
-                diaHoy=7;
-                break;
-            case 2:
-                diaHoy=1;
-                break;
-            case 3:
-                diaHoy=2;
-                break;
-            case 4:
-                diaHoy=3;
-                break;
-            case 5:
-                diaHoy=4;
-                break;
-            case 6:
-                diaHoy=5;
-                break;
-            case 7:
-                diaHoy=6;
-                break;
-        }
-
-        return diaHoy;
-    }
 }

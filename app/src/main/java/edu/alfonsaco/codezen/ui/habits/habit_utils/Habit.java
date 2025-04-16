@@ -2,6 +2,7 @@ package edu.alfonsaco.codezen.ui.habits.habit_utils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Habit implements Serializable {
     private String id;
@@ -9,16 +10,16 @@ public class Habit implements Serializable {
     private String descripcion;
     private String color;
     private String recordatorio;
-    private ArrayList<Day> dias;
+    private List<Day> dias = new ArrayList<>();
 
     // CONSTRUCTOR
-    public Habit(String id, String nombre, String descripcion, String color, String recordatorio) {
+    public Habit(String id, String nombre, String descripcion, String color, String recordatorio, ArrayList<Day> dias) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.color = color;
         this.recordatorio = recordatorio;
-        this.dias = new ArrayList<>();
+        this.dias = dias;
     }
     public Habit() {
 
@@ -45,8 +46,13 @@ public class Habit implements Serializable {
     public void setColor(String color) {
         this.color = color;
     }
-    public ArrayList<Day> getDias() {return dias;}
-    public void setDias(ArrayList<Day> dias) {this.dias = dias;}
+    public List<Day> getDias() {
+        return dias != null ? dias : new ArrayList<>();
+    }
+
+    public void setDias(List<Day> dias) {
+        this.dias = dias != null ? dias : new ArrayList<>();
+    }
     public String getRecordatorio() {return recordatorio;}
     public void setRecordatorio(String recordatorio) {this.recordatorio = recordatorio;}
 }
