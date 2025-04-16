@@ -99,10 +99,10 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         // FECHAS DE DÍAS DE HÁBITOS
         DayAdapter adapter = (DayAdapter) holder.recyclerDiasHabito.getAdapter();
         if (adapter == null) {
-            adapter = new DayAdapter(habito.getDias());
+            adapter = new DayAdapter(habito.getDias(), habito.getColor());
             holder.recyclerDiasHabito.setAdapter(adapter);
         } else {
-            //adapter.actualizarRecycler(habito.getDias());
+            adapter.actualizarRecycler(habito.getDias(), habito.getColor());
         }
     }
 

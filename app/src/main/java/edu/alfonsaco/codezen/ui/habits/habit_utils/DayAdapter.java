@@ -16,10 +16,12 @@ import edu.alfonsaco.codezen.R;
 public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
 
     private List<Day> listaDias;
+    private String colorHabito;
 
     // CONSTRUCTOR
-    public DayAdapter(List<Day> listaDias) {
+    public DayAdapter(List<Day> listaDias, String colorHabito) {
         this.listaDias = listaDias;
+        this.colorHabito = colorHabito;
     }
 
     public static class DayViewHolder extends RecyclerView.ViewHolder {
@@ -43,9 +45,6 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
         Day dia=listaDias.get(position);
         String color=dia.getColor();
 
-        System.out.println(color);
-        System.out.println(dia.getId());
-
         if(dia.isCompletado()) {
             holder.diaView.setBackgroundColor(Color.parseColor(color));
             holder.diaView.setAlpha(1);
@@ -68,8 +67,10 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
     }
 
     // Método para actualizar los datos
-    public void actualizarRecycler(List<Day> newDays) {
-        this.listaDias = newDays;
+    public void actualizarRecycler(List<Day> nuevosDias, String color) {
+        this.listaDias = nuevosDias;
+        this.colorHabito = color;
+
         notifyDataSetChanged();
     }
 

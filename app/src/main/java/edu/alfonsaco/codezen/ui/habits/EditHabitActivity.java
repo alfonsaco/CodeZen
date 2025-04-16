@@ -202,11 +202,6 @@ public class EditHabitActivity extends AppCompatActivity {
             return;
         }
 
-        ArrayList<Day> diasHabitos=new ArrayList<>();
-        for(Day dias : diasHabitos) {
-            dias.setColor(colorSeleccionado);
-        }
-
         // Agregar hábito a la Base de Datos
         Habit habito=new Habit(id, nombreHabito, descripcion, colorSeleccionado, nuevaHoraRecordatorio, null);
         db.editarHabito(habito);

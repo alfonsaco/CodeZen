@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
@@ -122,13 +123,6 @@ public class BDD {
                     Log.e("ERROR", "ERROR AL AGREGAR EL DÍA AL HÁBITO");
                 });
     }
-    public CollectionReference getDiasHabito(String idHabito) {
-        return db.collection("usuarios")
-                .document(getUsuarioID())
-                .collection("habitos")
-                .document(idHabito)
-                .collection("dias");
-    }
 
     // Borrar un hábito
     public void borrarHabito(String idHabito) {
@@ -138,6 +132,22 @@ public class BDD {
             Log.e("Usuario no autentificado", "El usuario no está autentificado. No se puede agregar el hábito a la BDD");
             return;
         }
+
+        // Eliminar primero los días del hábito
+        db.collection("usuarios")
+                .document(getUsuarioID())
+                .collection("habitos")
+                .document(idHabito)
+                .collection("dias")
+                .get()
+                .addOnSuccessListener(a -> {
+                    for(DocumentSnapshot doc : a.getDocuments()) {
+                        doc.getReference().delete();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("ERROR", "ERROR AL BORRAR LOS DÍAS");
+                });
 
         // Eliminar el hábito
         db.collection("usuarios")
@@ -180,6 +190,18 @@ public class BDD {
                 .set(habitoBD, SetOptions.merge())
                 .addOnSuccessListener(aVoid -> Log.d("Añadir hábito (Clase BDD)", "Hábito guardado en Firestore para el usuario "+usuario.getDisplayName()))
                 .addOnFailureListener(e -> Log.e("Añadir hábito (Clase BDD)", "Error al guardar el hábito en Firestore para el usuario "+usuario.getDisplayName()));
+
+        db.collection("usuarios")
+                .document(getUsuarioID())
+                .collection("habitos")
+                .document(habito.getId())
+                .collection("dias")
+                .get()
+                .addOnSuccessListener(a -> {
+                    for(DocumentSnapshot doc : a.getDocuments()) {
+                        doc.getReference().update("color", habito.getColor());
+                    }
+                });
 
     }
     // **********************************************************************************************
