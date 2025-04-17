@@ -67,13 +67,14 @@ public class ShowHabitActivity extends AppCompatActivity {
         txtDescripcionShow.setText(descripcion);
         // ************************************************************
 
+
         // ******************** CALENDAR VIEW *************************
         calendarView=findViewById(R.id.calendarView);
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 String year=String.valueOf(date.getYear());
-                String mes=String.valueOf(date.getMonth());
+                String mes=String.valueOf(date.getMonth()+1);
                 String dia=String.valueOf(date.getDay());
 
                 if(mes.length() == 1) {
@@ -89,10 +90,8 @@ public class ShowHabitActivity extends AppCompatActivity {
                 // Cambiamos su estado en la base de datos
                 db.verificarCompletadoBoolean(diaSeleccionado, id, completado -> {
                     if(completado) {
-                        System.out.println("DIA COMPLETADO");
                         db.cambiarEstadoDia(false, id, diaSeleccionado);
                     } else {
-                        System.out.println("DIA NO COMPLETADO");
                         db.cambiarEstadoDia(true, id, diaSeleccionado);
                     }
 

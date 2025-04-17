@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Permisos de notificaciones -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -21,6 +25,7 @@
         <activity
             android:name=".ui.habits.CreateHabitActivity"
             android:exported="false" />
+        <receiver android:name=".utils.NotificacionBroadcaster" android:enabled="true" android:exported="false" />
         <activity
             android:name=".auth.PasswordRecoverActivity"
             android:exported="false" />

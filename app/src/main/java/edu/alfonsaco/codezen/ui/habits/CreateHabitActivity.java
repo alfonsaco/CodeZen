@@ -2,6 +2,8 @@ package edu.alfonsaco.codezen.ui.habits;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +14,8 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -30,6 +34,7 @@ import edu.alfonsaco.codezen.R;
 import edu.alfonsaco.codezen.ui.habits.habit_utils.Day;
 import edu.alfonsaco.codezen.ui.habits.habit_utils.Habit;
 import edu.alfonsaco.codezen.utils.BDD;
+import edu.alfonsaco.codezen.utils.Notificaciones;
 
 public class CreateHabitActivity extends AppCompatActivity {
 
@@ -53,6 +58,10 @@ public class CreateHabitActivity extends AppCompatActivity {
 
     // FirebaseAuth
     private BDD bd;
+
+    // Notificaciones
+    private Notificaciones notificaciones;
+    private String recordatorioPendiente = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,6 +182,7 @@ public class CreateHabitActivity extends AppCompatActivity {
 
         // AGREGAR HÁBITO A LA BASE DE DATOS
         bd=new BDD();
+        notificaciones=new Notificaciones(this);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -227,10 +237,48 @@ public class CreateHabitActivity extends AppCompatActivity {
         Habit habito=new Habit(idHabito, nombreHabito, descripcion, colorSeleccionado, nuevaHoraRecordatorio, diasHabitos);
         bd.guardarHabitoEnUsuario(habito);
 
+        // Guardar recordatorio
+        if (switchRecordatorios.isChecked() && !nuevaHoraRecordatorio.isEmpty()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                    ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS)
+                            != PackageManager.PERMISSION_GRANTED) {
+
+                recordatorioPendiente = nuevaHoraRecordatorio;
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.POST_NOTIFICATIONS},
+                        1001);
+            } else {
+                Notificaciones notificaciones = new Notificaciones(this);
+                notificaciones.programarRecordatorio(nuevaHoraRecordatorio);
+                terminarActividadConResultado(habito);
+            }
+        } else {
+            terminarActividadConResultado(habito);
+        }
+    }
+    private void terminarActividadConResultado(Habit habito) {
         Intent resultIntent = new Intent();
         resultIntent.putExtra("habito", habito);
         setResult(Activity.RESULT_OK, resultIntent);
         finish();
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 1001) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Ahora sí programamos la notificación
+                if (!recordatorioPendiente.isEmpty()) {
+                    Notificaciones notificaciones = new Notificaciones(this);
+                    notificaciones.programarRecordatorio(recordatorioPendiente);
+                }
+            } else {
+                Toast.makeText(this, "No se permitió enviar notificaciones. El recordatorio no será creado.", Toast.LENGTH_SHORT).show();
+            }
+
+            finish();
+        }
     }
 
     // Método para obtener el día de la semana, para saber cuantos Divs agregar
