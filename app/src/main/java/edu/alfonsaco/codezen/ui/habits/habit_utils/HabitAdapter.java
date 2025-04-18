@@ -41,6 +41,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         Button btnHabitoCompletado;
 
         String idHabito;
+        String color;
         HabitOptionsBottomSheet.HabitOptionsListener listener;
 
         RecyclerView recyclerDiasHabito;
@@ -66,6 +67,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
                 intent.putExtra("id", idHabito);
                 intent.putExtra("nombre", nombre);
                 intent.putExtra("descripcion", descripcion);
+                intent.putExtra("color", color);
                 itemView.getContext().startActivity(intent);
             });
 
@@ -94,17 +96,10 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         holder.txtNombreHabito.setText(habito.getNombre().toUpperCase());
         holder.txtDescripcionHabito.setText(habito.getDescripcion());
         holder.btnHabitoCompletado.setBackgroundColor(Color.parseColor(habito.getColor()));
-        holder.idHabito = habito.getId();
 
-        // FECHAS DE DÍAS DE HÁBITOS
-        /*
-        DayAdapter adapter = (DayAdapter) holder.recyclerDiasHabito.getAdapter();
-        if (adapter == null) {
-            adapter = new DayAdapter(habito.getDias(), habito.getColor());
-            holder.recyclerDiasHabito.setAdapter(adapter);
-        } else {
-            adapter.actualizarRecycler(habito.getDias(), habito.getColor());
-        }*/
+        holder.idHabito = habito.getId();
+        holder.color = habito.getColor();
+
         DayAdapter adaptar=new DayAdapter(habito.getDias(), habito.getColor());
         holder.recyclerDiasHabito.setAdapter(adaptar);
     }

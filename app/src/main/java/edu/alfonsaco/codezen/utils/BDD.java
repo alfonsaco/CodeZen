@@ -206,6 +206,52 @@ public class BDD {
     // **********************************************************************************************
 
 
+    // ********************************** MÉTODOS DÍAS HÁBITO **************************************
+    public interface FechaCompletadaCallback {
+        void onResultado(boolean completado);
+    }
+    public void verificarCompletadoBoolean(String fecha, String idHabito, FechaCompletadaCallback callback) {
+        if(getUsuarioID() == null) {
+            Log.e("Usuario no autentificado", "El usuario no está autentificado. No se puede agregar el hábito a la BDD");
+            callback.onResultado(false);
+            return;
+        }
+
+        db.collection("usuarios")
+                .document(getUsuarioID())
+                .collection("habitos")
+                .document(idHabito)
+                .collection("dias")
+                .document(fecha)
+                .get()
+                .addOnSuccessListener(a -> {
+                    if (a.exists()) {
+                        Boolean completado = a.getBoolean("completado");
+                        callback.onResultado(completado != null && completado);
+                    } else {
+                        callback.onResultado(false);
+                    }
+                });
+    }
+    public void cambiarEstadoDia(Boolean estado, String idHabito, String fecha) {
+        if(getUsuarioID() == null) {
+            Log.e("Usuario no autentificado", "El usuario no está autentificado. No se puede agregar el hábito a la BDD");
+            return;
+        }
+
+        db.collection("usuarios")
+                .document(getUsuarioID())
+                .collection("habitos")
+                .document(idHabito)
+                .collection("dias")
+                .document(fecha)
+                .update("completado", estado)
+                .addOnSuccessListener(a -> {
+                    Log.d("PROCESO TERMINADO", "SE ACTUALIZÓ EL ESTADO");
+                });
+    }
+    // **********************************************************************************************
+
     // ****************************** OBTENER UN DATO EN ESPECÍFICO ********************************
     public interface HabitCallback {
         void onHabitLoaded(Habit habit);
