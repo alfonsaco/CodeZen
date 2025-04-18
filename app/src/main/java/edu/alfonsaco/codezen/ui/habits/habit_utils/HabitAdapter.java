@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.checkerframework.checker.units.qual.C;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,11 +24,14 @@ import java.util.List;
 
 import edu.alfonsaco.codezen.R;
 import edu.alfonsaco.codezen.ui.habits.ShowHabitActivity;
+import edu.alfonsaco.codezen.utils.BDD;
+import edu.alfonsaco.codezen.utils.MyDayDecorator;
 
 public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> {
 
     private List<Habit> listaHabitos;
     private Context context;
+
     private final HabitOptionsBottomSheet.HabitOptionsListener listener;
 
     public HabitAdapter(List<Habit> listaHabitos, Context context, HabitOptionsBottomSheet.HabitOptionsListener listener) {
@@ -44,6 +49,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         String color;
         HabitOptionsBottomSheet.HabitOptionsListener listener;
 
+        private BDD db;
         RecyclerView recyclerDiasHabito;
 
         public ViewHolder(@NonNull View itemView, HabitOptionsBottomSheet.HabitOptionsListener listener) {
@@ -57,6 +63,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
             recyclerDiasHabito=itemView.findViewById(R.id.recyclerDiasHabito);
             recyclerDiasHabito.setLayoutManager(new GridLayoutManager(itemView.getContext(), 7, GridLayoutManager.HORIZONTAL, false));
 
+            db=new BDD();
 
             // VAMOS A SHOWACTIVITY
             itemView.setOnClickListener(v -> {
@@ -80,6 +87,42 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
                 }
                 return true;
             });
+
+            // CAMBIAR EL ESTADO DEL DÍA
+            btnHabitoCompletado.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (idHabito != null) {
+                        LocalDate hoy = LocalDate.now();
+                        String fecha = hoy.toString();
+
+                        db.verificarCompletadoBoolean(fecha, idHabito, completado -> {
+                            if (completado) {
+                                db.cambiarEstadoDia(false, idHabito, fecha);
+                                btnHabitoCompletado.setAlpha(0.4f);
+                            } else {
+                                db.cambiarEstadoDia(true, idHabito, fecha);
+                                btnHabitoCompletado.setAlpha(1f);
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+        public void actualizarEstadoBoton() {
+            if (idHabito != null) {
+                LocalDate hoy = LocalDate.now();
+                String fecha = hoy.toString();
+
+                db.verificarCompletadoBoolean(fecha, idHabito, completado -> {
+                    if (completado) {
+                        btnHabitoCompletado.setAlpha(1f);
+                    } else {
+                        btnHabitoCompletado.setAlpha(0.4f);
+                    }
+                });
+            }
         }
     }
 
@@ -99,6 +142,8 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
 
         holder.idHabito = habito.getId();
         holder.color = habito.getColor();
+
+        holder.actualizarEstadoBoton();
 
         DayAdapter adaptar=new DayAdapter(habito.getDias(), habito.getColor());
         holder.recyclerDiasHabito.setAdapter(adaptar);

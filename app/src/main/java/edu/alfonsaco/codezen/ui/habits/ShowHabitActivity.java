@@ -95,7 +95,7 @@ public class ShowHabitActivity extends AppCompatActivity {
                         db.cambiarEstadoDia(true, id, diaSeleccionado);
                     }
 
-                    widget.addDecorator(new MyDayDecorator(date, completado ? Color.BLACK : colorCompletado));
+                    widget.addDecorator(new MyDayDecorator(date, completado ? Color.TRANSPARENT : colorCompletado));
                 });
             }
         });
