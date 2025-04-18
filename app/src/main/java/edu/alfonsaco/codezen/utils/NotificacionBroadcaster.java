@@ -17,10 +17,12 @@ public class NotificacionBroadcaster extends BroadcastReceiver {
         // Verificamos permisos
         if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
 
+            String nombre=intent.getStringExtra("nombre");
+
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "channel_id")
-                    .setSmallIcon(R.drawable.ic_launcher_background)
-                    .setContentTitle("TEXTO TITULO")
-                    .setContentText("TEXTO TEXTOSO")
+                    .setSmallIcon(R.drawable.icono_vector)
+                    .setContentTitle(nombre.toUpperCase())
+                    .setContentText("Es hora de "+nombre)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setAutoCancel(true);
 

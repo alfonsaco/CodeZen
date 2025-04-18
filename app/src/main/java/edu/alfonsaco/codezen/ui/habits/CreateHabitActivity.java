@@ -249,7 +249,7 @@ public class CreateHabitActivity extends AppCompatActivity {
                         1001);
             } else {
                 Notificaciones notificaciones = new Notificaciones(this);
-                notificaciones.programarRecordatorio(nuevaHoraRecordatorio);
+                notificaciones.programarRecordatorio(nuevaHoraRecordatorio, nombreHabito);
                 terminarActividadConResultado(habito);
             }
         } else {
@@ -265,13 +265,15 @@ public class CreateHabitActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        String nombre=String.valueOf(etxtNombreHabito.getText());
+        String descripcion=String.valueOf(etxtDescripcion.getText());
 
         if (requestCode == 1001) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Ahora sí programamos la notificación
                 if (!recordatorioPendiente.isEmpty()) {
                     Notificaciones notificaciones = new Notificaciones(this);
-                    notificaciones.programarRecordatorio(recordatorioPendiente);
+                    notificaciones.programarRecordatorio(recordatorioPendiente, nombre);
                 }
             } else {
                 Toast.makeText(this, "No se permitió enviar notificaciones. El recordatorio no será creado.", Toast.LENGTH_SHORT).show();

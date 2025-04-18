@@ -20,7 +20,7 @@ public class Notificaciones {
         this.context = context;
     }
 
-    public void programarRecordatorio(String hora) {
+    public void programarRecordatorio(String hora, String nombre) {
         crearCanalDeNotificacion();
 
         // Verificar si la app tiene permiso para alarmas exactas
@@ -49,7 +49,10 @@ public class Notificaciones {
             calendario.add(Calendar.DAY_OF_MONTH, 1);
         }
 
+        // Pasamos el dato para la notificación
         Intent intent = new Intent(context, NotificacionBroadcaster.class);
+        intent.putExtra("nombre", nombre);
+
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
