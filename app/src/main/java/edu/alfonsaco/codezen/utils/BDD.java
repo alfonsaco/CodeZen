@@ -275,6 +275,7 @@ public class BDD {
                     Log.e("ERROR", "ERROR AL VERIFICAR LA EXISTENCIA DEL DÍA");
                 });
     }
+
     public void anadirDia(Day dia, String idHabito) {
         db.collection("usuarios")
                 .document(getUsuarioID())
