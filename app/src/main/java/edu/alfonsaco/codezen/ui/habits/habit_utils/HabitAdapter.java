@@ -3,6 +3,7 @@ package edu.alfonsaco.codezen.ui.habits.habit_utils;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.checkerframework.checker.units.qual.C;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -124,7 +127,28 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
                 });
             }
         }
+
+        // ***************** MÉTODOS PARA AÑADIR EL DÍA DE HOY AUTOMATICAMENTE **********************
+        private void verificarHoyAnadido(LocalDate fechaHoy) {
+            String fecha=fechaHoy.toString();
+
+            // Si existe, añadimos nuevo día
+            db.verificarExistenciaDia(idHabito, fecha, existe -> {
+                if(existe) {
+                    Log.d("EXISTE", "LA FECHA "+fecha+" YA EXISTE");
+                } else {
+                    Log.d("NO EXISTE", "LA FECHA "+fecha+" NO EXISTE");
+
+                    Day dia=new Day(false, fecha, color);
+                    db.anadirDia(dia, idHabito);
+
+                    // Si ayer no está añadido, lo añadimos y volvemos a llamar al método
+                    verificarHoyAnadido(fechaHoy.minusDays(1));
+                }
+            });
+        }
     }
+    // **********************************************************************************************
 
     @NonNull
     @Override
@@ -145,6 +169,10 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
 
         holder.actualizarEstadoBoton();
 
+        // Añadir el día de hoy, por si no está agregado
+        LocalDate hoy=LocalDate.now();
+        holder.verificarHoyAnadido(hoy);
+
         DayAdapter adaptar=new DayAdapter(habito.getDias(), habito.getColor());
         holder.recyclerDiasHabito.setAdapter(adaptar);
     }
@@ -153,6 +181,5 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
     public int getItemCount() {
         return listaHabitos.size();
     }
-
 
 }
