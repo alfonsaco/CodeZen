@@ -2,7 +2,6 @@ package edu.alfonsaco.codezen.ui.habits.habit_utils;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -94,7 +93,7 @@ public class HabitOptionsBottomSheet extends BottomSheetDialogFragment {
             AlertDialog alert=builder.create();
             alert.show();
 
-            Button btnBorrar=alert.findViewById(R.id.btnBorrar);
+            Button btnBorrar=alert.findViewById(R.id.btnFinalizar);
             Button btnCancelar=alert.findViewById(R.id.btnCancelar);
 
             btnCancelar.setOnClickListener(new View.OnClickListener() {

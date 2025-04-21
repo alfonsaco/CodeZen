@@ -4,11 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.window.OnBackInvokedDispatcher;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -42,6 +47,27 @@ public class MeditationActivity extends AppCompatActivity {
 
         // BOTÓN DE SALIR DE LA MEDITACIÓN
         btnFinalizarMeditacion=findViewById(R.id.btnFinalizarMeditacion);
+        btnFinalizarMeditacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(contadorActivo) {
+                    alertaFinalizarMeditacion();
+                } else {
+                    finish();
+                }
+            }
+        });
+        // Para evitar salir de la meditación al pulsar "Atrás"
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if(contadorActivo) {
+                    alertaFinalizarMeditacion();
+                } else {
+                    finish();
+                }
+            }
+        });
 
 
         // ******************* INSTAURAR DURACIÓN MEDITACIÓN ********************
@@ -73,12 +99,12 @@ public class MeditationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(contadorActivo) {
-                    btnPararReanudar.setImageResource(R.drawable.pause);
+                    btnPararReanudar.setImageResource(R.drawable.play);
                     contadorActivo=false;
                     countDown.cancel();
 
                 } else {
-                    btnPararReanudar.setImageResource(R.drawable.play);
+                    btnPararReanudar.setImageResource(R.drawable.pause);
                     contadorActivo=true;
                 }
             }
@@ -113,9 +139,40 @@ public class MeditationActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 Toast.makeText(MeditationActivity.this, "Meditación terminada", Toast.LENGTH_SHORT).show();
+                contadorActivo=false;
             }
         };
 
         countDown.start();
+    }
+
+    // MÉTODO PARA EL BOTÓN DE SALIR Y EL BACK PRESSED
+    private void alertaFinalizarMeditacion() {
+        AlertDialog.Builder builder=new AlertDialog.Builder(MeditationActivity.this);
+        View dialogView=getLayoutInflater().from(MeditationActivity.this).inflate(R.layout.dialog_finalizar_meditacion, null);
+        builder.setView(dialogView);
+
+        AlertDialog dialog=builder.create();
+        dialog.show();
+
+        Button btnCancelar=dialog.findViewById(R.id.btnCancelar);
+        Button btnFinalizar=dialog.findViewById(R.id.btnFinalizar);
+
+        btnCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        // CERRAMOS LA ACTIVIDAD
+        btnFinalizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                countDown.cancel();
+                dialog.dismiss();
+
+                finish();
+            }
+        });
     }
 }
