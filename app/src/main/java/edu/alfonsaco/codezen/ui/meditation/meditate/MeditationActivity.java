@@ -14,6 +14,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
+
 import edu.alfonsaco.codezen.R;
 
 public class MeditationActivity extends AppCompatActivity {
@@ -21,13 +23,16 @@ public class MeditationActivity extends AppCompatActivity {
     // Variables
     private int minutos;
     private int segundos;
+
     private boolean contadorActivo=true;
+    private CountDownTimer countDown;
 
     // Componentes
     private ImageView btnFinalizarMeditacion;
     private TextView txtDuracionCompleta;
     private TextView txtTiempoRestante;
     private ImageView btnPararReanudar;
+    private CircularProgressBar circularProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +56,12 @@ public class MeditationActivity extends AppCompatActivity {
             minutosTexto="0"+minutosTexto;
         }
 
-        minutosTexto=minutosTexto.length() == 1 ? minutosTexto="0"+minutosTexto : minutosTexto;
-        segundosTexto=segundosTexto.length() == 1 ? segundosTexto="0"+segundosTexto : segundosTexto;
+        minutosTexto=minutosTexto.length() == 1 ? "0"+minutosTexto : minutosTexto;
+        segundosTexto=segundosTexto.length() == 1 ? "0"+segundosTexto : segundosTexto;
 
         txtDuracionCompleta=findViewById(R.id.txtDuracionCompleta);
         txtTiempoRestante=findViewById(R.id.txtTiempoRestante);
+        circularProgressBar=findViewById(R.id.circularProgressBar);
 
         txtDuracionCompleta.setText(minutosTexto+":"+segundosTexto);
         empezarContador(minutos, segundos);
@@ -69,6 +75,8 @@ public class MeditationActivity extends AppCompatActivity {
                 if(contadorActivo) {
                     btnPararReanudar.setImageResource(R.drawable.pause);
                     contadorActivo=false;
+                    countDown.cancel();
+
                 } else {
                     btnPararReanudar.setImageResource(R.drawable.play);
                     contadorActivo=true;
@@ -85,18 +93,21 @@ public class MeditationActivity extends AppCompatActivity {
 
     private void empezarContador(int minutos, int segundos) {
         int tiempoMilis=(minutos * 60 + segundos) * 1000;
+        circularProgressBar.setProgressMax(tiempoMilis);
 
-        CountDownTimer countDown=new CountDownTimer(tiempoMilis, 1000) {
+        countDown=new CountDownTimer(tiempoMilis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 String minutosRestantes=String.valueOf((int) (millisUntilFinished / 1000) / 60);
                 String segundosRestantes=String.valueOf((int) (millisUntilFinished / 1000) % 60);
 
-                minutosRestantes=minutosRestantes.length() == 1 ? minutosRestantes="0"+minutosRestantes : minutosRestantes;
-                segundosRestantes=segundosRestantes.length() == 1 ? segundosRestantes="0"+segundosRestantes : segundosRestantes;
+                minutosRestantes=minutosRestantes.length() == 1 ? "0"+minutosRestantes : minutosRestantes;
+                segundosRestantes=segundosRestantes.length() == 1 ? "0"+segundosRestantes : segundosRestantes;
 
                 String tiempoRestante=minutosRestantes+":"+segundosRestantes;
                 txtTiempoRestante.setText(tiempoRestante);
+
+                circularProgressBar.setProgress(millisUntilFinished);
             }
 
             @Override

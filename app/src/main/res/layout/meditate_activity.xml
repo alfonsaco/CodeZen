@@ -37,6 +37,7 @@
         app:cpb_progressbar_color="#3f51b5"
         app:cpb_progressbar_width="10dp"
         app:cpb_round_border="false"
+        android:scaleY="-1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +80,7 @@
     <ImageView
         android:id="@+id/btnPararReanudar"
         android:layout_width="40dp"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         app:layout_constraintBottom_toBottomOf="@+id/circularProgressBar"
         app:layout_constraintEnd_toEndOf="@+id/circularProgressBar"
         app:layout_constraintStart_toStartOf="@+id/circularProgressBar"
