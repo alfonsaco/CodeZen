@@ -1,0 +1,110 @@
+package edu.alfonsaco.codezen.ui.meditation.meditate;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import edu.alfonsaco.codezen.R;
+
+public class MeditationActivity extends AppCompatActivity {
+
+    // Variables
+    private int minutos;
+    private int segundos;
+    private boolean contadorActivo=true;
+
+    // Componentes
+    private ImageView btnFinalizarMeditacion;
+    private TextView txtDuracionCompleta;
+    private TextView txtTiempoRestante;
+    private ImageView btnPararReanudar;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.meditate_activity);
+
+        // BOTÓN DE SALIR DE LA MEDITACIÓN
+        btnFinalizarMeditacion=findViewById(R.id.btnFinalizarMeditacion);
+
+
+        // ******************* INSTAURAR DURACIÓN MEDITACIÓN ********************
+        Intent intent=getIntent();
+        minutos=intent.getIntExtra("minutos", 0);
+        segundos=intent.getIntExtra("segundos", 0);
+
+        String minutosTexto=String.valueOf(minutos);
+        String segundosTexto=String.valueOf(segundos);
+
+        if(minutosTexto.length() == 1) {
+            minutosTexto="0"+minutosTexto;
+        }
+
+        minutosTexto=minutosTexto.length() == 1 ? minutosTexto="0"+minutosTexto : minutosTexto;
+        segundosTexto=segundosTexto.length() == 1 ? segundosTexto="0"+segundosTexto : segundosTexto;
+
+        txtDuracionCompleta=findViewById(R.id.txtDuracionCompleta);
+        txtTiempoRestante=findViewById(R.id.txtTiempoRestante);
+
+        txtDuracionCompleta.setText(minutosTexto+":"+segundosTexto);
+        empezarContador(minutos, segundos);
+
+
+        // BOTÓN DE DETENER O REANUDAR LA MOTIVACIÓN
+        btnPararReanudar=findViewById(R.id.btnPararReanudar);
+        btnPararReanudar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(contadorActivo) {
+                    btnPararReanudar.setImageResource(R.drawable.pause);
+                    contadorActivo=false;
+                } else {
+                    btnPararReanudar.setImageResource(R.drawable.play);
+                    contadorActivo=true;
+                }
+            }
+        });
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+    }
+
+    private void empezarContador(int minutos, int segundos) {
+        int tiempoMilis=(minutos * 60 + segundos) * 1000;
+
+        CountDownTimer countDown=new CountDownTimer(tiempoMilis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                String minutosRestantes=String.valueOf((int) (millisUntilFinished / 1000) / 60);
+                String segundosRestantes=String.valueOf((int) (millisUntilFinished / 1000) % 60);
+
+                minutosRestantes=minutosRestantes.length() == 1 ? minutosRestantes="0"+minutosRestantes : minutosRestantes;
+                segundosRestantes=segundosRestantes.length() == 1 ? segundosRestantes="0"+segundosRestantes : segundosRestantes;
+
+                String tiempoRestante=minutosRestantes+":"+segundosRestantes;
+                txtTiempoRestante.setText(tiempoRestante);
+            }
+
+            @Override
+            public void onFinish() {
+                Toast.makeText(MeditationActivity.this, "Meditación terminada", Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        countDown.start();
+    }
+}

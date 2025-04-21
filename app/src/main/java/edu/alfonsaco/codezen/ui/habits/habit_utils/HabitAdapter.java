@@ -203,11 +203,16 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         holder.dayAdapter.setColorHabito(habito.getColor());
 
         holder.actualizarEstadoBoton();
+
+        // Configurar listener y verificar días
         holder.setupDiasListener(habito.getId());
 
-        // Añadir el día de hoy, por si no está agregado
-        LocalDate hoy = LocalDate.now();
-        holder.verificarHoyAnadido(hoy);
+        // Verificar días en segundo plano
+        new Thread(() -> {
+            LocalDate hoy = LocalDate.now();
+            holder.verificarHoyAnadido(hoy);
+            holder.actualizarEstadoBoton();
+        }).start();
     }
 
     @Override
