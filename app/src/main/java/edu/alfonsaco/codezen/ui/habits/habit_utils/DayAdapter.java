@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 import edu.alfonsaco.codezen.R;
 
@@ -24,31 +23,42 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
         this.colorHabito = colorHabito;
     }
 
+    // Método para actualizar la lista de días
+    public void updateDays(List<Day> newDays) {
+        this.listaDias = newDays;
+        notifyDataSetChanged();
+    }
+
+    // Método para actualizar el color
+    public void setColorHabito(String newColor) {
+        this.colorHabito = newColor;
+        notifyDataSetChanged();
+    }
+
     public static class DayViewHolder extends RecyclerView.ViewHolder {
         View diaView;
 
         public DayViewHolder(@NonNull View itemView) {
             super(itemView);
-            diaView=itemView.findViewById(R.id.dayIndicator);
+            diaView = itemView.findViewById(R.id.dayIndicator);
         }
     }
 
     @NonNull
     @Override
-    public DayAdapter.DayViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public DayViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_habit_day, parent, false);
         return new DayViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DayAdapter.DayViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull DayViewHolder holder, int position) {
         Day dia = listaDias.get(position);
         // Colores del día
         int alpha = dia.isCompletado() ? 255 : 76;
 
         holder.diaView.setBackgroundColor(Color.parseColor(colorHabito));
         holder.diaView.setAlpha(alpha / 255f);
-
     }
 
     @Override

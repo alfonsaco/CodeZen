@@ -23,6 +23,8 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
+import java.util.Calendar;
+
 import edu.alfonsaco.codezen.R;
 import edu.alfonsaco.codezen.utils.BDD;
 import edu.alfonsaco.codezen.utils.MyDayDecorator;
@@ -85,6 +87,11 @@ public class ShowHabitActivity extends AppCompatActivity {
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                // Evitar hacer acciones en los días futuros
+                if(date.isAfter(CalendarDay.today())) {
+                    return;
+                }
+
                 String year=String.valueOf(date.getYear());
                 String mes=String.valueOf(date.getMonth()+1);
                 String dia=String.valueOf(date.getDay());
