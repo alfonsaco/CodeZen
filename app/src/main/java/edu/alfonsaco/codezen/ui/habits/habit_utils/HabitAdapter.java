@@ -175,6 +175,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
 
         DayAdapter adaptar=new DayAdapter(habito.getDias(), habito.getColor());
         holder.recyclerDiasHabito.setAdapter(adaptar);
+        holder.recyclerDiasHabito.scrollToPosition(adaptar.getItemCount() - 1);
     }
 
     @Override
