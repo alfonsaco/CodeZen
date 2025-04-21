@@ -28,6 +28,7 @@ public class BDD {
     public FirebaseFirestore getDb() {
         return db;
     }
+
     public String getUsuarioID() {
         return firebaseAuth.getCurrentUser().getUid();
     }
@@ -248,6 +249,46 @@ public class BDD {
                 .update("completado", estado)
                 .addOnSuccessListener(a -> {
                     Log.d("PROCESO TERMINADO", "SE ACTUALIZÓ EL ESTADO");
+                });
+    }
+
+    // Método para verificar si existe un día en la BDD, por si agregarlo o no
+    public interface ExisteDiaCallback {
+        void onResultado(boolean existe);
+    }
+    public void verificarExistenciaDia(String idHabito, String fecha, ExisteDiaCallback callback) {
+        db.collection("usuarios")
+                .document(getUsuarioID())
+                .collection("habitos")
+                .document(idHabito)
+                .collection("dias")
+                .document(fecha)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if(documentSnapshot.exists() && documentSnapshot != null) {
+                        callback.onResultado(true);
+                    } else {
+                        callback.onResultado(false);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("ERROR", "ERROR AL VERIFICAR LA EXISTENCIA DEL DÍA");
+                });
+    }
+
+    public void anadirDia(Day dia, String idHabito) {
+        db.collection("usuarios")
+                .document(getUsuarioID())
+                .collection("habitos")
+                .document(idHabito)
+                .collection("dias")
+                .document(dia.getId())
+                .set(dia)
+                .addOnSuccessListener(a -> {
+                    Log.d("ÉXITO", "DÍA AÑADIDO CORRECTAMENTE");
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("ERROR", "ERROR AL AÑADIR DÍA AL HÁBITO");
                 });
     }
     // **********************************************************************************************
