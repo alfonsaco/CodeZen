@@ -67,4 +67,7 @@ dependencies {
     // Material
     implementation("com.google.android.material:material:1.11.0")
     implementation("com.prolificinteractive:material-calendarview:1.4.3")
+
+    // Progress bar meditacion
+    implementation("com.mikhaellopez:circularprogressbar:3.1.0")
 }

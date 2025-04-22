@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <!-- Permisos de notificaciones -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
@@ -17,6 +16,15 @@
         android:theme="@style/Theme.CodeZen"
         tools:targetApi="33">
         <activity
+            android:name=".ui.meditation.meditate.MeditationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.meditation.meditate.HistoryMeditateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.meditation.meditate.MeditationCreateActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.habits.EditHabitActivity"
             android:exported="false" />
         <activity
@@ -25,7 +33,12 @@
         <activity
             android:name=".ui.habits.CreateHabitActivity"
             android:exported="false" />
-        <receiver android:name=".utils.NotificacionBroadcaster" android:enabled="true" android:exported="false" />
+
+        <receiver
+            android:name=".utils.NotificacionBroadcaster"
+            android:enabled="true"
+            android:exported="false" />
+
         <activity
             android:name=".auth.PasswordRecoverActivity"
             android:exported="false" />

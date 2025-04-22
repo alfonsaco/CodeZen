@@ -20,10 +20,10 @@
             android:id="@+id/textView13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="BORRAR HÁBITO"
-            android:textSize="19sp"
             android:layout_marginBottom="5dp"
+            android:gravity="center"
+            android:text="FINALIZAR MEDITACIÓN"
+            android:textSize="19sp"
             android:textStyle="bold" />
 
         <TextView
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginBottom="20dp"
-            android:text="¿Estás seguro de que quieres borrar este hábito?" />
+            android:text="La meditación no se guardará como completada" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="#C80000"
-                android:text="BORRAR" />
+                android:text="FINALIZAR" />
         </LinearLayout>
 
     </LinearLayout>
