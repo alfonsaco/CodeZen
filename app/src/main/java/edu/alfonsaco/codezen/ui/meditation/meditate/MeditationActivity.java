@@ -1,6 +1,7 @@
 package edu.alfonsaco.codezen.ui.meditation.meditate;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -29,8 +30,12 @@ public class MeditationActivity extends AppCompatActivity {
     private int minutos;
     private int segundos;
 
+    // Contador
     private boolean contadorActivo=true;
     private CountDownTimer countDown;
+
+    // Audio
+    private MediaPlayer mediaPlayer;
 
     // Componentes
     private ImageView btnFinalizarMeditacion;
@@ -74,6 +79,10 @@ public class MeditationActivity extends AppCompatActivity {
         Intent intent=getIntent();
         minutos=intent.getIntExtra("minutos", 0);
         segundos=intent.getIntExtra("segundos", 0);
+        int audio=intent.getIntExtra("audio", 0);
+
+        // borrar
+        Toast.makeText(MeditationActivity.this, "Sonido: "+audio, Toast.LENGTH_SHORT).show();
 
         String minutosTexto=String.valueOf(minutos);
         String segundosTexto=String.valueOf(segundos);
@@ -91,6 +100,21 @@ public class MeditationActivity extends AppCompatActivity {
 
         txtDuracionCompleta.setText(minutosTexto+":"+segundosTexto);
         empezarContador(minutos, segundos);
+        // *************************************************************************
+
+
+        // ******************************** AUDIO **********************************
+        int rutaAudio=establecerAudio(audio);
+        // borrar
+        Toast.makeText(MeditationActivity.this, "Sonido: "+rutaAudio, Toast.LENGTH_SHORT).show();
+        if(rutaAudio != 0) {
+            mediaPlayer=MediaPlayer.create(this, rutaAudio);
+            if(mediaPlayer != null) {
+                mediaPlayer.setLooping(true);
+                mediaPlayer.start();
+            }
+        }
+        // *************************************************************************
 
 
         // BOTÓN DE DETENER O REANUDAR LA MOTIVACIÓN
@@ -115,6 +139,22 @@ public class MeditationActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    // Método para seleccionar la música
+    private int establecerAudio(int audio) {
+        switch(audio) {
+            case 1:
+                return R.raw.white_noise;
+            case 2:
+                return R.raw.ondas_binaurales;
+            case 3:
+                return R.raw.rain;
+            case 4:
+                return 0;
+            default:
+                return 0;
+        }
     }
 
     private void empezarContador(int minutos, int segundos) {
@@ -174,5 +214,19 @@ public class MeditationActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+
+    // PARAR AUDIO AL SALIR DE LA APP
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mediaPlayer.stop();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }
