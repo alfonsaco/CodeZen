@@ -127,11 +127,16 @@ public class MeditationActivity extends AppCompatActivity {
                 if(musicaActiva) {
                     btnActivarSonido.setImageResource(R.drawable.sound_mute);
                     musicaActiva=false;
-                    mediaPlayer.setVolume(0f, 0f);
+                    if(mediaPlayer != null && mediaPlayer.isPlaying()) {
+                        mediaPlayer.setVolume(0f, 0f);
+                    }
+
                 } else {
                     btnActivarSonido.setImageResource(R.drawable.sound);
                     musicaActiva=true;
-                    mediaPlayer.setVolume(1f, 1f);
+                    if(mediaPlayer != null && mediaPlayer.isPlaying()) {
+                        mediaPlayer.setVolume(1f, 1f);
+                    }
                 }
             }
         });
@@ -218,6 +223,8 @@ public class MeditationActivity extends AppCompatActivity {
 
                 Meditation meditacion=new Meditation(id, fecha, duracion);
                 db.agregarMeditacion(meditacion);
+
+                circularProgressBar.setProgress(0);
             }
         };
 
