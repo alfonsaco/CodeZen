@@ -36,12 +36,14 @@ public class MeditationActivity extends AppCompatActivity {
 
     // Audio
     private MediaPlayer mediaPlayer;
+    private boolean musicaActiva=true;
 
     // Componentes
     private ImageView btnFinalizarMeditacion;
     private TextView txtDuracionCompleta;
     private TextView txtTiempoRestante;
     private ImageView btnPararReanudar;
+    private ImageView btnActivarSonido;
     private CircularProgressBar circularProgressBar;
 
     @Override
@@ -114,6 +116,22 @@ public class MeditationActivity extends AppCompatActivity {
                 mediaPlayer.start();
             }
         }
+
+        btnActivarSonido=findViewById(R.id.btnActivarSonido);
+        btnActivarSonido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(musicaActiva) {
+                    btnActivarSonido.setImageResource(R.drawable.sound_mute);
+                    musicaActiva=false;
+                    mediaPlayer.setVolume(0f, 0f);
+                } else {
+                    btnActivarSonido.setImageResource(R.drawable.sound);
+                    musicaActiva=true;
+                    mediaPlayer.setVolume(1f, 1f);
+                }
+            }
+        });
         // *************************************************************************
 
 
@@ -222,11 +240,26 @@ public class MeditationActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        mediaPlayer.stop();
+        if(mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer=null;
+        }
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
 
+        if(mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
+        }
+    }
     @Override
     protected void onResume() {
         super.onResume();
+
+        if(mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.start();
+        }
     }
 }
