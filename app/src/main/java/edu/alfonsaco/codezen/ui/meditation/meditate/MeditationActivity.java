@@ -20,9 +20,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.firestore.DocumentReference;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
+import java.time.LocalDate;
+
 import edu.alfonsaco.codezen.R;
+import edu.alfonsaco.codezen.utils.BDD;
 
 public class MeditationActivity extends AppCompatActivity {
 
@@ -33,6 +37,7 @@ public class MeditationActivity extends AppCompatActivity {
     // Contador
     private boolean contadorActivo=true;
     private CountDownTimer countDown;
+    private BDD db;
 
     // Audio
     private MediaPlayer mediaPlayer;
@@ -51,6 +56,8 @@ public class MeditationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.meditate_activity);
+
+        db=new BDD();
 
         // BOTÓN DE SALIR DE LA MEDITACIÓN
         btnFinalizarMeditacion=findViewById(R.id.btnFinalizarMeditacion);
@@ -83,9 +90,6 @@ public class MeditationActivity extends AppCompatActivity {
         segundos=intent.getIntExtra("segundos", 0);
         int audio=intent.getIntExtra("audio", 0);
 
-        // borrar
-        Toast.makeText(MeditationActivity.this, "Sonido: "+audio, Toast.LENGTH_SHORT).show();
-
         String minutosTexto=String.valueOf(minutos);
         String segundosTexto=String.valueOf(segundos);
 
@@ -107,8 +111,7 @@ public class MeditationActivity extends AppCompatActivity {
 
         // ******************************** AUDIO **********************************
         int rutaAudio=establecerAudio(audio);
-        // borrar
-        Toast.makeText(MeditationActivity.this, "Sonido: "+rutaAudio, Toast.LENGTH_SHORT).show();
+
         if(rutaAudio != 0) {
             mediaPlayer=MediaPlayer.create(this, rutaAudio);
             if(mediaPlayer != null) {
@@ -135,7 +138,7 @@ public class MeditationActivity extends AppCompatActivity {
         // *************************************************************************
 
 
-        // BOTÓN DE DETENER O REANUDAR LA MOTIVACIÓN
+        // BOTÓN DE DETENER O REANUDAR LA MEDITACIÓN
         btnPararReanudar=findViewById(R.id.btnPararReanudar);
         btnPararReanudar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,6 +201,23 @@ public class MeditationActivity extends AppCompatActivity {
             public void onFinish() {
                 Toast.makeText(MeditationActivity.this, "Meditación terminada", Toast.LENGTH_SHORT).show();
                 contadorActivo=false;
+
+                // Agregamos la meditacion a la BDD
+                String duracion=minutos+":"+segundos;
+                LocalDate hoy=LocalDate.now();
+                String fecha=hoy.toString();
+
+                // Obtener ID de Firebase de la meditación
+                DocumentReference ref=db.getDb()
+                        .collection("usuarios")
+                        .document(db.getUsuarioID())
+                        .collection("meditaciones")
+                        .document();
+
+                String id=ref.getId();
+
+                Meditation meditacion=new Meditation(id, fecha, duracion);
+                db.agregarMeditacion(meditacion);
             }
         };
 

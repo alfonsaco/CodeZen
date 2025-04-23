@@ -76,7 +76,6 @@ public class MeditationCreateActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 sonidoSeleccionado=items.get(position).getValorAudio();
-                Toast.makeText(MeditationCreateActivity.this, "Sonido: "+sonidoSeleccionado, Toast.LENGTH_SHORT).show();
             }
 
             @Override
