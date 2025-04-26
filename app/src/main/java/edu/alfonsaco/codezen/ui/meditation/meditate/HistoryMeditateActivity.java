@@ -11,6 +11,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.firestore.DocumentSnapshot;
+
+import java.util.ArrayList;
 
 import edu.alfonsaco.codezen.R;
 import edu.alfonsaco.codezen.utils.BDD;
@@ -21,6 +27,11 @@ public class HistoryMeditateActivity extends AppCompatActivity {
     private ImageView btnVolver;
     private TextView txtTotaslMeditaciones;
 
+    // Recycler
+    private RecyclerView recyclerMeditaciones;
+    private MeditacionAdapter adapterMeditaciones;
+    private ArrayList<Meditation> listaMeditaciones;
+
     private BDD db;
 
     @Override
@@ -30,6 +41,15 @@ public class HistoryMeditateActivity extends AppCompatActivity {
         setContentView(R.layout.meditate_history);
 
         db=new BDD();
+
+
+        // RECYCLER
+        recyclerMeditaciones=findViewById(R.id.recyclerMeditaciones);
+        listaMeditaciones=new ArrayList<>();
+        adapterMeditaciones=new MeditacionAdapter(listaMeditaciones, this);
+        recyclerMeditaciones.setAdapter(adapterMeditaciones);
+        recyclerMeditaciones.setLayoutManager(new LinearLayoutManager(this));
+        cargarMeditaciones();
 
         // Volver a la actividad de meditaciones
         btnVolver=findViewById(R.id.btnVolver);
@@ -61,5 +81,38 @@ public class HistoryMeditateActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    private void cargarMeditaciones() {
+        if(db.getUsuarioID() == null) {
+            return;
+        }
+
+        db.getDb().collection("usuarios")
+                .document(db.getUsuarioID())
+                .collection("meditaciones")
+                .get()
+                .addOnSuccessListener(consulta -> {
+                    listaMeditaciones.clear();
+
+                    for(DocumentSnapshot doc : consulta.getDocuments()) {
+                        String duracion=doc.getString("duracion");
+                        String minutos=duracion.split(":")[0];
+                        String segundos=duracion.split(":")[1];
+
+                        String duracionFinal=minutos+" minutos y "+segundos+" segundos";
+
+                        String fecha=doc.getString("fecha");
+                        String id=doc.getString("id");
+
+                        Meditation meditacion=new Meditation(id, fecha, duracionFinal);
+                        listaMeditaciones.add(meditacion);
+                    }
+
+                    adapterMeditaciones.notifyDataSetChanged();
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("ERROR", "ERROR AL OBTENER LAS MEDITACIONES");
+                });
     }
 }
