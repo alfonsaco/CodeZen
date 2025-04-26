@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
@@ -15,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.material.materialswitch.MaterialSwitch;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +33,12 @@ public class MeditationCreateActivity extends AppCompatActivity {
     private NumberPicker segundosPicker;
     private ImageView btnPlayMeditacion;
     private Spinner spinnerAudio;
+    private MaterialSwitch switchAlarma;
+    private ImageView imagenCampana;
 
     // Variables
     private int sonidoSeleccionado=0;
+    private boolean alarmaActiva=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +104,26 @@ public class MeditationCreateActivity extends AppCompatActivity {
         // ***************************************************************
 
 
+        // ************************** ALARMAS ****************************
+        switchAlarma=findViewById(R.id.switchAlarma);
+        imagenCampana=findViewById(R.id.imagenCampana);
+
+        switchAlarma.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(switchAlarma.isChecked()) {
+                    alarmaActiva=true;
+                    imagenCampana.setImageResource(R.drawable.alarm);
+
+                } else {
+                    alarmaActiva=false;
+                    imagenCampana.setImageResource(R.drawable.no_alarm);
+                }
+            }
+        });
+        // ***************************************************************
+
+
         // ********************** CREAR MEDITACIÓN ***********************
         btnPlayMeditacion=findViewById(R.id.btnPlayMeditacion);
         btnPlayMeditacion.setOnClickListener(new View.OnClickListener() {
@@ -121,7 +147,7 @@ public class MeditationCreateActivity extends AppCompatActivity {
         int segundos=segundosPicker.getValue();
 
         // Verificamos que sea una meditación válida
-        if(minutos < 1) {
+        if(minutos < 0) {
             Toast.makeText(this, "Esa meditación es muy corta, ¿No crees?", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -130,6 +156,7 @@ public class MeditationCreateActivity extends AppCompatActivity {
         intent.putExtra("minutos", minutos);
         intent.putExtra("segundos", segundos);
         intent.putExtra("audio", sonidoSeleccionado);
+        intent.putExtra("alarma", alarmaActiva);
         startActivity(intent);
     }
 }

@@ -41,7 +41,9 @@ public class MeditationActivity extends AppCompatActivity {
 
     // Audio
     private MediaPlayer mediaPlayer;
+    private MediaPlayer alarma;
     private boolean musicaActiva=true;
+    private boolean hayAlarma;
 
     // Componentes
     private ImageView btnFinalizarMeditacion;
@@ -89,6 +91,7 @@ public class MeditationActivity extends AppCompatActivity {
         minutos=intent.getIntExtra("minutos", 0);
         segundos=intent.getIntExtra("segundos", 0);
         int audio=intent.getIntExtra("audio", 0);
+        hayAlarma=intent.getBooleanExtra("alarma", true);
 
         String minutosTexto=String.valueOf(minutos);
         String segundosTexto=String.valueOf(segundos);
@@ -224,7 +227,29 @@ public class MeditationActivity extends AppCompatActivity {
                 Meditation meditacion=new Meditation(id, fecha, duracion);
                 db.agregarMeditacion(meditacion);
 
+                // Progreso a 0
                 circularProgressBar.setProgress(0);
+
+                // Paramos la música y suena la alarma
+                if(mediaPlayer != null && mediaPlayer.isPlaying()) {
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                }
+
+                if(hayAlarma) {
+                    alarma=MediaPlayer.create(MeditationActivity.this, R.raw.alarma);
+                    alarma.setLooping(true);
+                    alarma.setVolume(0.7f, 0.7f);
+                    alarma.start();
+
+                    alarma.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            alarma.stop();
+                            alarma.release();
+                        }
+                    });
+                }
             }
         };
 
@@ -272,6 +297,10 @@ public class MeditationActivity extends AppCompatActivity {
             mediaPlayer.release();
             mediaPlayer=null;
         }
+        if(alarma != null && alarma.isPlaying()) {
+            alarma.stop();
+            alarma.release();
+        }
     }
     @Override
     protected void onPause() {
@@ -280,6 +309,10 @@ public class MeditationActivity extends AppCompatActivity {
         if(mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
         }
+        if(alarma != null && alarma.isPlaying()) {
+            alarma.stop();
+            alarma.release();
+        }
     }
     @Override
     protected void onResume() {
@@ -287,6 +320,10 @@ public class MeditationActivity extends AppCompatActivity {
 
         if(mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.start();
+        }
+        if(alarma != null && alarma.isPlaying()) {
+            alarma.stop();
+            alarma.release();
         }
     }
 }
