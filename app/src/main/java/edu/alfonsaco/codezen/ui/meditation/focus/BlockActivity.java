@@ -1,12 +1,14 @@
 package edu.alfonsaco.codezen.ui.meditation.focus;
 
-import android.content.Intent;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.window.OnBackInvokedDispatcher;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -15,33 +17,32 @@ import androidx.core.view.WindowInsetsCompat;
 
 import edu.alfonsaco.codezen.R;
 
-public class FocusActivity extends AppCompatActivity {
+public class BlockActivity extends AppCompatActivity {
 
-    private ImageView btnVolver;
-    private ImageView btnIniciarFocus;
+    private Button btnFinalizarFocus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_focus);
+        setContentView(R.layout.activity_block);
 
-        // VOLVER
-        btnVolver=findViewById(R.id.btnVolver);
-        btnVolver.setOnClickListener(new View.OnClickListener() {
+        // MÉTODO POR DEFECTO DE ANDROID STUDIO PARA BLOQUEAR PANTALLA
+        startLockTask();
+        // EVITAMOS QUE SALGA AL PULSAR ATRÁS
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
-            public void onClick(View v) {
-                finish();
+            public void handleOnBackPressed() {
+
             }
         });
 
-        // INICIAR FOCUS
-        btnIniciarFocus=findViewById(R.id.btnIniciarFocus);
-        btnIniciarFocus.setOnClickListener(new View.OnClickListener() {
+        // ******************* CERRAR LA SESIÓN CON UN DIÁLOGO ************************
+        btnFinalizarFocus=findViewById(R.id.btnFinalizarFocus);
+        btnFinalizarFocus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(FocusActivity.this, BlockActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
 
