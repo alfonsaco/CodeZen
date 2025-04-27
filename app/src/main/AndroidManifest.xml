@@ -16,22 +16,32 @@
         android:theme="@style/Theme.CodeZen"
         tools:targetApi="33">
         <activity
+            android:name=".ui.meditation.focus.FocusActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+        <activity
             android:name=".ui.meditation.meditate.MeditationActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.meditation.meditate.HistoryMeditateActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.meditation.meditate.MeditationCreateActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.habits.EditHabitActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.habits.ShowHabitActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.habits.CreateHabitActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
 
         <receiver
@@ -41,18 +51,23 @@
 
         <activity
             android:name=".auth.PasswordRecoverActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".otros.SettingsActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".auth.RegisterActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".auth.LoginActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".AuthSelectActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -62,6 +77,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true"
             android:label="@string/app_name" />
     </application>
