@@ -1,6 +1,7 @@
 package edu.alfonsaco.codezen.ui.meditation.focus;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -19,9 +20,14 @@ import edu.alfonsaco.codezen.R;
 
 public class BlockActivity extends AppCompatActivity {
 
+    // Componentes
     private Button btnFinalizarFocus;
     private TextView txtTiempoRestanteFocus;
     private TextView txtSegundos;
+
+    // Variables
+    private boolean focusActivo=true;
+    private MediaPlayer alarma;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +37,8 @@ public class BlockActivity extends AppCompatActivity {
 
         txtSegundos=findViewById(R.id.txtSegundos);
         txtTiempoRestanteFocus=findViewById(R.id.txtTiempoRestanteFocus);
+        alarma=MediaPlayer.create(BlockActivity.this, R.raw.alarma_focus);
+        alarma.setVolume(1.0f, 1.0f);
 
         Intent intent=getIntent();
         int segundos=intent.getIntExtra("segundos", 0);
@@ -55,7 +63,17 @@ public class BlockActivity extends AppCompatActivity {
         btnFinalizarFocus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mostrarAlerta();
+                if(focusActivo) {
+                    mostrarAlerta();
+                } else {
+                    // Paramos la alarma
+                    if(alarma != null && alarma.isPlaying()) {
+                        alarma.stop();
+                        alarma.release();
+                    }
+
+                    finish();
+                }
             }
         });
 
@@ -72,7 +90,6 @@ public class BlockActivity extends AppCompatActivity {
         CountDownTimer countDownTimer=new CountDownTimer(milis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-
                 int horasRestantes=(int) (millisUntilFinished / (1000 * 60 * 60));
                 int minutosRestantes=(int) (millisUntilFinished / (1000 * 60)) % 60;
                 int segundosRestantes=(int) (millisUntilFinished / 1000) % 60;
@@ -89,9 +106,29 @@ public class BlockActivity extends AppCompatActivity {
             public void onFinish() {
                 txtSegundos.setText("00");
                 txtTiempoRestanteFocus.setText("00:00");
+                focusActivo=false;
+
+                alarma.start();
+                alarma.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        alarma.release();
+                    }
+                });
 
                 stopLockTask();
-                finish();
+                getOnBackPressedDispatcher().addCallback(BlockActivity.this, new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        // Paramos la alarma
+                        if(alarma != null && alarma.isPlaying()) {
+                            alarma.stop();
+                            alarma.release();
+                        }
+
+                        finish();
+                    }
+                });
             }
         }.start();
     }
