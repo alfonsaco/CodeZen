@@ -5,6 +5,11 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
+    <!-- PERMISOS MODO FOCUS (Device Owner)-->
+    <uses-permission android:name="android.permission.MANAGE_DEVICE_ADMINS" tools:ignore="ProtectedPermissions"/>
+    <uses-permission android:name="android.permission.BIND_DEVICE_ADMIN" tools:ignore="ProtectedPermissions"/>
+    <uses-permission android:name="android.permission.LOCK_TASK" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -49,10 +54,24 @@
             android:exported="false"
             android:screenOrientation="portrait" />
 
+        <!-- Notificaciones -->
         <receiver
             android:name=".utils.NotificacionBroadcaster"
             android:enabled="true"
             android:exported="false" />
+
+        <!-- Device Owner -->
+        <receiver
+            android:name=".utils.DeviceAdminReceiver"
+            android:permission="android.permission.BIND_DEVICE_ADMIN"
+            android:exported="true">
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/device_admin_receiver" />
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
 
         <activity
             android:name=".auth.PasswordRecoverActivity"
