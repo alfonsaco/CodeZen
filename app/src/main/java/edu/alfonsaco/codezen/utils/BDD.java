@@ -16,6 +16,7 @@ import java.util.Map;
 
 import edu.alfonsaco.codezen.ui.habits.habit_utils.Day;
 import edu.alfonsaco.codezen.ui.habits.habit_utils.Habit;
+import edu.alfonsaco.codezen.ui.meditation.meditate.Meditation;
 
 public class BDD {
     private FirebaseAuth firebaseAuth;
@@ -298,6 +299,42 @@ public class BDD {
         void onHabitLoaded(Habit habit);
         void onError(Exception e);
     }
+    // *********************************************************************************************
+
+    // ************************************** MEDITACIONES ******************************************
+    public void agregarMeditacion(Meditation meditacion) {
+        Map<String, Object> meditacionBD=new HashMap<>();
+
+        // Verificar usuario
+        if(getUsuarioID() == null) {
+            return;
+        }
+
+        meditacionBD.put("id", meditacion.getId());
+        meditacionBD.put("fecha", meditacion.getFecha());
+        meditacionBD.put("duracion", meditacion.getDuracion());
+
+        db.collection("usuarios")
+                .document(getUsuarioID())
+                .collection("meditaciones")
+                .document(meditacion.getId())
+                .set(meditacionBD)
+                .addOnSuccessListener(aVoid -> Log.d("AÑADIR MEDITACION", "Meditación guardada en Firestore"))
+                .addOnFailureListener(e -> Log.e("AÑADIR MEDITACION", "Error al guardar la meditación en Firestore"));
+
+
+        // Incrementar el contador de meditación
+        db.collection("usuarios")
+                .document(getUsuarioID())
+                .update("cont_meditaciones", FieldValue.increment(1))
+                .addOnSuccessListener(a -> {
+                    Log.d("MEDITACION", "SE SUMÓ EL CONTADOR DE MEDITACION");
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("MEDITACION", "NO SE PUDO SUMAR EL CONTADOR DE MEDITACION");
+                });
+    }
+    // *********************************************************************************************
 
     public void obtenerHabito(String idHabito, HabitCallback callback) {
         FirebaseUser usuario=FirebaseAuth.getInstance().getCurrentUser();
