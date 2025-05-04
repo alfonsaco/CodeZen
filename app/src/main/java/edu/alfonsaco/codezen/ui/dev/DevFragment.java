@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import edu.alfonsaco.codezen.databinding.FragmentDevBinding;
+import retrofit2.Retrofit;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class DevFragment extends Fragment {
 
@@ -18,14 +20,16 @@ public class DevFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        NotificationsViewModel notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
-
         binding = FragmentDevBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textNotifications;
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        // CONECTAR A LA API DE GRAPHQL
+        Retrofit retrofit=new Retrofit.Builder()
+                .baseUrl("https://api.github.com/")
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .build();
+
+
         return root;
     }
 

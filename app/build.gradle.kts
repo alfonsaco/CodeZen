@@ -15,6 +15,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "GITHUB_CLIENTE", "\"${project.property("GITHUB_CLIENTE")}\"")
+        buildConfigField("String", "GITHUB_CLIENTE_SECRET", "\"${project.property("GITHUB_CLIENTE_SECRET")}\"")
     }
 
     buildTypes {
@@ -70,4 +73,9 @@ dependencies {
 
     // Progress bar meditacion
     implementation("com.mikhaellopez:circularprogressbar:3.1.0")
+
+    // Api de GitHub
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
 }
