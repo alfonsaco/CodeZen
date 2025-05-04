@@ -16,6 +16,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
+        android.buildFeatures.buildConfig = true
         buildConfigField("String", "GITHUB_CLIENTE", "\"${project.property("GITHUB_CLIENTE")}\"")
         buildConfigField("String", "GITHUB_CLIENTE_SECRET", "\"${project.property("GITHUB_CLIENTE_SECRET")}\"")
     }
