@@ -5,6 +5,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import com.google.gson.JsonObject;
 
 public interface GraphQLApi {
     @Headers("Content-Type: JSON/application")
@@ -14,3 +15,4 @@ public interface GraphQLApi {
             @Header("Authorization") String token
     );
 }
+

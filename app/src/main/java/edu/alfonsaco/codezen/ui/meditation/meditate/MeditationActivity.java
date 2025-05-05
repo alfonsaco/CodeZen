@@ -303,18 +303,6 @@ public class MeditationActivity extends AppCompatActivity {
         }
     }
     @Override
-    protected void onPause() {
-        super.onPause();
-
-        if(mediaPlayer != null && mediaPlayer.isPlaying()) {
-            mediaPlayer.pause();
-        }
-        if(alarma != null && alarma.isPlaying()) {
-            alarma.stop();
-            alarma.release();
-        }
-    }
-    @Override
     protected void onResume() {
         super.onResume();
 

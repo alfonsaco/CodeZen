@@ -1,7 +1,9 @@
 package edu.alfonsaco.codezen;
 
+import android.app.ComponentCaller;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +22,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import edu.alfonsaco.codezen.databinding.ActivityMainBinding;
 import edu.alfonsaco.codezen.otros.SettingsActivity;
+import edu.alfonsaco.codezen.ui.dev.DevFragment;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -124,5 +127,21 @@ public class MainActivity extends AppCompatActivity {
         String emailUsuario=intentDatosUsuario.getStringExtra("email");
 
         Toast.makeText(this, "HA INICIADO SESIÓN EL USUARIO "+nombreUsuario+" CON EL EMAIL "+emailUsuario, Toast.LENGTH_SHORT).show();
+    }
+
+    // PARA OBTENER LOS DATOS AL INICIAR SESIÓN EN GITHUB
+    @Override
+    public void onNewIntent(@NonNull Intent intent, @NonNull ComponentCaller caller) {
+        super.onNewIntent(intent, caller);
+        setIntent(intent);
+
+        Uri uri=intent.getData();
+        if(uri != null && uri.toString().startsWith("codezen://callback")) {
+            String code=uri.getQueryParameter("code");
+            if(code != null) {
+                //DevFragment.
+                Toast.makeText(MainActivity.this, "CODE: "+code, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
