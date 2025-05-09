@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import edu.alfonsaco.codezen.databinding.FragmentMeditateBinding;
+import edu.alfonsaco.codezen.ui.meditation.focus.FocusActivity;
 import edu.alfonsaco.codezen.ui.meditation.meditate.MeditationCreateActivity;
 
 public class MeditateFragment extends Fragment {
@@ -20,6 +21,7 @@ public class MeditateFragment extends Fragment {
     private FragmentMeditateBinding binding;
 
     private LinearLayout irAMeditar;
+    private LinearLayout irAFocus;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -36,6 +38,15 @@ public class MeditateFragment extends Fragment {
             }
         });
 
+        // IR A FOCUS
+        irAFocus=binding.irAFocus;
+        irAFocus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), FocusActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return root;
     }

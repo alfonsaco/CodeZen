@@ -72,7 +72,7 @@ public class CreateHabitActivity extends AppCompatActivity {
         btnAgregarNuevoHabito=findViewById(R.id.btnEditarHabito);
         etxtNombreHabito=findViewById(R.id.etxtNombreHabito);
         etxtDescripcion=findViewById(R.id.etxtDescripcion);
-        switchRecordatorios=findViewById(R.id.switchRecordatorios);
+        switchRecordatorios=findViewById(R.id.switchAlarma);
         btnGestionarRecordatorio=findViewById(R.id.btnGestionarRecordatorio);
 
         // BOTÓN PARA VOLVER ATRÁS

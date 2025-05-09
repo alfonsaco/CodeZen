@@ -84,5 +84,36 @@
         app:layout_constraintTop_toBottomOf="@+id/textView17"
         app:srcCompat="@drawable/play" />
 
+    <Spinner
+        android:id="@+id/spinnerAudio"
+        android:layout_width="209dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Alarma -->
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/switchAlarma"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:checked="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.44"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnPlayMeditacion" />
+
+    <ImageView
+        android:id="@+id/imagenCampana"
+        android:layout_width="30dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/switchAlarma"
+        app:layout_constraintStart_toEndOf="@+id/switchAlarma"
+        app:layout_constraintTop_toTopOf="@+id/switchAlarma"
+        app:srcCompat="@drawable/no_alarm" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
