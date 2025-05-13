@@ -38,7 +38,7 @@
                 tools:text="Primeros pasos" />
 
             <TextView
-                android:id="@+id/txtDesacripcionLogro"
+                android:id="@+id/txtDescripcionLogro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="Crea tu primer hábito" />
