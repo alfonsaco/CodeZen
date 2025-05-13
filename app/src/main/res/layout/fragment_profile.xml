@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="56dp"
+    android:paddingTop="56dp"
     tools:context=".ui.dev.DevFragment">
 
 
@@ -18,9 +19,9 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:id="@+id/avatarUsuario"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         android:layout_marginTop="50dp"
         tools:src="@drawable/github"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,11 +29,26 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/txtNombreUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="184dp"
-        tools:layout_editor_absoluteY="245dp" />
+        android:layout_marginTop="15dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:text="GigaChad"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/avatarUsuario" />
+
+    <ImageView
+        android:id="@+id/imagenNivel"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="-20dp"
+        android:layout_marginBottom="-10dp"
+        android:src="@drawable/alarm"
+        app:tint="#12B8CF"
+        app:layout_constraintBottom_toBottomOf="@+id/avatarUsuario"
+        app:layout_constraintStart_toEndOf="@+id/avatarUsuario" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
