@@ -46,6 +46,7 @@ public class BDD {
         usuario.put("id", firebaseAuth.getCurrentUser().getUid());
         usuario.put("avatar", "lvl0");
         usuario.put("cont_logros", 0);
+        usuario.put("nivel", 0);
 
         db.collection("usuarios")
                 .document(firebaseAuth.getCurrentUser().getUid())
