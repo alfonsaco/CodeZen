@@ -5,16 +5,11 @@
     "descripcion": "Crea tu primer hábito",
     "ruta": "logro1"
   },
+
   {
-    "id": "hab_01",
-    "nombre": "Primeros pasos",
-    "descripcion": "Crea tu primer hábito",
-    "ruta": "logro1"
-  },
-  {
-    "id": "hab_01",
-    "nombre": "Primeros pasos",
-    "descripcion": "Crea tu primer hábito",
-    "ruta": "logro1"
+    "id": "med_04",
+    "nombre": "300",
+    "descripcion": "Haz 300 meditaciones",
+    "ruta": "logro7"
   }
 ]
