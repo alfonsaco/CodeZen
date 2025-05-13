@@ -15,8 +15,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
@@ -131,17 +133,48 @@ public class MainActivity extends AppCompatActivity {
 
     // PARA OBTENER LOS DATOS AL INICIAR SESIÓN EN GITHUB
     @Override
-    public void onNewIntent(@NonNull Intent intent, @NonNull ComponentCaller caller) {
-        super.onNewIntent(intent, caller);
+    public void onNewIntent(@NonNull Intent intent) {
+        super.onNewIntent(intent);
         setIntent(intent);
+        handleOAuthIntent(intent);
+    }
 
-        Uri uri=intent.getData();
-        if(uri != null && uri.toString().startsWith("codezen://callback")) {
-            String code=uri.getQueryParameter("code");
-            if(code != null) {
-                //DevFragment.
-                Toast.makeText(MainActivity.this, "CODE: "+code, Toast.LENGTH_SHORT).show();
+    private void handleOAuthIntent(Intent intent) {
+        Uri uri = intent.getData();
+        if (uri != null && uri.toString().startsWith("codezen://callback")) {
+            String code = uri.getQueryParameter("code");
+            if (code != null) {
+                Toast.makeText(MainActivity.this, "CODE: " + code, Toast.LENGTH_SHORT).show();
+
+                BottomNavigationView navView = findViewById(R.id.nav_view);
+                navView.setSelectedItemId(R.id.navigation_dev);
+
+                NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
+                Fragment currentFragment = navHostFragment.getChildFragmentManager().getPrimaryNavigationFragment();
+
+                if (currentFragment instanceof DevFragment) {
+                    DevFragment devFragment = (DevFragment) currentFragment;
+                    DevFragment.obtenerToken(code, devFragment.requireContext());
+                } else {
+                    // Esperar a que se cargue el fragmento con un pequeño delay
+                    new android.os.Handler().postDelayed(() -> {
+                        Fragment fragment = navHostFragment.getChildFragmentManager().getPrimaryNavigationFragment();
+                        if (fragment instanceof DevFragment) {
+                            DevFragment.obtenerToken(code, fragment.requireContext());
+                        }
+                    }, 500);
+                }
             }
         }
     }
+    public void updateDevFragmentUI() {
+        Fragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
+        if (navHostFragment != null) {
+            Fragment fragment = navHostFragment.getChildFragmentManager().getPrimaryNavigationFragment();
+            if (fragment instanceof DevFragment) {
+            }
+        }
+    }
+
+
 }
