@@ -9,57 +9,85 @@
     tools:context=".ui.dev.DevFragment">
 
 
-    <View
-        android:id="@+id/view2"
-        android:layout_width="0dp"
-        android:layout_height="280dp"
-        android:background="#D8D8D8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/avatarUsuario"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:layout_marginTop="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/github" />
-
-    <TextView
-        android:id="@+id/txtNombreUsuario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        tools:text="GigaChad"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/avatarUsuario" />
-
-    <ImageView
-        android:id="@+id/imagenNivel"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="-20dp"
-        android:layout_marginBottom="-10dp"
-        android:src="@drawable/alarm"
-        app:tint="#12B8CF"
-        app:layout_constraintBottom_toBottomOf="@+id/avatarUsuario"
-        app:layout_constraintStart_toEndOf="@+id/avatarUsuario" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerLogros"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="267dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view2" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#D8D8D8"
+                android:padding="20dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/avatarUsuario"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_gravity="center_horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/github" />
+
+                <ImageView
+                    android:id="@+id/imagenNivel"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="130dp"
+                    android:src="@drawable/alarm"
+                    android:layout_gravity="center_horizontal"
+                    app:layout_constraintBottom_toBottomOf="@+id/avatarUsuario"
+                    app:layout_constraintStart_toEndOf="@+id/avatarUsuario"
+                    app:tint="#12B8CF" />
+
+                <TextView
+                    android:id="@+id/txtNombreUsuario"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="160dp"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/avatarUsuario"
+                    tools:text="GigaChad" />
+
+            </FrameLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="#BFBFBF"
+                android:layout_marginBottom="30dp"
+                android:orientation="vertical"></LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerLogros"
+                android:layout_width="match_parent"
+                android:layout_height="267dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
