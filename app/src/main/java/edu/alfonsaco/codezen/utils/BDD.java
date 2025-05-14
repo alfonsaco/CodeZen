@@ -44,6 +44,9 @@ public class BDD {
         usuario.put("cont_habitos", 0);
         usuario.put("cont_meditaciones", 0);
         usuario.put("id", firebaseAuth.getCurrentUser().getUid());
+        usuario.put("avatar", "lvl0");
+        usuario.put("cont_logros", 0);
+        usuario.put("nivel", 0);
 
         db.collection("usuarios")
                 .document(firebaseAuth.getCurrentUser().getUid())
@@ -363,4 +366,9 @@ public class BDD {
                     callback.onError(e);
                 });
     }
+
+
+    // ***************************************** PERFIL ********************************************
+
+    // *********************************************************************************************
 }

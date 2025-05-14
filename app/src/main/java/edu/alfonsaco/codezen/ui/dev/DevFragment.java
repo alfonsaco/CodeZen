@@ -2,6 +2,7 @@ package edu.alfonsaco.codezen.ui.dev;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,14 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.google.gson.JsonObject;
+
+import edu.alfonsaco.codezen.MainActivity;
 import retrofit2.converter.gson.GsonConverterFactory;
 import edu.alfonsaco.codezen.BuildConfig;
 
@@ -32,79 +34,85 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class DevFragment extends Fragment {
 
     private FragmentDevBinding binding;
-
-
-    static String ID_Cliente=BuildConfig.GITHUB_CLIENTE;
-    static String ID_Cliente_Secret=BuildConfig.GITHUB_CLIENTE_SECRET;
-    static String URL_REDIRECT="codezen://callback";
-
-    // Componentes
     private LinearLayout btnInicioSesionGithub;
 
+    static String ID_Cliente = BuildConfig.GITHUB_CLIENTE;
+    static String ID_Cliente_Secret = BuildConfig.GITHUB_CLIENTE_SECRET;
+    static String URL_REDIRECT = "codezen://callback";
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDevBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-        btnInicioSesionGithub=binding.btnInicioSesionGithub;
-        btnInicioSesionGithub.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                conectarConOAuth();
-            }
-        });
-
-        return root;
+        return binding.getRoot();
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        btnInicioSesionGithub = binding.btnInicioSesionGithub;
+        btnInicioSesionGithub.setOnClickListener(v -> conectarConOAuth());
+
+        checkLoginStatus();
     }
 
-    // Conectar con GitHub mediante OAuth
+    private void checkLoginStatus() {
+        SharedPreferences preferences = requireContext().getSharedPreferences("auth", Context.MODE_PRIVATE);
+        String token = preferences.getString("token", null);
+
+        btnInicioSesionGithub.setVisibility(token == null ? View.VISIBLE : View.GONE);
+
+        if (token != null) {
+            Toast.makeText(getContext(), "USUARIO VERIFICADO", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void conectarConOAuth() {
-        String URL="https://github.com/login/oauth/authorize"
-                +"?client_id="+ID_Cliente
-                +"&scope=read:user%20repo"
-                +"&redirect_uri="+URL_REDIRECT;
+        String URL = "https://github.com/login/oauth/authorize"
+                + "?client_id=" + ID_Cliente
+                + "&scope=read:user%20repo"
+                + "&redirect_uri=" + URL_REDIRECT;
 
-        Intent intentConectar=new Intent(Intent.ACTION_VIEW, Uri.parse(URL));
-        startActivity(intentConectar);
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(URL)));
     }
 
-    // OBTENER EL TOKEN DEL USUARIO EN GITHUB
     public static void obtenerToken(String codigo, Context context) {
-        Retrofit retrofit=new Retrofit.Builder()
-                .baseUrl("http://github.com")
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://github.com/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
 
-        GitHubOAuthService oAuth=retrofit.create(GitHubOAuthService.class);
+        GitHubOAuthService oAuth = retrofit.create(GitHubOAuthService.class);
         oAuth.getAccessToken(ID_Cliente, ID_Cliente_Secret, codigo, URL_REDIRECT)
                 .enqueue(new Callback<JsonObject>() {
                     @Override
                     public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                        if(response.isSuccessful()) {
-                            String tokenAcceso=response.body().get("access_token").getAsString();
-                            Toast.makeText(context.getApplicationContext(), "TOKEN: "+tokenAcceso, Toast.LENGTH_SHORT).show();
-
-                            context.getSharedPreferences("auth", Context.MODE_PRIVATE)
-                                    .edit()
-                                    .putString("token", tokenAcceso)
-                                    .apply();
-
-                            obtenerUsuario(tokenAcceso, context);
+                        if (response.isSuccessful() && response.body() != null) {
+                            String tokenAcceso = response.body().get("access_token").getAsString();
+                            storeTokenAndFetchUser(tokenAcceso, context);
+                        } else {
+                            Toast.makeText(context, "Error al obtener token", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<JsonObject> call, Throwable t) {
-                        Log.e("ERROR", "Error al conectar");
+                        Toast.makeText(context, "Error de conexión", Toast.LENGTH_SHORT).show();
+                        Log.e("GITHUB_OAUTH", "Error: ", t);
                     }
                 });
+    }
+
+    private static void storeTokenAndFetchUser(String token, Context context) {
+        // Store token
+        context.getSharedPreferences("auth", Context.MODE_PRIVATE)
+                .edit()
+                .putString("token", token)
+                .apply();
+
+        // Fetch user info
+        obtenerUsuario(token, context);
     }
 
     private static void obtenerUsuario(String token, Context context) {
@@ -113,20 +121,25 @@ public class DevFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        GitHubApi api=retrofitApi.create(GitHubApi.class);
-        api.getUser("Bearer"+token).enqueue(new Callback<JsonObject>() {
+        GitHubApi api = retrofitApi.create(GitHubApi.class);
+        api.getUser("Bearer " + token).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful() && response.body() != null) {
                     JsonObject user = response.body();
                     String username = user.get("login").getAsString();
-                    Toast.makeText(context.getApplicationContext(), "USERNAME: "+username, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Bienvenido " + username, Toast.LENGTH_SHORT).show();
+
+                    // Notify fragment to update UI
+                    if (context instanceof MainActivity) {
+                        ((MainActivity) context).updateDevFragmentUI();
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e("GitHub", "Fallo al obtener usuario: " + t.getMessage());
+                Log.e("GitHub", "Error al obtener usuario", t);
             }
         });
     }
