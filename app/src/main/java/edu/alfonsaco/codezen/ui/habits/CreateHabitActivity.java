@@ -1,6 +1,7 @@
 package edu.alfonsaco.codezen.ui.habits;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -65,6 +66,7 @@ public class CreateHabitActivity extends AppCompatActivity {
     private String recordatorioPendiente = "";
 
     private ArchievementsUnlocks logros;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,6 +197,7 @@ public class CreateHabitActivity extends AppCompatActivity {
 
         // MÉTODOS PARA LOS LOGROS
         logros=new ArchievementsUnlocks(bd);
+        context=this;
     }
 
     private void agregarHabito() {
@@ -243,6 +246,8 @@ public class CreateHabitActivity extends AppCompatActivity {
         Habit habito=new Habit(idHabito, nombreHabito, descripcion, colorSeleccionado, nuevaHoraRecordatorio, diasHabitos);
         bd.guardarHabitoEnUsuario(habito);
 
+        logros.logrosHabitos(context);
+
         // Guardar recordatorio
         if (switchRecordatorios.isChecked() && !nuevaHoraRecordatorio.isEmpty()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
@@ -261,8 +266,6 @@ public class CreateHabitActivity extends AppCompatActivity {
         } else {
             terminarActividadConResultado(habito);
         }
-
-        logros.logrosHabitos();
     }
 
     private void terminarActividadConResultado(Habit habito) {
