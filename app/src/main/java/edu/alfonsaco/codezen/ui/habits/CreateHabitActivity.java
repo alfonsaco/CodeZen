@@ -67,9 +67,6 @@ public class CreateHabitActivity extends AppCompatActivity {
     private Notificaciones notificaciones;
     private String recordatorioPendiente = "";
 
-    private ArchievementsUnlocks logros;
-    private Context context;
-
     // Booleana para evitar que se añadan varios hábitos a la vez
     private boolean pulsado=false;
 
@@ -199,10 +196,6 @@ public class CreateHabitActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        // MÉTODOS PARA LOS LOGROS
-        logros=new ArchievementsUnlocks(bd);
-        context=this;
     }
 
     private void agregarHabito() {
@@ -253,8 +246,6 @@ public class CreateHabitActivity extends AppCompatActivity {
 
             Habit habito=new Habit(idHabito, nombreHabito, descripcion, colorSeleccionado, nuevaHoraRecordatorio, diasHabitos);
             bd.guardarHabitoEnUsuario(habito);
-
-            logros.logrosHabitos(context);
 
             // Guardar recordatorio
             if (switchRecordatorios.isChecked() && !nuevaHoraRecordatorio.isEmpty()) {

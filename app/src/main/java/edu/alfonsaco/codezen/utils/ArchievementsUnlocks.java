@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 import edu.alfonsaco.codezen.R;
 
 // CLASE DEDICADA AL DESBLOQUEO DE CADA LOGRO
@@ -29,7 +31,7 @@ public class ArchievementsUnlocks {
         View layout = inflater.inflate(R.layout.logro_desbloqueado, null);
 
         // Poner los datos del logro
-        TextView txtNombre=layout.findViewById(R.id.txtLogroDesbloqueado);
+        TextView txtNombre=layout.findViewById(R.id.txtNombreLogroDesbloqueado);
         txtNombre.setText(nombre);
         ImageView imagenLogro=layout.findViewById(R.id.imagenLogroDesbloqueado);
         imagenLogro.setImageResource(context.getResources().getIdentifier(ruta, "drawable", context.getPackageName()));
@@ -45,12 +47,12 @@ public class ArchievementsUnlocks {
         decorView.addView(layout, params);
 
         // Animar entrada y salida
-        layout.animate().alpha(1f).setDuration(500).start(); // Fade in
+        layout.animate().alpha(1f).setDuration(3000).start(); // Fade in
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             layout.animate().alpha(0f).setDuration(500).withEndAction(() -> {
                 decorView.removeView(layout);
             }).start(); // Fade out
-        }, 2000);
+        }, 3000);
     }
     // *********************************************************************************************
 
@@ -58,27 +60,14 @@ public class ArchievementsUnlocks {
 
     // ********************************* DESBLOQUEO DE LOGROS **************************************
     // VERIFICAR LOS LOGROS DE HÁBITOS
-    public void logrosHabitos(Context context) {
-        db.getDb().collection("usuarios")
-                .document(db.getUsuarioID())
-                .get()
-                .addOnSuccessListener(snapshot -> {
-                    Long numHabitos=snapshot.getLong("cont_habitos");
-
-                    if(numHabitos == 1) {
-                        mostrarLogroDesbloqueado(context,"Primeros pasos", "logro1");
-
-                    } else if(numHabitos == 5) {
-
-                    } else if(numHabitos == 15) {
-
-                    }
-
-                    Log.d("HABITOS", "NÚMERO DE HÁBITOS ACTUAL: "+numHabitos);
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("EROR HABITOS", "Error al obtener el número de hábitos");
-                });
+    public void logrosHabitos(List listaHabitos, Context context) {
+        if(listaHabitos.isEmpty()) {
+            mostrarLogroDesbloqueado(context, "Primeros pasos", "logro1");
+        } else if(listaHabitos.size() == 5) {
+            mostrarLogroDesbloqueado(context, "Level Up", "logro7");
+        } else if(listaHabitos.size() == 15) {
+            mostrarLogroDesbloqueado(context, "GigaChad", "logro8");
+        }
     }
 
     // VERIFICAR LOS LOGROS DE MEDITACIONES
