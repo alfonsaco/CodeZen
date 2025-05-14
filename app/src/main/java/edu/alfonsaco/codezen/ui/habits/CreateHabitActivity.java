@@ -33,6 +33,7 @@ import java.util.Date;
 import edu.alfonsaco.codezen.R;
 import edu.alfonsaco.codezen.ui.habits.habit_utils.Day;
 import edu.alfonsaco.codezen.ui.habits.habit_utils.Habit;
+import edu.alfonsaco.codezen.utils.ArchievementsUnlocks;
 import edu.alfonsaco.codezen.utils.BDD;
 import edu.alfonsaco.codezen.utils.Notificaciones;
 
@@ -62,6 +63,8 @@ public class CreateHabitActivity extends AppCompatActivity {
     // Notificaciones
     private Notificaciones notificaciones;
     private String recordatorioPendiente = "";
+
+    private ArchievementsUnlocks logros;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,6 +192,9 @@ public class CreateHabitActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // MÉTODOS PARA LOS LOGROS
+        logros=new ArchievementsUnlocks(bd);
     }
 
     private void agregarHabito() {
@@ -255,7 +261,10 @@ public class CreateHabitActivity extends AppCompatActivity {
         } else {
             terminarActividadConResultado(habito);
         }
+
+        logros.logrosHabitos();
     }
+
     private void terminarActividadConResultado(Habit habito) {
         Intent resultIntent = new Intent();
         resultIntent.putExtra("habito", habito);

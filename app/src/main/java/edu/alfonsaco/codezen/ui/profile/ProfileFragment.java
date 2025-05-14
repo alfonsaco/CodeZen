@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.common.reflect.TypeToken;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
@@ -41,7 +42,7 @@ public class ProfileFragment extends Fragment {
 
     // Componentes
     private TextView txtNombreUsuario;
-    private ImageView avatarUsuario;
+    private ShapeableImageView avatarUsuario;
 
     // Recycler de logros
     private RecyclerView recyclerLogros;
