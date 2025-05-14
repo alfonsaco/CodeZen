@@ -43,16 +43,17 @@ public class ArchievementsUnlocks {
         );
         params.gravity = Gravity.TOP;
 
+        // Animar entrada y salida
+        layout.setTranslationY(-100f);
         layout.setAlpha(0f);
         decorView.addView(layout, params);
 
-        // Animar entrada y salida
-        layout.animate().alpha(1f).setDuration(3000).start(); // Fade in
+        layout.animate().translationY(0f).alpha(1f).setDuration(600).setStartDelay(2000).start();
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            layout.animate().alpha(0f).setDuration(500).withEndAction(() -> {
-                decorView.removeView(layout);
-            }).start(); // Fade out
-        }, 3000);
+            layout.animate()
+                    .translationY(-300f).alpha(0f).setDuration(500).withEndAction(() ->
+                            decorView.removeView(layout)).start();
+        }, 5000);
     }
     // *********************************************************************************************
 
