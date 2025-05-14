@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -67,6 +69,9 @@ public class CreateHabitActivity extends AppCompatActivity {
 
     private ArchievementsUnlocks logros;
     private Context context;
+
+    // Booleana para evitar que se añadan varios hábitos a la vez
+    private boolean pulsado=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,57 +220,62 @@ public class CreateHabitActivity extends AppCompatActivity {
             return;
         }
 
-        // CREACIÓN AUTOMÁTICA DEL ID EN FIREBASE
-        DocumentReference nuevoHabitoRef = bd.getDb()
-                .collection("usuarios")
-                .document(bd.getUsuarioID())
-                .collection("habitos")
-                .document();
+        if(!pulsado) {
+            pulsado=true;
 
-        // Obtener el ID generado
-        String idHabito=nuevoHabitoRef.getId();
+            // CREACIÓN AUTOMÁTICA DEL ID EN FIREBASE
+            DocumentReference nuevoHabitoRef = bd.getDb()
+                    .collection("usuarios")
+                    .document(bd.getUsuarioID())
+                    .collection("habitos")
+                    .document();
+
+            // Obtener el ID generado
+            String idHabito=nuevoHabitoRef.getId();
 
 
-        // FECHAS DE DÍAS DE HÁBITOS
-        // Obtenemos la fecha de aquí a 196 días
-        ArrayList<Day> diasHabitos=new ArrayList<>();
-        LocalDate hoy=LocalDate.now();
+            // FECHAS DE DÍAS DE HÁBITOS
+            // Obtenemos la fecha de aquí a 196 días
+            ArrayList<Day> diasHabitos=new ArrayList<>();
+            LocalDate hoy=LocalDate.now();
 
-        // Insertamos la fecha de cada uno en cada uno de los "Days"
-        int diaSemana=obtenerDiaSemana();
+            // Insertamos la fecha de cada uno en cada uno de los "Days"
+            int diaSemana=obtenerDiaSemana();
 
-        for(int i=0; i< (196 + diaSemana); i++) {
-            Day dia=new Day();
-            dia.setId(hoy.minusDays(i).toString());
-            dia.setCompletado(false);
-            dia.setColor(colorSeleccionado);
+            for(int i=0; i< (196 + diaSemana); i++) {
+                Day dia=new Day();
+                dia.setId(hoy.minusDays(i).toString());
+                dia.setCompletado(false);
+                dia.setColor(colorSeleccionado);
 
-            diasHabitos.add(dia);
-        }
+                diasHabitos.add(dia);
+            }
 
-        Habit habito=new Habit(idHabito, nombreHabito, descripcion, colorSeleccionado, nuevaHoraRecordatorio, diasHabitos);
-        bd.guardarHabitoEnUsuario(habito);
+            Habit habito=new Habit(idHabito, nombreHabito, descripcion, colorSeleccionado, nuevaHoraRecordatorio, diasHabitos);
+            bd.guardarHabitoEnUsuario(habito);
 
-        logros.logrosHabitos(context);
+            logros.logrosHabitos(context);
 
-        // Guardar recordatorio
-        if (switchRecordatorios.isChecked() && !nuevaHoraRecordatorio.isEmpty()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-                    ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS)
-                            != PackageManager.PERMISSION_GRANTED) {
+            // Guardar recordatorio
+            if (switchRecordatorios.isChecked() && !nuevaHoraRecordatorio.isEmpty()) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                        ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS)
+                                != PackageManager.PERMISSION_GRANTED) {
 
-                recordatorioPendiente = nuevaHoraRecordatorio;
-                ActivityCompat.requestPermissions(this,
-                        new String[]{android.Manifest.permission.POST_NOTIFICATIONS},
-                        1001);
+                    recordatorioPendiente = nuevaHoraRecordatorio;
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{android.Manifest.permission.POST_NOTIFICATIONS},
+                            1001);
+                } else {
+                    Notificaciones notificaciones = new Notificaciones(this);
+                    notificaciones.programarRecordatorio(nuevaHoraRecordatorio, nombreHabito);
+                    terminarActividadConResultado(habito);
+                }
             } else {
-                Notificaciones notificaciones = new Notificaciones(this);
-                notificaciones.programarRecordatorio(nuevaHoraRecordatorio, nombreHabito);
                 terminarActividadConResultado(habito);
             }
-        } else {
-            terminarActividadConResultado(habito);
         }
+
     }
 
     private void terminarActividadConResultado(Habit habito) {
@@ -274,6 +284,7 @@ public class CreateHabitActivity extends AppCompatActivity {
         setResult(Activity.RESULT_OK, resultIntent);
         finish();
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

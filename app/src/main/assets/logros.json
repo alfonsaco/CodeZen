@@ -5,11 +5,22 @@
     "descripcion": "Crea tu primer hábito",
     "ruta": "logro1"
   },
-
+  {
+    "id": "med_01",
+    "nombre": "Reboot",
+    "descripcion": "Haz 5 meditaciones",
+    "ruta": "logro4"
+  },
   {
     "id": "med_04",
     "nombre": "300",
     "descripcion": "Haz 300 meditaciones",
     "ruta": "logro7"
+  },
+  {
+    "id": "sup_01",
+    "nombre": "Supporter",
+    "descripcion": "Valora la app en Play Store",
+    "ruta": "logro8"
   }
 ]
