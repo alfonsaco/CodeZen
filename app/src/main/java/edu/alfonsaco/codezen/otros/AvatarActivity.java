@@ -3,6 +3,7 @@ package edu.alfonsaco.codezen.otros;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
@@ -29,10 +30,12 @@ public class AvatarActivity extends AppCompatActivity {
     private ImageView avatar4;
     private ImageView avatar5;
     private ImageView avatar6;
+    private Button btnGuardarNuevoAvatar;
 
     // Variables
     private int idImagen;
     private ImageView[] avatares;
+    private String nombreImagen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,7 @@ public class AvatarActivity extends AppCompatActivity {
         obtenerAvatar();
         // *******************************************************************************
 
+
         // ****************************** CAMBIO DE IMAGEN *******************************
         avatar1=findViewById(R.id.avatar1);
         avatar2=findViewById(R.id.avatar2);
@@ -77,6 +81,15 @@ public class AvatarActivity extends AppCompatActivity {
         // *******************************************************************************
 
 
+        btnGuardarNuevoAvatar=findViewById(R.id.btnGuardarNuevoAvatar);
+        btnGuardarNuevoAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                guardarAvatar();
+            }
+        });
+
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -92,6 +105,7 @@ public class AvatarActivity extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(snapshot -> {
                     String avatar=snapshot.getString("avatar");
+                    nombreImagen=avatar;
 
                     idImagen=getResources().getIdentifier(avatar, "drawable", getPackageName());
                     imagenAvatarSeleccionado.setImageResource(idImagen);
@@ -106,10 +120,22 @@ public class AvatarActivity extends AppCompatActivity {
 
     // CAMBIAR DE AVATAR POR CLICK
     private void cambiarAvatar(ImageView imagen) {
+        nombreImagen=(String) imagen.getTag();
         idImagen=getResources().getIdentifier((String) imagen.getTag(), "drawable", getPackageName());
         imagenAvatarSeleccionado.setImageResource(idImagen);
 
         Glide.with(this).load(idImagen)
                 .circleCrop().into(imagenAvatarSeleccionado);
+    }
+
+    // GUARDAR AVATAR NUEVO
+    private void guardarAvatar() {
+        db.getDb().collection("usuarios")
+                .document(db.getUsuarioID())
+                .update("avatar", nombreImagen)
+                .addOnSuccessListener(aVoid -> {
+                    Log.d("AVATAR", "Avatar actualizado correctamente");
+                    finish();
+                });
     }
 }
