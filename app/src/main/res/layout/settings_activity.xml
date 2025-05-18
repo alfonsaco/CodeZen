@@ -52,6 +52,14 @@
                     tools:srcCompat="@drawable/brain_icon"
                     app:shapeAppearanceOverlay="@style/CircularImageView" />
 
+                <ImageView
+                    android:id="@+id/irAAvatar"
+                    android:layout_gravity="center"
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"
+                    app:tint="#797979"
+                    app:srcCompat="@drawable/edit" />
+
                 <TextView
                     android:id="@+id/txtUsername"
                     android:layout_width="match_parent"
