@@ -1,5 +1,6 @@
 package edu.alfonsaco.codezen.ui.habits;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -34,6 +37,7 @@ import edu.alfonsaco.codezen.ui.habits.habit_utils.Day;
 import edu.alfonsaco.codezen.ui.habits.habit_utils.Habit;
 import edu.alfonsaco.codezen.ui.habits.habit_utils.HabitAdapter;
 import edu.alfonsaco.codezen.ui.habits.habit_utils.HabitOptionsBottomSheet;
+import edu.alfonsaco.codezen.utils.ArchievementsUnlocks;
 import edu.alfonsaco.codezen.utils.BDD;
 
 public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.HabitOptionsListener {
@@ -50,6 +54,9 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
     private RecyclerView recyclerHabitos;
     private ProgressBar progressBarHabitos;
     private TextView txtCreaTuPrimerHabito;
+
+    private ArchievementsUnlocks logros;
+    private ActivityResultLauncher<Intent> createHabitLauncher;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,10 +84,23 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
         recyclerHabitos.setAdapter(habitAdapter);
         recyclerHabitos.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        // *************** VERIFICAR LOGRO CONSEGUIDO ******************
+        logros=new ArchievementsUnlocks(db);
+        // Registrar el launcher
+        createHabitLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        if (data != null) {
+                            logros.logrosHabitos(listaHabitos, getContext());
+                        }
+                    }
+                });
         // Configurar botón de agregar
         btnAgregarHabito.setOnClickListener(v -> {
             Intent intent = new Intent(requireActivity(), CreateHabitActivity.class);
-            startActivity(intent);
+            createHabitLauncher.launch(intent);
         });
         btnAgregarHabito.setTooltipText("Crear un nuevo hábito");
 

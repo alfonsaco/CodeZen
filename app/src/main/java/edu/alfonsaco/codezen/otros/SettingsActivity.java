@@ -3,6 +3,7 @@ package edu.alfonsaco.codezen.otros;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,10 +26,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import edu.alfonsaco.codezen.AuthSelectActivity;
 import edu.alfonsaco.codezen.MainActivity;
 import edu.alfonsaco.codezen.R;
+import edu.alfonsaco.codezen.utils.BDD;
 
 public class SettingsActivity extends AppCompatActivity {
 
     private ImageView btnVolverDesdeAjustes;
+    private BDD db;
 
     // Tema claro / oscuro
     private RadioButton rdClaro, rdOscuro;
@@ -42,6 +45,7 @@ public class SettingsActivity extends AppCompatActivity {
     // Componentes
     private TextView txtEmail;
     private TextView txtUsername;
+    private ImageView imagenUsuario;
 
     private String username= MainActivity.username;
     private String email=MainActivity.email;
@@ -50,7 +54,11 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.other_settings_activity);
+        setContentView(R.layout.settings_activity);
+
+        db=new BDD();
+        imagenUsuario=findViewById(R.id.imagenUsuario);
+        obtenerAvatar();
 
         // Botón para volver a la ventana de Fragments
         btnVolverDesdeAjustes=findViewById(R.id.btnVolverInicio);
@@ -115,6 +123,22 @@ public class SettingsActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    private void obtenerAvatar() {
+        db.getDb()
+                .collection("usuarios")
+                .document(db.getUsuarioID())
+                .get()
+                .addOnSuccessListener(snapshot -> {
+                    String avatar=snapshot.getString("avatar");
+
+                    int idImagen=getResources().getIdentifier(avatar, "drawable", getPackageName());
+                    imagenUsuario.setImageResource(idImagen);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("ERROR", "No se pudo cargar el avatar");
+                });
     }
 
     // ******************* MÉTODOS PARA CAMBIAR EL TEMA CLARO OSCURO **********************

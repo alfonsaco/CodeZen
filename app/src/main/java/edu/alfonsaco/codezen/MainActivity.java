@@ -1,7 +1,9 @@
 package edu.alfonsaco.codezen;
 
+import android.app.ComponentCaller;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,13 +15,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import edu.alfonsaco.codezen.databinding.ActivityMainBinding;
 import edu.alfonsaco.codezen.otros.SettingsActivity;
+import edu.alfonsaco.codezen.ui.dev.DevFragment;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -125,4 +130,51 @@ public class MainActivity extends AppCompatActivity {
 
         Toast.makeText(this, "HA INICIADO SESIÓN EL USUARIO "+nombreUsuario+" CON EL EMAIL "+emailUsuario, Toast.LENGTH_SHORT).show();
     }
+
+    // PARA OBTENER LOS DATOS AL INICIAR SESIÓN EN GITHUB
+    @Override
+    public void onNewIntent(@NonNull Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        handleOAuthIntent(intent);
+    }
+
+    private void handleOAuthIntent(Intent intent) {
+        Uri uri = intent.getData();
+        if (uri != null && uri.toString().startsWith("codezen://callback")) {
+            String code = uri.getQueryParameter("code");
+            if (code != null) {
+                Toast.makeText(MainActivity.this, "CODE: " + code, Toast.LENGTH_SHORT).show();
+
+                BottomNavigationView navView = findViewById(R.id.nav_view);
+                navView.setSelectedItemId(R.id.navigation_dev);
+
+                NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
+                Fragment currentFragment = navHostFragment.getChildFragmentManager().getPrimaryNavigationFragment();
+
+                if (currentFragment instanceof DevFragment) {
+                    DevFragment devFragment = (DevFragment) currentFragment;
+                    DevFragment.obtenerToken(code, devFragment.requireContext());
+                } else {
+                    // Esperar a que se cargue el fragmento con un pequeño delay
+                    new android.os.Handler().postDelayed(() -> {
+                        Fragment fragment = navHostFragment.getChildFragmentManager().getPrimaryNavigationFragment();
+                        if (fragment instanceof DevFragment) {
+                            DevFragment.obtenerToken(code, fragment.requireContext());
+                        }
+                    }, 500);
+                }
+            }
+        }
+    }
+    public void updateDevFragmentUI() {
+        Fragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
+        if (navHostFragment != null) {
+            Fragment fragment = navHostFragment.getChildFragmentManager().getPrimaryNavigationFragment();
+            if (fragment instanceof DevFragment) {
+            }
+        }
+    }
+
+
 }
