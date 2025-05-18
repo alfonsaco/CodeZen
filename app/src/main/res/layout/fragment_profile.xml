@@ -43,13 +43,13 @@
                 <ImageView
                     android:id="@+id/imagenNivel"
                     android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginStart="50dp"
                     android:layout_marginTop="130dp"
-                    android:src="@drawable/lvl1_medalla"
-                    android:layout_gravity="center_horizontal"
                     app:layout_constraintBottom_toBottomOf="@+id/avatarUsuario"
-                    app:layout_constraintStart_toEndOf="@+id/avatarUsuario" />
+                    app:layout_constraintStart_toEndOf="@+id/avatarUsuario"
+                    tools:src="@drawable/lvl1" />
 
                 <TextView
                     android:id="@+id/txtNombreUsuario"
