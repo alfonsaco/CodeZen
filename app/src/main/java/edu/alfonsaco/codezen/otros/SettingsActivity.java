@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
@@ -50,6 +52,9 @@ public class SettingsActivity extends AppCompatActivity {
 
     private String username= MainActivity.username;
     private String email=MainActivity.email;
+
+    // Launcher cambio de Avatar
+    private ActivityResultLauncher<Intent> launcherAvatar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,12 +125,21 @@ public class SettingsActivity extends AppCompatActivity {
         txtEmail=findViewById(R.id.txtEmail);
 
         // IR A CAMBIAR AVATAR
+        launcherAvatar = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        obtenerAvatar();
+                    }
+                }
+        );
+
         irAAvatar=findViewById(R.id.irAAvatar);
         irAAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(SettingsActivity.this, AvatarActivity.class);
-                startActivity(intent);
+                launcherAvatar.launch(intent);
             }
         });
 

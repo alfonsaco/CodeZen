@@ -29,7 +29,7 @@
                 android:padding="20dp"
                 android:orientation="vertical">
 
-                <com.google.android.material.imageview.ShapeableImageView
+                <ImageView
                     android:id="@+id/avatarUsuario"
                     android:layout_width="130dp"
                     android:layout_height="130dp"
@@ -38,8 +38,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/github"
-                    app:shapeAppearanceOverlay="@style/CircularImageView" />
+                    tools:src="@drawable/github" />
 
                 <ImageView
                     android:id="@+id/imagenNivel"

@@ -44,13 +44,12 @@
                 android:layout_marginBottom="20dp"
                 android:orientation="vertical">
 
-                <com.google.android.material.imageview.ShapeableImageView
+                <ImageView
                     android:id="@+id/imagenUsuario"
                     android:layout_width="138dp"
                     android:layout_height="83dp"
                     android:layout_gravity="center"
-                    tools:srcCompat="@drawable/brain_icon"
-                    app:shapeAppearanceOverlay="@style/CircularImageView" />
+                    tools:srcCompat="@drawable/brain_icon" />
 
                 <ImageView
                     android:id="@+id/irAAvatar"

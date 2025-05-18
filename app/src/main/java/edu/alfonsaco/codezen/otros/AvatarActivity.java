@@ -110,8 +110,7 @@ public class AvatarActivity extends AppCompatActivity {
                     idImagen=getResources().getIdentifier(avatar, "drawable", getPackageName());
                     imagenAvatarSeleccionado.setImageResource(idImagen);
 
-                    Glide.with(this).load(idImagen)
-                            .circleCrop().into(imagenAvatarSeleccionado);
+                    Glide.with(this).load(idImagen).circleCrop().into(imagenAvatarSeleccionado);
                 })
                 .addOnFailureListener(e -> {
                     Log.e("ERROR", "No se pudo cargar el avatar");
@@ -124,8 +123,7 @@ public class AvatarActivity extends AppCompatActivity {
         idImagen=getResources().getIdentifier((String) imagen.getTag(), "drawable", getPackageName());
         imagenAvatarSeleccionado.setImageResource(idImagen);
 
-        Glide.with(this).load(idImagen)
-                .circleCrop().into(imagenAvatarSeleccionado);
+        Glide.with(this).load(idImagen).circleCrop().into(imagenAvatarSeleccionado);
     }
 
     // GUARDAR AVATAR NUEVO
@@ -135,6 +133,7 @@ public class AvatarActivity extends AppCompatActivity {
                 .update("avatar", nombreImagen)
                 .addOnSuccessListener(aVoid -> {
                     Log.d("AVATAR", "Avatar actualizado correctamente");
+                    setResult(RESULT_OK);
                     finish();
                 });
     }

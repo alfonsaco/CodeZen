@@ -42,7 +42,7 @@ public class ProfileFragment extends Fragment {
 
     // Componentes
     private TextView txtNombreUsuario;
-    private ShapeableImageView avatarUsuario;
+    private ImageView avatarUsuario;
 
     // Recycler de logros
     private RecyclerView recyclerLogros;
