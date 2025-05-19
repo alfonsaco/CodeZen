@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:background="?attr/colorOnPrimary"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AuthSelectActivity">
@@ -31,11 +32,11 @@
     <Button
         android:id="@+id/btnIrIniciarSesion"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="24dp"
         android:text="INICIAR SESIÓN"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnIrRegistro"
+        app:layout_constraintStart_toStartOf="@+id/btnIrRegistro"
         app:layout_constraintTop_toBottomOf="@+id/btnIrRegistro" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

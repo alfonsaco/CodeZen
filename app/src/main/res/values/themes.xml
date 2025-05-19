@@ -4,7 +4,7 @@
         <!--Color botones y eso-->
         <item name="colorPrimary">#20303E</item>
         <!--Color fondo y textos-->
-        <item name="colorOnPrimary">#FBFBFF</item>
+        <item name="colorOnPrimary">#F5F5FB</item>
         <!--Color enlaces y botones secundarios-->
         <item name="colorPrimaryContainer">#30896E</item>
         <!--Hint color-->
