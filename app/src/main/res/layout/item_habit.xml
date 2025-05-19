@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:elevation="6dp"
     android:layout_marginBottom="15dp">
 
     <LinearLayout
         android:id="@+id/view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#FFF"
+        android:background="@drawable/fondo_redondeado_habito"
         android:orientation="vertical"
         android:padding="15dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,23 +34,30 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="?attr/colorPrimary"
+                    android:textStyle="bold"
                     android:text="TextView" />
 
                 <TextView
                     android:id="@+id/txtDescripcionHabito"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="?attr/colorPrimary"
                     android:layout_weight="1"
                     android:text="TextView" />
 
             </LinearLayout>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnHabitoCompletado"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal|center_vertical"
                 android:layout_weight="1"
+                android:layout_gravity="center"
+                app:iconPadding="0dp"
+                app:iconGravity="textStart"
+                android:text=""
                 app:icon="@drawable/tick" />
 
         </LinearLayout>
