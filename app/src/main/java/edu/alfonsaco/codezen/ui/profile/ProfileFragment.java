@@ -42,7 +42,8 @@ public class ProfileFragment extends Fragment {
 
     // Componentes
     private TextView txtNombreUsuario;
-    private ShapeableImageView avatarUsuario;
+    private ImageView avatarUsuario;
+    private ImageView imagenNivel;
 
     // Recycler de logros
     private RecyclerView recyclerLogros;
@@ -56,12 +57,19 @@ public class ProfileFragment extends Fragment {
 
         db=new BDD();
 
-        // Obtener datos del usuario
+        // *********************** OBTENER DATOS DEL USUARIO *************************
         txtNombreUsuario=binding.txtNombreUsuario;
         avatarUsuario=binding.avatarUsuario;
 
+        // Avatar
         txtNombreUsuario.setText(MainActivity.username);
         obtenerAvatar();
+
+        // Nivel
+        imagenNivel=binding.imagenNivel;
+        verificarNivelUsuario();
+        // ***************************************************************************
+
 
         // RECYCLER
         recyclerLogros=binding.recyclerLogros;
@@ -115,6 +123,36 @@ public class ProfileFragment extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    // *********************************************************************************************
+
+
+    // ************* VERIFICAMOS EL NIVEL DEL USUARIO SEGÚN LA CANTIDAD DE LOGROS ******************
+    private void verificarNivelUsuario() {
+        db.getDb().collection("usuarios")
+                .document(db.getUsuarioID())
+                .get()
+                .addOnSuccessListener(snapshot -> {
+                    long nivel=snapshot.getLong("nivel");
+
+                    if(nivel == 0) {
+
+                    } else if(nivel == 1) {
+                        imagenNivel.setImageResource(R.drawable.lvl1);
+                    } else if(nivel == 2) {
+                        imagenNivel.setImageResource(R.drawable.lvl2);
+                    } else if(nivel == 3) {
+
+                    } else if(nivel == 4) {
+
+                    } else if(nivel == 5) {
+
+                    }
+
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("ERROR", "Error al obtener el número de logros");
+                });
     }
     // *********************************************************************************************
 

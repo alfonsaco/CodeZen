@@ -64,15 +64,15 @@ public class ArchievementsUnlocks {
     public void logrosHabitos(List listaHabitos, Context context) {
         if(listaHabitos.isEmpty()) {
             mostrarLogroDesbloqueado(context, "Primeros pasos", "logro1");
-        } else if(listaHabitos.size() == 5) {
+        } else if(listaHabitos.size() == 4) {
             mostrarLogroDesbloqueado(context, "Level Up", "logro7");
-        } else if(listaHabitos.size() == 15) {
+        } else if(listaHabitos.size() == 14) {
             mostrarLogroDesbloqueado(context, "GigaChad", "logro8");
         }
     }
 
     // VERIFICAR LOS LOGROS DE MEDITACIONES
-    public void logrosMeditaciones() {
+    public void logrosMeditaciones(Context context) {
         db.getDb().collection("usuarios")
                 .document(db.getUsuarioID())
                 .get()
@@ -80,13 +80,13 @@ public class ArchievementsUnlocks {
                     Long numMeditaciones=snapshot.getLong("cont_meditaciones");
 
                     if(numMeditaciones == 5) {
-
+                        mostrarLogroDesbloqueado(context, "Reboot", "logro1");
                     } else if(numMeditaciones == 30) {
-
+                        mostrarLogroDesbloqueado(context, "Aficionado", "logro1");
                     } else if(numMeditaciones == 100) {
-
+                        mostrarLogroDesbloqueado(context, "Zen", "logro1");
                     } else if(numMeditaciones == 300) {
-
+                        mostrarLogroDesbloqueado(context, "300", "logro7");
                     }
 
                     Log.d("MEDITACIONES", "NÚMERO DE MEDITACIONES ACTUAL: "+numMeditaciones);
