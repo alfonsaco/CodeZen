@@ -26,7 +26,7 @@ public class ArchievementsUnlocks {
     }
 
     // ****************************** MENSAJE LOGRO DESBLOQUEADO ***********************************
-    private void mostrarLogroDesbloqueado(Context context, String nombre, String ruta) {
+    public void mostrarLogroDesbloqueado(Context context, String nombre, String ruta) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View layout = inflater.inflate(R.layout.logro_desbloqueado, null);
 

@@ -180,7 +180,7 @@ public class MeditationActivity extends AppCompatActivity {
             case 3:
                 return R.raw.rain;
             case 4:
-                return 0;
+                return R.raw.stone;
             default:
                 return 0;
         }

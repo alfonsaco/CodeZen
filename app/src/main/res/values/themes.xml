@@ -1,10 +1,14 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.CodeZen" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">#1856AF</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorPrimaryContainer">#81A3DF</item>
-        <item name="colorSecondary">@color/teal_200</item>
+        <!--Color botones y eso-->
+        <item name="colorPrimary">#20303E</item>
+        <!--Color fondo y textos-->
+        <item name="colorOnPrimary">#FBFBFF</item>
+        <!--Color enlaces y botones secundarios-->
+        <item name="colorPrimaryContainer">#30896E</item>
+        <!--Hint color-->
+        <item name="colorSecondary">#893271A4</item>
         <item name="colorOnSecondary">@color/black</item>
         <item name="colorSecondaryContainer">#FFFFFF</item>
         <item name="android:statusBarColor">?attr/colorPrimaryContainer</item>

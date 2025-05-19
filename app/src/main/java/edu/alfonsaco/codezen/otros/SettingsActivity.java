@@ -2,6 +2,7 @@ package edu.alfonsaco.codezen.otros;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +29,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import edu.alfonsaco.codezen.AuthSelectActivity;
 import edu.alfonsaco.codezen.MainActivity;
 import edu.alfonsaco.codezen.R;
+import edu.alfonsaco.codezen.utils.ArchievementsUnlocks;
 import edu.alfonsaco.codezen.utils.BDD;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -49,9 +51,12 @@ public class SettingsActivity extends AppCompatActivity {
     private TextView txtUsername;
     private ImageView imagenUsuario;
     private ImageView irAAvatar;
+    private Button btnPlayStore;
 
     private String username= MainActivity.username;
     private String email=MainActivity.email;
+
+    private ArchievementsUnlocks logros;
 
     // Launcher cambio de Avatar
     private ActivityResultLauncher<Intent> launcherAvatar;
@@ -62,7 +67,10 @@ public class SettingsActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.settings_activity);
 
+        // Inicializar clases
         db=new BDD();
+        logros=new ArchievementsUnlocks(db);
+
         imagenUsuario=findViewById(R.id.imagenUsuario);
         obtenerAvatar();
 
@@ -140,6 +148,27 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent=new Intent(SettingsActivity.this, AvatarActivity.class);
                 launcherAvatar.launch(intent);
+            }
+        });
+
+
+        // Desbloquear logro Play Store
+        btnPlayStore=findViewById(R.id.btnPlayStore);
+        btnPlayStore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String nombrePaquete=getPackageName();
+
+                try {
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="+nombrePaquete));
+                    startActivity(intent);
+
+                    logros.mostrarLogroDesbloqueado(SettingsActivity.this, "Supporter", "logro8");
+
+                } catch (android.content.ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("https://play.google.com/store/apps/details?id=" + nombrePaquete)));
+                }
             }
         });
 

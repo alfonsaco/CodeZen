@@ -17,6 +17,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -39,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
     private ImageView btnVolverInicio;
     private TextView txtBotonRecuperarContra;
+    private ImageView iconoApp;
 
     // Firebase
     private SignInButton btnGoogleIniciar;
@@ -60,6 +62,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.auth_login_activity);
 
         verifications=new Verifications();
+
+        iconoApp=findViewById(R.id.iconoApp);
+        Glide.with(this).load(R.mipmap.ic_launcher).circleCrop().into(iconoApp);
 
         // Cambiar al Registro
         btnCambiarARegistro=findViewById(R.id.btnCambiarARegistro);
