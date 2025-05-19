@@ -38,15 +38,19 @@ public class BDD {
     public void guardarUsuarioEnFirebase(String username, String email) {
         Map<String, Object> usuario = new HashMap<>();
 
+        // Seleccion de Avatar automatica
+        int numAvatar= (int) (1 + Math.random() * 6);
+        String[] avatares={"avatar1", "avatar2", "avatar3", "avatar4", "avatar5", "avatar6"};
+
         usuario.put("username", username);
         usuario.put("email", email);
         usuario.put("fecha_creacion", new Date());
         usuario.put("cont_habitos", 0);
         usuario.put("cont_meditaciones", 0);
         usuario.put("id", firebaseAuth.getCurrentUser().getUid());
-        usuario.put("avatar", "lvl0");
         usuario.put("cont_logros", 0);
         usuario.put("nivel", 0);
+        usuario.put("avatar", avatares[numAvatar]);
 
         db.collection("usuarios")
                 .document(firebaseAuth.getCurrentUser().getUid())
@@ -120,11 +124,8 @@ public class BDD {
                 .collection("dias")
                 .document(dia.getId())
                 .set(diaDB)
-                .addOnSuccessListener(a -> {
-                    Log.d("ÉXITO", "SE INSERTARON LOS DIAS DE FORMA TOTALMENTE EXITOSA");
-                })
                 .addOnFailureListener(e -> {
-                    Log.e("ERROR", "ERROR AL AGREGAR EL DÍA AL HÁBITO");
+                    e.printStackTrace();
                 });
     }
 

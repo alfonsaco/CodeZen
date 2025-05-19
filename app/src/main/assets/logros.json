@@ -5,11 +5,106 @@
     "descripcion": "Crea tu primer hábito",
     "ruta": "logro1"
   },
-
+  {
+    "id": "hab_02",
+    "nombre": "Level Up",
+    "descripcion": "Crea 5 hábitos",
+    "ruta": "logro1"
+  },
+  {
+    "id": "hab_03",
+    "nombre": "GigaChad",
+    "descripcion": "Crea 15 hábitos",
+    "ruta": "logro1"
+  },
+  {
+    "id": "med_01",
+    "nombre": "Reboot",
+    "descripcion": "Haz 5 meditaciones",
+    "ruta": "logro4"
+  },
+  {
+    "id": "med_02",
+    "nombre": "Aficionado",
+    "descripcion": "Haz 30 meditaciones",
+    "ruta": "logro4"
+  },
+  {
+    "id": "med_03",
+    "nombre": "Zen",
+    "descripcion": "Haz 100 meditaciones",
+    "ruta": "logro4"
+  },
   {
     "id": "med_04",
     "nombre": "300",
     "descripcion": "Haz 300 meditaciones",
+    "ruta": "logro7"
+  },
+  {
+    "id": "sup_01",
+    "nombre": "Supporter",
+    "descripcion": "Valora la app en Play Store",
+    "ruta": "logro8"
+  },
+  {
+    "id": "sup_02",
+    "nombre": "Supporter v.2",
+    "descripcion": "Siguenos en Instagram",
+    "ruta": "logro7"
+  },
+  {
+    "id": "pop_01",
+    "nombre": "Popular",
+    "descripcion": "Ten 100 seguidores",
+    "ruta": "logro7"
+  },
+  {
+    "id": "pop_02",
+    "nombre": "Ultra-Popular",
+    "descripcion": "Ten 1000 seguidores",
+    "ruta": "logro7"
+  },
+  {
+    "id": "git_01",
+    "nombre": "GitHead",
+    "descripcion": "Haz 1000 commits en GitHub",
+    "ruta": "logro7"
+  },
+  {
+    "id": "git_02",
+    "nombre": "Commit Beast",
+    "descripcion": "Haz 5000 commits en GitHub",
+    "ruta": "logro7"
+  },
+  {
+    "id": "heisen",
+    "nombre": "Heisenberg",
+    "descripcion": "Ten un porcentaje de éxito del 99%",
+    "ruta": "logro7"
+  },
+  {
+    "id": "pop_02",
+    "nombre": "Better Call CodeZen",
+    "descripcion": "Consigue que un amigo se registre a través de tu enlace",
+    "ruta": "logro7"
+  },
+  {
+    "id": "rac_01",
+    "nombre": "",
+    "descripcion": "Ten 1000 seguidores",
+    "ruta": "logro7"
+  },
+  {
+    "id": "rac_02",
+    "nombre": "Michael Jordan",
+    "descripcion": "Usar la app 23 días seguidos",
+    "ruta": "logro7"
+  },
+  {
+    "id": "rac_03",
+    "nombre": "",
+    "descripcion": "TUsar la app 100 días seguidos",
     "ruta": "logro7"
   }
 ]
