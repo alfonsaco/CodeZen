@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -51,7 +52,7 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
     private HabitAdapter habitAdapter;
 
     // Componentes
-    private FloatingActionButton btnAgregarHabito;
+    private ImageButton btnAgregarHabito;
     private RecyclerView recyclerHabitos;
     private ProgressBar progressBarHabitos;
     private TextView txtCreaTuPrimerHabito;
