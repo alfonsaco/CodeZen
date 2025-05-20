@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -119,6 +120,14 @@ public class CreateHabitActivity extends AppCompatActivity {
 
                     String tagColor=color.getTag().toString();
                     colorSeleccionado=tagColor;
+
+                    for (View vColor : listaColores) {
+                        View contenedor = (FrameLayout) vColor.getParent();
+                        contenedor.setBackgroundResource(0);
+                    }
+
+                    View contenedor=(FrameLayout) color.getParent();
+                    contenedor.setBackgroundResource(R.drawable.fondo_borde_color_seleccionado);
                 }
             });
         }

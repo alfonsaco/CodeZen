@@ -80,6 +80,8 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
         txtCreaTuPrimerHabito = binding.txtCreaTuPrimerHabito;
         recyclerHabitos = binding.recyclerHabitos;
         btnAgregarHabito = binding.btnAgregarHabito;
+        // Ocultamos el botón hasta que carguen los hábitos
+        btnAgregarHabito.setVisibility(View.GONE);
 
         // Configurar RecyclerView
         habitAdapter = new HabitAdapter(listaHabitos, requireContext(), this);
@@ -244,6 +246,7 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
         if (getActivity() != null) {
             getActivity().runOnUiThread(() -> {
                 progressBarHabitos.setVisibility(View.GONE);
+                btnAgregarHabito.setVisibility(View.VISIBLE);
                 recyclerHabitos.setVisibility(listaHabitos.isEmpty() ? View.GONE : View.VISIBLE);
                 txtCreaTuPrimerHabito.setVisibility(listaHabitos.isEmpty() ? View.VISIBLE : View.GONE);
             });

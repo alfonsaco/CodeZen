@@ -26,10 +26,12 @@
         android:text="Crear Hábito"
         android:textStyle="bold"
         android:textSize="30sp"
+        android:textColor="?attr/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnVolverInicio" />
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -99,133 +101,213 @@
                 android:padding="16dp"
                 android:rowCount="2">
 
-                <View
-                    android:id="@+id/color1"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:background="#d24858"
-                    android:tag="#d24858" />
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
 
-                <View
-                    android:id="@+id/color2"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:background="#d31900"
-                    android:tag="#d31900" />
+                    <View
+                        android:id="@+id/color1"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="#d24858"
+                        android:tag="#d24858" />
+                </FrameLayout>
 
-                <View
-                    android:id="@+id/color3"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:background="#f76e2a"
-                    android:tag="#f76e2a" />
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
 
-                <View
-                    android:id="@+id/color4"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:background="#fcae11"
-                    android:tag="#fcae11" />
+                    <View
+                        android:id="@+id/color2"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="#d31900"
+                        android:tag="#d31900" />
+                </FrameLayout>
 
-                <View
-                    android:id="@+id/color5"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:background="#f9d423"
-                    android:tag="#f9d423" />
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
 
-                <View
-                    android:id="@+id/color6"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:background="#9fd86b"
-                    android:tag="#9fd86b" />
+                    <View
+                        android:id="@+id/color3"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="#f76e2a"
+                        android:tag="#f76e2a" />
+                </FrameLayout>
 
-                <View
-                    android:id="@+id/color7"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:background="#8fbe00"
-                    android:tag="#8fbe00" />
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
 
-                <View
-                    android:id="@+id/color8"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:background="#059b9a"
-                    android:tag="#059b9a" />
+                    <View
+                        android:id="@+id/color4"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="#fcae11"
+                        android:tag="#fcae11" />
+                </FrameLayout>
 
-                <View
-                    android:id="@+id/color9"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:background="#536c8d"
-                    android:tag="#536c8d" />
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
 
-                <View
-                    android:id="@+id/color10"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:background="#5c4f79"
-                    android:tag="#5c4f79" />
+                    <View
+                        android:id="@+id/color5"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="#f9d423"
+                        android:tag="#f9d423" />
+                </FrameLayout>
 
-                <View
-                    android:id="@+id/color11"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:background="#613860"
-                    android:tag="#613860" />
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
 
-                <View
-                    android:id="@+id/color12"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:background="#4e3a3b"
-                    android:tag="#4e3a3b" />
+                    <View
+                        android:id="@+id/color6"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="#9fd86b"
+                        android:tag="#9fd86b" />
+                </FrameLayout>
 
-                <View
-                    android:id="@+id/color13"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:background="#666666"
-                    android:tag="#666666" />
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
 
-                <View
-                    android:id="@+id/color14"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:background="#929090"
-                    android:tag="#929090" />
+                    <View
+                        android:id="@+id/color7"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="#8fbe00"
+                        android:tag="#8fbe00" />
+                </FrameLayout>
 
-                <View
-                    android:id="@+id/color15"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:background="#af9c98"
-                    android:tag="#af9c98" />
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
 
-                <View
-                    android:id="@+id/color16"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:background="#ead1cb"
-                    android:tag="#ead1cb" />
+                    <View
+                        android:id="@+id/color8"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="#059b9a"
+                        android:tag="#059b9a" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
+
+                    <View
+                        android:id="@+id/color9"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="#536c8d"
+                        android:tag="#536c8d" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
+
+                    <View
+                        android:id="@+id/color10"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="#5c4f79"
+                        android:tag="#5c4f79" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
+
+                    <View
+                        android:id="@+id/color11"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="#613860"
+                        android:tag="#613860" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
+
+                    <View
+                        android:id="@+id/color12"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="#4e3a3b"
+                        android:tag="#4e3a3b" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
+
+                    <View
+                        android:id="@+id/color13"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="#666666"
+                        android:tag="#666666" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
+
+                    <View
+                        android:id="@+id/color14"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="#929090"
+                        android:tag="#929090" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
+
+                    <View
+                        android:id="@+id/color15"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="#af9c98"
+                        android:tag="#af9c98" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
+
+                    <View
+                        android:id="@+id/color16"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="#ead1cb"
+                        android:tag="#ead1cb" />
+                </FrameLayout>
 
             </GridLayout>
 
@@ -248,10 +330,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:textSize="20sp"
                     android:enabled="false"
                     android:gravity="left|center_vertical"
-                    android:text="00:00" />
+                    android:text="00:00"
+                    android:textSize="20sp" />
 
                 <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/switchAlarma"
