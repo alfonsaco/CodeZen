@@ -1,12 +1,17 @@
 package edu.alfonsaco.codezen.otros;
 
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.AttrRes;
+import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -16,6 +21,7 @@ import com.bumptech.glide.Glide;
 
 import edu.alfonsaco.codezen.R;
 import edu.alfonsaco.codezen.utils.BDD;
+import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation;
 
 public class AvatarActivity extends AppCompatActivity {
 
@@ -41,7 +47,7 @@ public class AvatarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_avatar);
+        setContentView(R.layout.avatar_activity);
 
         db=new BDD();
 
@@ -74,6 +80,11 @@ public class AvatarActivity extends AppCompatActivity {
             avatar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    for(ImageView img: avatares) {
+                        img.setBackgroundResource(0);
+                    }
+
+                    avatar.setBackgroundResource(R.drawable.borde_avatar_seleccionado);
                     cambiarAvatar(avatar);
                 }
             });
@@ -97,6 +108,16 @@ public class AvatarActivity extends AppCompatActivity {
         });
     }
 
+    // Obtener el color de los Attr
+    @ColorInt
+    private int resolveColorAttr(@AttrRes int attr) {
+        TypedValue typedValue = new TypedValue();
+        TypedArray a = obtainStyledAttributes(typedValue.data, new int[]{attr});
+        int color = a.getColor(0, Color.BLACK);
+        a.recycle();
+        return color;
+    }
+
     // CARGAR EL AVATAR CIRCULAR POR DEFECTO
     private void obtenerAvatar() {
         db.getDb()
@@ -110,7 +131,10 @@ public class AvatarActivity extends AppCompatActivity {
                     idImagen=getResources().getIdentifier(avatar, "drawable", getPackageName());
                     imagenAvatarSeleccionado.setImageResource(idImagen);
 
-                    Glide.with(this).load(idImagen).circleCrop().into(imagenAvatarSeleccionado);
+                    // Imagen circular con borde
+                    int colorBorde = resolveColorAttr(R.attr.colorSecondaryTransparent);
+                    Glide.with(this).load(idImagen)
+                            .transform(new CropCircleWithBorderTransformation(8, colorBorde)).into(imagenAvatarSeleccionado);
                 })
                 .addOnFailureListener(e -> {
                     Log.e("ERROR", "No se pudo cargar el avatar");
@@ -123,7 +147,10 @@ public class AvatarActivity extends AppCompatActivity {
         idImagen=getResources().getIdentifier((String) imagen.getTag(), "drawable", getPackageName());
         imagenAvatarSeleccionado.setImageResource(idImagen);
 
-        Glide.with(this).load(idImagen).circleCrop().into(imagenAvatarSeleccionado);
+        // Imagen circular con borde
+        int colorBorde = resolveColorAttr(R.attr.colorSecondaryTransparent);
+        Glide.with(this).load(idImagen)
+                .transform(new CropCircleWithBorderTransformation(8, colorBorde)).into(imagenAvatarSeleccionado);
     }
 
     // GUARDAR AVATAR NUEVO
