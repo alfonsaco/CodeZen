@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -19,8 +20,10 @@ import edu.alfonsaco.codezen.utils.Verifications;
 
 public class PasswordRecoverActivity extends AppCompatActivity {
 
+    // Componentes
     private EditText etxtEmailRecuperarContra;
     private Button btnEmailRecuperarContra;
+    private ImageView btnVolverInicio;
 
     private FirebaseAuth firebaseAuth;
     private Verifications verifications;
@@ -42,6 +45,15 @@ public class PasswordRecoverActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 enviarEmail();
+            }
+        });
+
+        // Cerrar actividad
+        btnVolverInicio=findViewById(R.id.btnVolverInicio);
+        btnVolverInicio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 

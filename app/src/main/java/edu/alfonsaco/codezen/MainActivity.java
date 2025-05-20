@@ -100,9 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.btnNotificaciones) {
-
-        } else if(item.getItemId() == R.id.btnAjustes) {
+        if(item.getItemId() == R.id.btnAjustes) {
             Intent intent=new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
         }
@@ -124,11 +122,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Intent intentDatosUsuario=getIntent();
-        String nombreUsuario=intentDatosUsuario.getStringExtra("nombre");
-        String emailUsuario=intentDatosUsuario.getStringExtra("email");
-
-        Toast.makeText(this, "HA INICIADO SESIÓN EL USUARIO "+nombreUsuario+" CON EL EMAIL "+emailUsuario, Toast.LENGTH_SHORT).show();
     }
 
     // PARA OBTENER LOS DATOS AL INICIAR SESIÓN EN GITHUB

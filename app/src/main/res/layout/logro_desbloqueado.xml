@@ -15,7 +15,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/fondo_redondeado"
+        android:background="@drawable/fondo_redondeado_logro"
         android:gravity="center"
         android:paddingEnd="10dp"
         android:paddingStart="10dp"

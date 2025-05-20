@@ -50,6 +50,7 @@ public class HabitsFragment extends Fragment implements HabitOptionsBottomSheet.
     private List<Habit> listaHabitos;
     private HabitAdapter habitAdapter;
 
+    // Componentes
     private FloatingActionButton btnAgregarHabito;
     private RecyclerView recyclerHabitos;
     private ProgressBar progressBarHabitos;

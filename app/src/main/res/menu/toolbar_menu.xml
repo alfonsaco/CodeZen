@@ -10,13 +10,4 @@
         app:showAsAction="always"
         android:tooltipText="Notificaciones"
         android:layout_gravity="end" />
-
-    <!-- Ir a Notificaciones -->
-    <item android:id="@+id/btnNotificaciones"
-        android:icon="@drawable/notifications"
-        android:title="Notificaciones"
-        android:iconTint="#FFF"
-        app:showAsAction="always"
-        android:tooltipText="Notificaciones"
-        android:layout_gravity="end" />
 </menu>
