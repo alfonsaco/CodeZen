@@ -51,6 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nombre"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="17sp" />
 
             <EditText
@@ -58,9 +59,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
-                android:background="#F1F1F1"
                 android:ems="10"
+                android:padding="10dp"
                 android:inputType="text"
+                android:background="@drawable/fondo_formularios"
                 tools:layout_editor_absoluteX="204dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -70,6 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:text="Descripción"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="17sp" />
 
             <EditText
@@ -77,9 +80,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="127dp"
                 android:layout_marginTop="7dp"
-                android:background="#F1F1F1"
+                android:background="@drawable/fondo_formularios"
                 android:ems="10"
                 android:inputType="textMultiLine"
+                android:gravity="top"
+                android:padding="10dp"
                 android:minLines="4" />
 
             <!--CONTENEDOR DE COLORES-->
@@ -87,6 +92,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
+                android:textColor="?attr/colorPrimary"
+
                 android:text="Seleccionar color"
                 android:textSize="17sp" />
 
@@ -96,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
                 android:alignmentMode="alignMargins"
-                android:background="#F1F1F1"
+                android:background="@drawable/fondo_formularios"
                 android:columnCount="8"
                 android:padding="16dp"
                 android:rowCount="2">
@@ -318,11 +325,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:text="Recordatorios"
+                android:textColor="?attr/colorPrimary"
+
                 android:textSize="17sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@drawable/fondo_formularios"
                 android:orientation="horizontal">
 
                 <Button
@@ -331,12 +342,16 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:enabled="false"
+                    android:backgroundTint="@android:color/transparent"
                     android:gravity="left|center_vertical"
                     android:text="00:00"
-                    android:textSize="20sp" />
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:padding="0dp" />
 
                 <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/switchAlarma"
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:checked="false" />

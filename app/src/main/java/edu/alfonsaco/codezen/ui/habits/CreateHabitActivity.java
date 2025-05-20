@@ -144,7 +144,6 @@ public class CreateHabitActivity extends AppCompatActivity {
                     btnGestionarRecordatorio.setEnabled(false);
                     nuevaHoraRecordatorio="";
                 }
-                Toast.makeText(CreateHabitActivity.this, nuevaHoraRecordatorio, Toast.LENGTH_SHORT).show();
             }
         });
 

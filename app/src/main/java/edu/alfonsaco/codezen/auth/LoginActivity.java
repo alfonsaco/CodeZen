@@ -168,7 +168,6 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser user = firebaseAuth.getCurrentUser();
-                        Toast.makeText(this, "Autenticación exitosa", Toast.LENGTH_SHORT).show();
 
                         String emailUsuario=firebaseAuth.getCurrentUser().getEmail();
                         String nombreUsuario=firebaseAuth.getCurrentUser().getDisplayName();
@@ -200,7 +199,6 @@ public class LoginActivity extends AppCompatActivity {
         // Iniciar sesión
         firebaseAuth.signInWithEmailAndPassword(email, contra).addOnCompleteListener(task -> {
             if(task.isSuccessful()) {
-                Toast.makeText(this, "Sesión iniciada con éxito", Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(this, MainActivity.class);
                 startActivity(intent);
                 finish();

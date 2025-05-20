@@ -12,9 +12,10 @@
         <item name="colorOnSecondary">@color/black</item>
         <item name="colorSecondaryContainer">#FFFFFF</item>
 
-        <!--AppBar-->
-        <item name="android:statusBarColor">#FF0339</item>
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <!--Fondo de los formularios-->
+        <item name="colorSecondaryTransparent">#2B449B7E</item>
+
+        <item name="android:statusBarColor">@color/statusBar</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 </resources>

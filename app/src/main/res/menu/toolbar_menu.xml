@@ -2,12 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Ir a Notificaciones -->
     <item android:id="@+id/btnAjustes"
         android:icon="@drawable/settings"
         android:title="Notificaciones"
-        android:iconTint="#FFF"
         app:showAsAction="always"
-        android:tooltipText="Notificaciones"
+        android:tooltipText="Ajustes"
         android:layout_gravity="end" />
 </menu>

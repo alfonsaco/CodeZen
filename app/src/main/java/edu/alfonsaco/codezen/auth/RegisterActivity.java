@@ -163,7 +163,6 @@ public class RegisterActivity extends AppCompatActivity {
                         FirebaseUser user = firebaseAuth.getCurrentUser();
                         baseDeDatos.guardarUsuarioEnFirebase(firebaseAuth.getCurrentUser().getDisplayName(), firebaseAuth.getCurrentUser().getEmail());
 
-                        Toast.makeText(this, "Autenticación exitosa", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(this, MainActivity.class));
                         finish();
                     } else {
@@ -227,7 +226,6 @@ public class RegisterActivity extends AppCompatActivity {
 
                 // Agregar el username al usuario creado
                 UserProfileChangeRequest cambioDatos= new UserProfileChangeRequest.Builder().setDisplayName(nombreUsuario).build();
-                Toast.makeText(this, "Usuario creado correctamente", Toast.LENGTH_SHORT).show();
 
                 usuario.updateProfile(cambioDatos).addOnCompleteListener(taskPerfil -> {
                     if(taskPerfil.isSuccessful()) {

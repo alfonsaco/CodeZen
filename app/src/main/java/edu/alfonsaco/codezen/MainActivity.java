@@ -4,9 +4,13 @@ import android.app.ComponentCaller;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowInsetsController;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -15,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -25,8 +30,8 @@ import androidx.navigation.ui.NavigationUI;
 import edu.alfonsaco.codezen.databinding.ActivityMainBinding;
 import edu.alfonsaco.codezen.otros.SettingsActivity;
 import edu.alfonsaco.codezen.ui.dev.DevFragment;
-
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.WindowInsetsControllerCompat;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,12 +47,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Se aplica el tema antes de realizar cualquier otra acción
-        aplicarTema();
-
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // Se aplica el tema antes de realizar cualquier otra acción
+        aplicarTema();
 
         // ------------------------ CAMBIAR TEMA DE CLAR A OSCURO ----------------------------
         preferencesTema = getSharedPreferences("tema", MODE_PRIVATE);
@@ -67,23 +72,10 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_habits, R.id.navigation_dev, R.id.navigation_meditate, R.id.navigation_profile)
                 .build();
 
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
-
-        // Icono de ajustes a la izquierda
-        /*
-        toolbar.setNavigationIcon(R.drawable.settings_30dp);
-        toolbar.setNavigationContentDescription("Ajustes");
-
-        toolbar.setNavigationOnClickListener(v -> {
-            Intent intent=new Intent(MainActivity.this, SettingsActivity.class);
-            startActivity(intent);
-        });
-        */
-        // (Para cambiar el tamaño del icono, ir a settings.xml)
-        // -----------------------------------------------------------------------------------
-
 
         // ------------------------- OBTENER DATOS DEL USUARIO --------------------------------
         firebaseAuth=FirebaseAuth.getInstance();
