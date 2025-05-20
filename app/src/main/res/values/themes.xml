@@ -15,6 +15,9 @@
         <!--Fondo de los formularios-->
         <item name="colorSecondaryTransparent">#2B449B7E</item>
 
+        <!--Fondo de los avatares-->
+        <item name="colorBordeImagen">#9ECFDA</item>
+
         <item name="android:statusBarColor">@color/statusBar</item>
         <item name="android:windowLightStatusBar">false</item>
     </style>

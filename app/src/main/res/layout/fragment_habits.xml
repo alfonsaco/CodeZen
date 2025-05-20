@@ -57,10 +57,10 @@
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_marginStart="20dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/fondo_redondeado_flotante"
         android:src="@android:drawable/ic_input_add"
-        app:layout_constraintBottom_toBottomOf="@+id/recyclerHabitos"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:tint="?attr/colorOnPrimary" />
 

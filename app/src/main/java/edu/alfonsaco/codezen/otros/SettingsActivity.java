@@ -2,9 +2,12 @@ package edu.alfonsaco.codezen.otros;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,12 +18,15 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.AttrRes;
+import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -31,6 +37,7 @@ import edu.alfonsaco.codezen.MainActivity;
 import edu.alfonsaco.codezen.R;
 import edu.alfonsaco.codezen.utils.ArchievementsUnlocks;
 import edu.alfonsaco.codezen.utils.BDD;
+import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -189,10 +196,23 @@ public class SettingsActivity extends AppCompatActivity {
 
                     int idImagen=getResources().getIdentifier(avatar, "drawable", getPackageName());
                     imagenUsuario.setImageResource(idImagen);
+                    // Imagen circular con borde
+                    int colorBorde = resolveColorAttr(R.attr.colorBordeImagen);
+                    Glide.with(this).load(idImagen)
+                            .transform(new CropCircleWithBorderTransformation(8, colorBorde)).into(imagenUsuario);
                 })
                 .addOnFailureListener(e -> {
                     Log.e("ERROR", "No se pudo cargar el avatar");
                 });
+    }
+    // Obtener el color de los Attr
+    @ColorInt
+    private int resolveColorAttr(@AttrRes int attr) {
+        TypedValue typedValue = new TypedValue();
+        TypedArray a = obtainStyledAttributes(typedValue.data, new int[]{attr});
+        int color = a.getColor(0, Color.BLACK);
+        a.recycle();
+        return color;
     }
 
     // ******************* MÉTODOS PARA CAMBIAR EL TEMA CLARO OSCURO **********************
@@ -231,8 +251,6 @@ public class SettingsActivity extends AppCompatActivity {
                 Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         startActivity(intent);
-
-        Toast.makeText(this, "Sesión cerrada correctamente", Toast.LENGTH_SHORT).show();
         finish();
     }
     // ************************************************************************************

@@ -18,7 +18,8 @@
             android:id="@+id/btnCloseSheet"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            app:tint="#5D5D5D"
+            app:tint="?attr/colorPrimary"
+            android:alpha="0.6"
             android:layout_gravity="start"
             app:srcCompat="@drawable/close" />
 

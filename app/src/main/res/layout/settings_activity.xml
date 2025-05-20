@@ -18,6 +18,7 @@
         app:srcCompat="@drawable/go_back_arrow" />
 
     <ScrollView
+        android:id="@+id/scrollView3"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="60dp"
@@ -31,42 +32,57 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingEnd="24dp"
+            android:paddingStart="24dp" >
 
             <!-- LINEAR LAYOUT DE LOS DATOS DEL USUARIO -->
             <LinearLayout
                 android:id="@+id/viewUsuario"
-                android:background="#D8D8D8"
-                android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:orientation="vertical">
+                android:background="@drawable/fondo_formularios"
+                android:orientation="vertical"
+                android:padding="15dp">
 
-                <ImageView
-                    android:id="@+id/imagenUsuario"
-                    android:layout_width="138dp"
-                    android:layout_height="83dp"
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    tools:srcCompat="@drawable/brain_icon" />
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:paddingBottom="10dp">
 
-                <ImageView
-                    android:id="@+id/irAAvatar"
-                    android:layout_gravity="center"
-                    android:layout_width="30dp"
-                    android:layout_height="40dp"
-                    app:tint="#797979"
-                    app:srcCompat="@drawable/edit" />
+                    <ImageView
+                        android:id="@+id/imagenUsuario"
+                        android:layout_width="97dp"
+                        android:layout_height="97dp"
+                        tools:srcCompat="@drawable/avatar1" />
+
+                    <ImageView
+                        android:id="@+id/irAAvatar"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="bottom|end"
+                        app:srcCompat="@drawable/edit"
+                        android:alpha="0.8"
+                        app:tint="?attr/colorPrimary" />
+                </FrameLayout>
+
 
                 <TextView
                     android:id="@+id/txtUsername"
+                    android:textStyle="bold"
+                    android:textSize="17sp"
+                    android:textColor="?attr/colorPrimary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Datos del usuario" />
 
                 <TextView
                     android:id="@+id/txtEmail"
+                    android:textColor="?attr/colorPrimary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Email del usuario" />
@@ -76,39 +92,49 @@
             <!-- LINEAR LAYOUT DEL TEMA OSCURO / CLARO -->
             <LinearLayout
                 android:id="@+id/viewTema"
-                android:background="#D8D8D8"
                 android:layout_width="match_parent"
-                android:padding="10dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
+                android:background="@drawable/fondo_formularios"
                 android:orientation="vertical"
-                android:layout_height="wrap_content" >
-
+                android:padding="15dp">
 
                 <TextView
                     android:id="@+id/textView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="18sp"
-                    android:textColor="#272727"
-                    android:text="Cambiar tema de la aplicación" />
+                    android:text="Cambiar tema de la aplicación"
+                    android:layout_marginBottom="12dp"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="16sp" />
 
                 <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" >
+                    android:paddingStart="10dp"
+                    android:layout_weight="1">
 
                     <RadioButton
                         android:id="@+id/rdClaro"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Claro" />
+                        android:text="Claro"
+                        android:textColor="?attr/colorPrimary"
+                        android:padding="0dp"
+                        android:minHeight="0dp"
+                        android:minWidth="0dp"/>
 
                     <RadioButton
                         android:id="@+id/rdOscuro"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Oscuro" />
+                        android:text="Oscuro"
+                        android:textColor="?attr/colorPrimary"
+                        android:layout_marginBottom="5dp"
+                        android:padding="0dp"
+                        android:minHeight="0dp"
+                        android:minWidth="0dp"/>
                 </RadioGroup>
 
             </LinearLayout>
@@ -119,14 +145,19 @@
                 android:layout_height="wrap_content"
                 android:text="Valorar App en Play Store" />
 
-            <Button
-                android:id="@+id/btnCerrarSesión"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#C64242"
-                android:text="CERRAR SESIÓN" />
-
-
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/btnCerrarSesión"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#C64242"
+        android:text="CERRAR SESIÓN"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
