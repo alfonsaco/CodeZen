@@ -12,11 +12,10 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
-        android:background="#27000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,59 +25,101 @@
             android:id="@+id/irAFocus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="#000"
-                android:padding="20dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:orientation="horizontal">
+                android:background="@drawable/fondo_focus"
+                android:orientation="horizontal"
+                android:padding="20dp">
 
                 <ImageView
                     android:id="@+id/iamgeViewFocus"
-                    android:layout_width="67dp"
-                    android:layout_height="45dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/brain_icon"
+                    android:layout_marginEnd="20dp"
+                    android:src="@drawable/diana"
                     app:tint="#c4c4c4" />
 
-                <TextView
-                    android:id="@+id/textFocus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:textColor="#C4C4C4"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
-                    android:text="Focus" />
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="7dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textFocus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="FOCUS"
+                        android:textColor="#c4c4c4"
+                        android:textSize="21sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textFocus2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="&quot;Este contador bloquea el móvil hasta que finalice, ayudándote a concentrarte sin distracciones.&quot;"
+                        android:textColor="#c4c4c4"
+                        android:textStyle="italic" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/irAMeditar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#D79ECF63"
-                android:padding="20dp"
-                android:orientation="horizontal">
+                android:background="@drawable/fondo_formularios"
+                android:orientation="horizontal"
+                android:padding="20dp">
 
                 <ImageView
                     android:id="@+id/imageView6"
-                    android:layout_width="71dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/brain_icon" />
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginEnd="20dp"
+                    android:src="@drawable/meditation" />
 
-                <TextView
-                    android:id="@+id/textView15"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
-                    android:text="Meditación" />
+                    android:layout_marginBottom="7dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_weight="1"
+                        android:text="MEDITACIÓN"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="21sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="&quot;Este contador te ayuda a medir el tiempo dedicado a tu sesión de meditación.&quot;"
+                        android:textColor="?attr/colorPrimary"
+                        android:textStyle="italic" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>
