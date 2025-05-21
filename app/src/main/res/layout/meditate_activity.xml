@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:background="?attr/colorOnPrimary"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.meditation.meditate.MeditationActivity">
@@ -11,18 +12,20 @@
         android:id="@+id/btnFinalizarMeditacion"
         android:layout_width="26dp"
         android:layout_height="26dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:tint="?attr/colorPrimary"
+        android:alpha="0.6"
         app:srcCompat="@drawable/close" />
 
     <ImageView
         android:id="@+id/btnActivarSonido"
         android:layout_width="26dp"
         android:layout_height="26dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/sound" />
@@ -34,7 +37,7 @@
         app:cpb_background_progressbar_color="#b6bbd8"
         app:cpb_background_progressbar_width="5dp"
         app:cpb_progress_direction="to_right"
-        app:cpb_progressbar_color="#3f51b5"
+        app:cpb_progressbar_color="?attr/colorPrimary"
         app:cpb_progressbar_width="10dp"
         app:cpb_round_border="false"
         android:scaleY="-1"
@@ -50,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         tools:text="TextView"
+        android:textColor="?attr/colorPrimary"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView19"
         app:layout_constraintStart_toEndOf="@+id/textView19"
@@ -61,6 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="/"
+        android:textColor="?attr/colorPrimary"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,20 +77,11 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         tools:text="TextView"
+        android:textColor="?attr/colorPrimary"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView19"
         app:layout_constraintEnd_toStartOf="@+id/textView19"
         app:layout_constraintTop_toTopOf="@+id/textView19" />
 
-    <ImageView
-        android:id="@+id/btnPararReanudar"
-        android:layout_width="40dp"
-        android:layout_height="80dp"
-        app:layout_constraintBottom_toBottomOf="@+id/circularProgressBar"
-        app:layout_constraintEnd_toEndOf="@+id/circularProgressBar"
-        app:layout_constraintStart_toStartOf="@+id/circularProgressBar"
-        app:layout_constraintTop_toTopOf="@+id/circularProgressBar"
-        app:tint="#424242"
-        app:srcCompat="@drawable/pause" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

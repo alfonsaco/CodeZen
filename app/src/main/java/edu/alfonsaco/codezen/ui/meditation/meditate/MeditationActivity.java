@@ -49,7 +49,6 @@ public class MeditationActivity extends AppCompatActivity {
     private ImageView btnFinalizarMeditacion;
     private TextView txtDuracionCompleta;
     private TextView txtTiempoRestante;
-    private ImageView btnPararReanudar;
     private ImageView btnActivarSonido;
     private CircularProgressBar circularProgressBar;
 
@@ -145,23 +144,6 @@ public class MeditationActivity extends AppCompatActivity {
         });
         // *************************************************************************
 
-
-        // BOTÓN DE DETENER O REANUDAR LA MEDITACIÓN
-        btnPararReanudar=findViewById(R.id.btnPararReanudar);
-        btnPararReanudar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(contadorActivo) {
-                    btnPararReanudar.setImageResource(R.drawable.play);
-                    contadorActivo=false;
-                    countDown.cancel();
-
-                } else {
-                    btnPararReanudar.setImageResource(R.drawable.pause);
-                    contadorActivo=true;
-                }
-            }
-        });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
