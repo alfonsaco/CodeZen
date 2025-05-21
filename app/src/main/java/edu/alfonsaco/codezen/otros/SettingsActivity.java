@@ -60,6 +60,7 @@ public class SettingsActivity extends AppCompatActivity {
     private ImageView irAAvatar;
     private Button btnPlayStore;
 
+
     private String username= MainActivity.username;
     private String email=MainActivity.email;
 
@@ -197,7 +198,7 @@ public class SettingsActivity extends AppCompatActivity {
                     int idImagen=getResources().getIdentifier(avatar, "drawable", getPackageName());
                     imagenUsuario.setImageResource(idImagen);
                     // Imagen circular con borde
-                    int colorBorde = resolveColorAttr(R.attr.colorBordeImagen);
+                    int colorBorde = resolveColorAttr(androidx.biometric.R.attr.colorPrimary);
                     Glide.with(this).load(idImagen)
                             .transform(new CropCircleWithBorderTransformation(8, colorBorde)).into(imagenUsuario);
                 })

@@ -132,9 +132,18 @@ public class AvatarActivity extends AppCompatActivity {
                     imagenAvatarSeleccionado.setImageResource(idImagen);
 
                     // Imagen circular con borde
-                    int colorBorde = resolveColorAttr(R.attr.colorSecondaryTransparent);
+                    int colorBorde = resolveColorAttr(androidx.biometric.R.attr.colorPrimary);
                     Glide.with(this).load(idImagen)
                             .transform(new CropCircleWithBorderTransformation(8, colorBorde)).into(imagenAvatarSeleccionado);
+
+                    // 🚨 AÑADE ESTE BLOQUE AQUÍ
+                    for (ImageView avatarView : avatares) {
+                        if (avatarView.getTag().equals(nombreImagen)) {
+                            avatarView.setBackgroundResource(R.drawable.borde_avatar_seleccionado);
+                        } else {
+                            avatarView.setBackgroundResource(0);
+                        }
+                    }
                 })
                 .addOnFailureListener(e -> {
                     Log.e("ERROR", "No se pudo cargar el avatar");
@@ -148,7 +157,7 @@ public class AvatarActivity extends AppCompatActivity {
         imagenAvatarSeleccionado.setImageResource(idImagen);
 
         // Imagen circular con borde
-        int colorBorde = resolveColorAttr(R.attr.colorSecondaryTransparent);
+        int colorBorde = resolveColorAttr(androidx.biometric.R.attr.colorPrimary);
         Glide.with(this).load(idImagen)
                 .transform(new CropCircleWithBorderTransformation(8, colorBorde)).into(imagenAvatarSeleccionado);
     }
