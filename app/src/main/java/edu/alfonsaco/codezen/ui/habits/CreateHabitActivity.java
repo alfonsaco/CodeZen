@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -123,11 +124,11 @@ public class CreateHabitActivity extends AppCompatActivity {
 
                     for (View vColor : listaColores) {
                         View contenedor = (FrameLayout) vColor.getParent();
-                        contenedor.setBackgroundResource(0);
+                        contenedor.setBackgroundColor(0);
                     }
 
                     View contenedor=(FrameLayout) color.getParent();
-                    contenedor.setBackgroundResource(R.drawable.fondo_borde_color_seleccionado);
+                    contenedor.setBackgroundColor(Color.BLACK);
                 }
             });
         }

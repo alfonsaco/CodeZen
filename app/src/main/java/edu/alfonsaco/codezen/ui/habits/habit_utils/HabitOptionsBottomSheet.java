@@ -64,14 +64,16 @@ public class HabitOptionsBottomSheet extends BottomSheetDialogFragment {
             bd.obtenerHabito(idHabito, new BDD.HabitCallback() {
                 @Override
                 public void onHabitLoaded(Habit habit) {
-                    Intent intent = new Intent(getContext(), EditHabitActivity.class);
-                    intent.putExtra("id", habit.getId());
-                    intent.putExtra("nombre", habit.getNombre());
-                    intent.putExtra("descripcion", habit.getDescripcion());
-                    intent.putExtra("color", habit.getColor());
-                    intent.putExtra("recordatorio", habit.getRecordatorio());
-                    startActivity(intent);
-                    dismiss();
+                    if (isAdded() && getContext() != null) {
+                        Intent intent = new Intent(getContext(), EditHabitActivity.class);
+                        intent.putExtra("id", habit.getId());
+                        intent.putExtra("nombre", habit.getNombre());
+                        intent.putExtra("descripcion", habit.getDescripcion());
+                        intent.putExtra("color", habit.getColor());
+                        intent.putExtra("recordatorio", habit.getRecordatorio());
+                        startActivity(intent);
+                        dismiss();
+                    }
                 }
 
                 @Override
@@ -85,8 +87,8 @@ public class HabitOptionsBottomSheet extends BottomSheetDialogFragment {
             dismiss();
 
             // Dialog personalizado
-            AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
-            View dialogView=LayoutInflater.from(getContext()).inflate(R.layout.dialog_borrar, null);
+            AlertDialog.Builder builder=new AlertDialog.Builder(requireContext());
+            View dialogView=LayoutInflater.from(requireContext()).inflate(R.layout.dialog_borrar, null);
             builder.setView(dialogView);
 
 

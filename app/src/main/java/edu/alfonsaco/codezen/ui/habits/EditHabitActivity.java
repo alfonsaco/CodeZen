@@ -2,11 +2,13 @@ package edu.alfonsaco.codezen.ui.habits;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -90,6 +92,14 @@ public class EditHabitActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     String tagColor=color.getTag().toString();
                     colorSeleccionado=tagColor;
+
+                    for (View vColor : listaColores) {
+                        View contenedor = (FrameLayout) vColor.getParent();
+                        contenedor.setBackgroundColor(0);
+                    }
+
+                    FrameLayout contenedor=(FrameLayout) color.getParent();
+                    contenedor.setBackgroundColor(Color.BLACK);
                 }
             });
         }
@@ -106,6 +116,13 @@ public class EditHabitActivity extends AppCompatActivity {
         String descripcionn=intent.getStringExtra("descripcion");
         String recordatorio=intent.getStringExtra("recordatorio");
         colorSeleccionado=intent.getStringExtra("color");
+
+        for(View color : listaColores) {
+            if(color.getTag().toString().equals(colorSeleccionado)) {
+                FrameLayout contenedor=(FrameLayout) color.getParent();
+                contenedor.setBackgroundColor(Color.BLACK);
+            }
+        }
 
         etxtNombreHabito.setText(nombre);
         etxtDescripcion.setText(descripcionn);

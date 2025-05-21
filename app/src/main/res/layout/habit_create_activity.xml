@@ -24,9 +24,9 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:text="Crear Hábito"
-        android:textStyle="bold"
-        android:textSize="30sp"
         android:textColor="?attr/colorPrimary"
+        android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnVolverInicio" />
 
@@ -45,8 +45,8 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="24dp"
-            android:paddingBottom="60dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="60dp">
 
             <TextView
                 android:id="@+id/textView10"
@@ -95,7 +95,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:text="Seleccionar color"
-
                 android:textColor="?attr/colorPrimary"
                 android:textSize="17sp" />
 
@@ -113,7 +112,8 @@
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="3dp"
+                    android:padding="2dp">
 
                     <View
                         android:id="@+id/color1"
@@ -126,7 +126,8 @@
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="3dp"
+                    android:padding="2dp">
 
                     <View
                         android:id="@+id/color2"
@@ -139,7 +140,8 @@
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="3dp"
+                    android:padding="2dp">
 
                     <View
                         android:id="@+id/color3"
@@ -152,7 +154,8 @@
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="3dp"
+                    android:padding="2dp">
 
                     <View
                         android:id="@+id/color4"
@@ -165,7 +168,8 @@
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="3dp"
+                    android:padding="2dp">
 
                     <View
                         android:id="@+id/color5"
@@ -178,7 +182,8 @@
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="3dp"
+                    android:padding="2dp">
 
                     <View
                         android:id="@+id/color6"
@@ -191,7 +196,8 @@
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="3dp"
+                    android:padding="2dp">
 
                     <View
                         android:id="@+id/color7"
@@ -204,7 +210,8 @@
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="3dp"
+                    android:padding="2dp">
 
                     <View
                         android:id="@+id/color8"
@@ -217,7 +224,8 @@
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="3dp"
+                    android:padding="2dp">
 
                     <View
                         android:id="@+id/color9"
@@ -230,7 +238,8 @@
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="3dp"
+                    android:padding="2dp">
 
                     <View
                         android:id="@+id/color10"
@@ -243,7 +252,8 @@
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="3dp"
+                    android:padding="2dp">
 
                     <View
                         android:id="@+id/color11"
@@ -256,7 +266,8 @@
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="3dp"
+                    android:padding="2dp">
 
                     <View
                         android:id="@+id/color12"
@@ -269,7 +280,8 @@
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="3dp"
+                    android:padding="2dp">
 
                     <View
                         android:id="@+id/color13"
@@ -282,7 +294,8 @@
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="3dp"
+                    android:padding="2dp">
 
                     <View
                         android:id="@+id/color14"
@@ -295,7 +308,8 @@
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="3dp"
+                    android:padding="2dp">
 
                     <View
                         android:id="@+id/color15"
@@ -308,7 +322,8 @@
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="3dp"
+                    android:padding="2dp">
 
                     <View
                         android:id="@+id/color16"
@@ -320,6 +335,7 @@
 
             </GridLayout>
 
+
             <!-- RECORDATORIOS -->
             <TextView
                 android:id="@+id/textView11"
@@ -328,7 +344,6 @@
                 android:layout_marginTop="25dp"
                 android:text="Recordatorios"
                 android:textColor="?attr/colorPrimary"
-
                 android:textSize="17sp" />
 
             <LinearLayout
