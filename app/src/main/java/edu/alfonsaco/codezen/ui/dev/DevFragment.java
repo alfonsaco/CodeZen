@@ -57,7 +57,7 @@ public class DevFragment extends Fragment {
         checkLoginStatus();
     }
 
-    private void checkLoginStatus() {
+    public void checkLoginStatus() {
         SharedPreferences preferences = requireContext().getSharedPreferences("auth", Context.MODE_PRIVATE);
         String token = preferences.getString("token", null);
 

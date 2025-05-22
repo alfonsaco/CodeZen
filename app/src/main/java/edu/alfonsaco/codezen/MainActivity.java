@@ -129,34 +129,52 @@ public class MainActivity extends AppCompatActivity {
         if (uri != null && uri.toString().startsWith("codezen://callback")) {
             String code = uri.getQueryParameter("code");
             if (code != null) {
-                Toast.makeText(MainActivity.this, "CODE: " + code, Toast.LENGTH_SHORT).show();
+                // Guardar el código temporalmente
+                getSharedPreferences("auth_temp", MODE_PRIVATE)
+                        .edit()
+                        .putString("oauth_code", code)
+                        .apply();
 
+                // Navegar al fragmento Dev si no está visible
                 BottomNavigationView navView = findViewById(R.id.nav_view);
                 navView.setSelectedItemId(R.id.navigation_dev);
 
-                NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
-                Fragment currentFragment = navHostFragment.getChildFragmentManager().getPrimaryNavigationFragment();
+                // Procesar el código inmediatamente
+                processStoredOAuthCode();
+            }
+        }
+    }
 
-                if (currentFragment instanceof DevFragment) {
-                    DevFragment devFragment = (DevFragment) currentFragment;
-                    DevFragment.obtenerToken(code, devFragment.requireContext());
-                } else {
-                    // Esperar a que se cargue el fragmento con un pequeño delay
-                    new android.os.Handler().postDelayed(() -> {
-                        Fragment fragment = navHostFragment.getChildFragmentManager().getPrimaryNavigationFragment();
-                        if (fragment instanceof DevFragment) {
-                            DevFragment.obtenerToken(code, fragment.requireContext());
-                        }
-                    }, 500);
+    private void processStoredOAuthCode() {
+        SharedPreferences prefs = getSharedPreferences("auth_temp", MODE_PRIVATE);
+        String code = prefs.getString("oauth_code", null);
+
+        if (code != null) {
+            NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.nav_host_fragment_activity_main);
+
+            if (navHostFragment != null) {
+                Fragment fragment = navHostFragment.getChildFragmentManager()
+                        .getPrimaryNavigationFragment();
+
+                if (fragment instanceof DevFragment) {
+                    DevFragment.obtenerToken(code, this);
+                    // Limpiar el código temporal
+                    prefs.edit().remove("oauth_code").apply();
                 }
             }
         }
     }
     public void updateDevFragmentUI() {
-        Fragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host_fragment_activity_main);
+
         if (navHostFragment != null) {
-            Fragment fragment = navHostFragment.getChildFragmentManager().getPrimaryNavigationFragment();
+            Fragment fragment = navHostFragment.getChildFragmentManager()
+                    .getPrimaryNavigationFragment();
+
             if (fragment instanceof DevFragment) {
+                ((DevFragment) fragment).checkLoginStatus();
             }
         }
     }
