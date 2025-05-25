@@ -9,13 +9,13 @@
     "id": "hab_02",
     "nombre": "Level Up",
     "descripcion": "Crea 5 hábitos",
-    "ruta": "logro1"
+    "ruta": "logro2"
   },
   {
     "id": "hab_03",
     "nombre": "GigaChad",
     "descripcion": "Crea 15 hábitos",
-    "ruta": "logro1"
+    "ruta": "logro3"
   },
   {
     "id": "med_01",
@@ -27,13 +27,13 @@
     "id": "med_02",
     "nombre": "Aficionado",
     "descripcion": "Haz 30 meditaciones",
-    "ruta": "logro4"
+    "ruta": "logro5"
   },
   {
     "id": "med_03",
     "nombre": "Zen",
     "descripcion": "Haz 100 meditaciones",
-    "ruta": "logro4"
+    "ruta": "logro6"
   },
   {
     "id": "med_04",
