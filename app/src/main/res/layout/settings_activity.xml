@@ -152,11 +152,25 @@
         android:id="@+id/btnCerrarSesión"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="#C64242"
         android:text="CERRAR SESIÓN"
+        android:textColor="#C64242"
+        app:layout_constraintBottom_toTopOf="@+id/btnBorrarCuenta"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/boton_cerrar_sesion"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnBorrarCuenta"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="ELIMINAR CUENTA"
+        android:backgroundTint="#C64242"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

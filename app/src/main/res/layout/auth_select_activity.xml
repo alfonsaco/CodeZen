@@ -9,6 +9,18 @@
     tools:context=".AuthSelectActivity">
 
     <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="411dp"
+        android:scaleY="-1"
+        android:src="@drawable/auth_fondo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="-251dp" />
+
+    <ImageView
         android:id="@+id/iconoAppAuth"
         android:layout_width="157dp"
         android:layout_height="175dp"
@@ -16,27 +28,34 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.32"
+        app:layout_constraintVertical_bias="0.5"
         app:srcCompat="@mipmap/ic_launcher" />
 
     <Button
-        android:id="@+id/btnIrRegistro"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnIrIniciarSesion"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="CREAR CUENTA"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="24dp"
+        android:text="INICIAR SESIÓN"
+        app:layout_constraintBottom_toTopOf="@+id/btnIrRegistro"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iconoAppAuth" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnIrIniciarSesion"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="24dp"
-        android:text="INICIAR SESIÓN"
-        app:layout_constraintEnd_toEndOf="@+id/btnIrRegistro"
-        app:layout_constraintStart_toStartOf="@+id/btnIrRegistro"
-        app:layout_constraintTop_toBottomOf="@+id/btnIrRegistro" />
+        android:id="@+id/btnIrRegistro"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/borde_boton_auth_select"
+        android:text="CREAR CUENTA"
+        android:textColor="?attr/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
