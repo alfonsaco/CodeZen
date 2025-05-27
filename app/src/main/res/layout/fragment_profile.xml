@@ -32,8 +32,8 @@
 
                 <ImageView
                     android:id="@+id/avatarUsuario"
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
                     android:layout_marginTop="25dp"
                     android:layout_gravity="center_horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +47,7 @@
                     android:layout_height="35dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="50dp"
-                    android:layout_marginTop="130dp"
+                    android:layout_marginTop="135dp"
                     app:layout_constraintBottom_toBottomOf="@+id/avatarUsuario"
                     app:layout_constraintStart_toEndOf="@+id/avatarUsuario"
                     tools:src="@drawable/lvl1" />

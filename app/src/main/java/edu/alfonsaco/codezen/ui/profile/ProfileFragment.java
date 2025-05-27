@@ -1,20 +1,26 @@
 package edu.alfonsaco.codezen.ui.profile;
 
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.AttrRes;
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.common.reflect.TypeToken;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,6 +40,7 @@ import edu.alfonsaco.codezen.databinding.FragmentProfileBinding;
 import edu.alfonsaco.codezen.ui.profile.profile_utils.Logro;
 import edu.alfonsaco.codezen.ui.profile.profile_utils.LogrosAdapter;
 import edu.alfonsaco.codezen.utils.BDD;
+import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation;
 
 public class ProfileFragment extends Fragment {
 
@@ -93,6 +100,9 @@ public class ProfileFragment extends Fragment {
 
                     int idImagen=getResources().getIdentifier(avatar, "drawable", getActivity().getPackageName());
                     avatarUsuario.setImageResource(idImagen);
+
+                    // Imagen circular con borde
+                    Glide.with(this).load(idImagen).circleCrop().into(avatarUsuario);
                 })
                 .addOnFailureListener(e -> {
                     Log.e("ERROR", "No se pudo cargar el avatar");

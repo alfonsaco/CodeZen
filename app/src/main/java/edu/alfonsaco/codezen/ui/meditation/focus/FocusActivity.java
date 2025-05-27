@@ -56,7 +56,7 @@ public class FocusActivity extends AppCompatActivity {
         btnIniciarFocus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(minutosPicker.getValue() < 1) {
+                if((minutosPicker.getValue() < 1 && horasPicker.getValue() < 1)) {
                     Toast.makeText(FocusActivity.this, "Esta sesión es muy corta", Toast.LENGTH_SHORT).show();
                     return;
                 }
