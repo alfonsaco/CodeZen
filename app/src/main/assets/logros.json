@@ -51,7 +51,7 @@
     "id": "sup_02",
     "nombre": "Supporter v.2",
     "descripcion": "Siguenos en Instagram",
-    "ruta": "logro7"
+    "ruta": "logro9"
   },
   {
     "id": "git_01",
@@ -63,13 +63,13 @@
     "id": "git_02",
     "nombre": "Commit Beast",
     "descripcion": "Haz 5000 commits en GitHub",
-    "ruta": "logro7"
+    "ruta": "logro11"
   },
   {
     "id": "heisen",
     "nombre": "Heisenberg",
     "descripcion": "Ten un porcentaje de éxito del 99%",
-    "ruta": "logro7"
+    "ruta": "logro12"
   },
   {
     "id": "saul",
@@ -81,7 +81,7 @@
     "id": "rac_01",
     "nombre": "Tu nuevo yo",
     "descripcion": "Usa la app 5 días seguidos",
-    "ruta": "logro7"
+    "ruta": "logro14"
   },
   {
     "id": "rac_02",
@@ -91,8 +91,8 @@
   },
   {
     "id": "rac_03",
-    "nombre": "Disciplina",
+    "nombre": "Club de los 100",
     "descripcion": "Usa la app 100 días seguidos",
-    "ruta": "logro7"
+    "ruta": "logro16"
   }
 ]

@@ -176,7 +176,7 @@ public class ProfileFragment extends Fragment {
                     } else if(nivel == 3) {
                         imagenNivel.setImageResource(R.drawable.lvl3);
                     } else if(nivel >= 4) {
-
+                        imagenNivel.setImageResource(R.drawable.lvl4);
                     }
                 })
                 .addOnFailureListener(e -> {

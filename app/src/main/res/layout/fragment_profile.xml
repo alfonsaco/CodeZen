@@ -81,7 +81,6 @@
                     android:layout_height="40dp"
                     android:background="@drawable/borde_boton_auth_select"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="30dp"
                     android:orientation="vertical">
 
                     <!--Aquí van los Views de cada progreso-->
@@ -96,7 +95,6 @@
                 android:layout_height="267dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                android:paddingTop="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
