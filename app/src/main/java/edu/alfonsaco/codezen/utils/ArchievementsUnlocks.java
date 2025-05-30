@@ -63,6 +63,7 @@ public class ArchievementsUnlocks {
 
                 // ***************** AGREGAR LOGRO A LA BASE DE DATOS ******************
                 db.agregarLogroABDD(id, nombre);
+
             }
         });
     }

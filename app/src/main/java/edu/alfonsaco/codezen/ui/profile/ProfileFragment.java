@@ -77,7 +77,7 @@ public class ProfileFragment extends Fragment {
 
         // ProgressBar de nivel
         progressBarNivel=binding.progressBarNivel;
-
+        llenarProgressBar();
 
         // Nivel
         imagenNivel=binding.imagenNivel;
@@ -196,15 +196,19 @@ public class ProfileFragment extends Fragment {
 
                         // NIVEL 0
                         if(contLogros < 2) {
+                            agregarViewsProgressBar(2);
 
                         // NIVEL 1
                         } else if(contLogros > 1 && contLogros <= 5) {
 
+
                         // NIVEL 2
                         } else if(contLogros > 5 && contLogros <= 9) {
 
+
                         // NIVEL 3
                         } else if(contLogros > 9 && contLogros <= 14) {
+
 
                         // NIVEL 4
                         } else if(contLogros > 14 && contLogros <= 21) {
@@ -217,7 +221,25 @@ public class ProfileFragment extends Fragment {
                 });
     }
 
+    private void agregarViewsProgressBar(int cantidad) {
+        progressBarNivel.removeAllViews();
 
+        for(int i=0; i < cantidad; i++) {
+            View view=new View(getContext());
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    0, // Ancho
+                    LinearLayout.LayoutParams.MATCH_PARENT, // Alto
+                    1f // Peso de 1 para cada sección
+            );
+
+            view.setLayoutParams(layoutParams);
+
+            view.setBackgroundResource(R.drawable.borde_boton_auth_select);
+
+            progressBarNivel.addView(view);
+        }
+    }
     // *********************************************************************************************
 
     @Override
