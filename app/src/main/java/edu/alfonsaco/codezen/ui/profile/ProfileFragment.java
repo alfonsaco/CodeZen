@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.AttrRes;
@@ -24,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.common.reflect.TypeToken;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.gson.Gson;
 
 import org.checkerframework.checker.units.qual.A;
@@ -51,6 +53,7 @@ public class ProfileFragment extends Fragment {
     private TextView txtNombreUsuario;
     private ImageView avatarUsuario;
     private ImageView imagenNivel;
+    private LinearLayout progressBarNivel;
 
     // Recycler de logros
     private RecyclerView recyclerLogros;
@@ -71,6 +74,10 @@ public class ProfileFragment extends Fragment {
         // Avatar
         txtNombreUsuario.setText(MainActivity.username);
         obtenerAvatar();
+
+        // ProgressBar de nivel
+        progressBarNivel=binding.progressBarNivel;
+
 
         // Nivel
         imagenNivel=binding.imagenNivel;
@@ -176,6 +183,41 @@ public class ProfileFragment extends Fragment {
                     Log.e("ERROR", "Error al obtener el número de logros");
                 });
     }
+
+    private void llenarProgressBar() {
+        db.getDb().collection("usuarios")
+                .document(db.getUsuarioID())
+                .get()
+                .addOnCompleteListener(task -> {
+                    DocumentSnapshot snapshot=task.getResult();
+
+                    if(snapshot.exists()) {
+                        int contLogros=snapshot.getLong("cont_logros").intValue();
+
+                        // NIVEL 0
+                        if(contLogros < 2) {
+
+                        // NIVEL 1
+                        } else if(contLogros > 1 && contLogros <= 5) {
+
+                        // NIVEL 2
+                        } else if(contLogros > 5 && contLogros <= 9) {
+
+                        // NIVEL 3
+                        } else if(contLogros > 9 && contLogros <= 14) {
+
+                        // NIVEL 4
+                        } else if(contLogros > 14 && contLogros <= 21) {
+
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("Error", "Error fatal al obtener el número de logros");
+                });
+    }
+
+
     // *********************************************************************************************
 
     @Override

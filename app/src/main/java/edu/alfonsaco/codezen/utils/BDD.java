@@ -396,6 +396,17 @@ public class BDD {
                 .addOnFailureListener(e -> {
                    Log.e("LOGRO", "Error al agregar el logro");
                 });
+
+        // Incrementar el contador de meditación
+        db.collection("usuarios")
+                .document(getUsuarioID())
+                .update("cont_logros", FieldValue.increment(1))
+                .addOnSuccessListener(a -> {
+                    Log.d("LOGRO", "SE SUMÓ EL CONTADOR DE LOGRO");
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("LOGRO", "NO SE PUDO SUMAR EL CONTADOR DE LOGRO");
+                });
     }
 
     public void verificarExistenciaLogroBDD(String id, ExisteDiaCallback callback) {
