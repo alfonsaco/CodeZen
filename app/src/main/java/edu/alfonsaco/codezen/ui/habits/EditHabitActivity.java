@@ -136,6 +136,10 @@ public class EditHabitActivity extends AppCompatActivity {
             btnGestionarRecordatorio.setEnabled(true);
             switchRecordatorios.setChecked(true);
         }
+
+        if(switchRecordatorios.isChecked()) {
+            btnGestionarRecordatorio.setAlpha(1.0f);
+        }
         // *************************************************************************
 
 
@@ -145,9 +149,11 @@ public class EditHabitActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(switchRecordatorios.isChecked()) {
                     btnGestionarRecordatorio.setEnabled(true);
+                    btnGestionarRecordatorio.setAlpha(1.0f);
                     nuevaHoraRecordatorio=btnGestionarRecordatorio.getText().toString();
                 } else {
                     btnGestionarRecordatorio.setEnabled(false);
+                    btnGestionarRecordatorio.setAlpha(0.3f);
                     nuevaHoraRecordatorio="";
                 }
             }
