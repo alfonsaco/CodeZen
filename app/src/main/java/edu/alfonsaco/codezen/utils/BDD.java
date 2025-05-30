@@ -10,6 +10,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -370,6 +371,49 @@ public class BDD {
 
 
     // ***************************************** PERFIL ********************************************
+    public void agregarLogroABDD(String id, String nombre) {
+        Map<String, Object> logroDB=new HashMap<>();
 
+        // Verificamos usuario
+        if(getUsuarioID() == null) {
+            return;
+        }
+
+        LocalDate hoy= LocalDate.now();
+
+        logroDB.put("id", id);
+        logroDB.put("nombre", nombre);
+        logroDB.put("fecha_desbloqueo", hoy.toString());
+
+        getDb().collection("usuarios")
+                .document(getUsuarioID())
+                .collection("logros")
+                .document(id)
+                .set(logroDB)
+                .addOnCompleteListener(a -> {
+                    Log.d("BIEN", "Logro agregado correctamente");
+                })
+                .addOnFailureListener(e -> {
+                   Log.e("LOGRO", "Error al agregar el logro");
+                });
+    }
+
+    public void verificarExistenciaLogroBDD(String id, ExisteDiaCallback callback) {
+        db.collection("usuarios")
+                .document(getUsuarioID())
+                .collection("logros")
+                .document(id)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if(documentSnapshot.exists() && documentSnapshot != null) {
+                        callback.onResultado(true);
+                    } else {
+                        callback.onResultado(false);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("ERROR", "ERROR AL VERIFICAR LA EXISTENCIA DEL DÍA");
+                });
+    }
     // *********************************************************************************************
 }

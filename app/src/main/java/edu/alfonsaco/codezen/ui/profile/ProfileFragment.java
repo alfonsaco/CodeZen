@@ -130,6 +130,21 @@ public class ProfileFragment extends Fragment {
             listaLogros.addAll(logrosDesdeJSON);
             adapterLogros.notifyDataSetChanged();
 
+            for(Logro logro : logrosDesdeJSON) {
+                db.verificarExistenciaLogroBDD(logro.getId(), existe -> {
+                    if(existe) {
+                        logro.setDesbloqueado(true);
+                    } else {
+                        logro.setDesbloqueado(false);
+                    }
+
+                    int pos = listaLogros.indexOf(logro);
+                    if (pos != -1) {
+                        adapterLogros.notifyItemChanged(pos);
+                    }
+                });
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -152,13 +167,10 @@ public class ProfileFragment extends Fragment {
                     } else if(nivel == 2) {
                         imagenNivel.setImageResource(R.drawable.lvl2);
                     } else if(nivel == 3) {
-
-                    } else if(nivel == 4) {
-
-                    } else if(nivel == 5) {
+                        imagenNivel.setImageResource(R.drawable.lvl3);
+                    } else if(nivel >= 4) {
 
                     }
-
                 })
                 .addOnFailureListener(e -> {
                     Log.e("ERROR", "Error al obtener el número de logros");

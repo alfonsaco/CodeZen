@@ -171,7 +171,7 @@ public class SettingsActivity extends AppCompatActivity {
                     Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="+nombrePaquete));
                     startActivity(intent);
 
-                    logros.mostrarLogroDesbloqueado(SettingsActivity.this, "Supporter", "logro8");
+                    logros.mostrarLogroDesbloqueado(SettingsActivity.this, "Supporter", "logro8", "sup_01");
 
                 } catch (android.content.ActivityNotFoundException e) {
                     startActivity(new Intent(Intent.ACTION_VIEW,

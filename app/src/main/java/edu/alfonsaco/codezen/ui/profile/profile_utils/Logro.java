@@ -5,13 +5,15 @@ public class Logro {
     private String nombre;
     private String descripcion;
     private String ruta;
+    private boolean desbloqueado;
 
     // CONSTRUCTOR
-    public Logro(String id, String nombre, String descripcion, String ruta) {
+    public Logro(String id, String nombre, String descripcion, String ruta, boolean desbloqueado) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.ruta = ruta;
+        this.desbloqueado = desbloqueado;
     }
 
     // GETTERS Y SETTERS
@@ -23,4 +25,6 @@ public class Logro {
     public void setDescripcion(String descripcion) {this.descripcion = descripcion;}
     public String getRuta() {return ruta;}
     public void setRuta(String ruta) {this.ruta = ruta;}
+    public void setDesbloqueado(boolean desbloqueado) {this.desbloqueado = desbloqueado;}
+    public boolean isDesbloqueado() {return desbloqueado;}
 }

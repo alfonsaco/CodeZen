@@ -1,6 +1,8 @@
 package edu.alfonsaco.codezen.ui.profile.profile_utils;
 
 import android.content.Context;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,14 +48,42 @@ public class LogrosAdapter extends RecyclerView.Adapter<LogrosAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull LogrosAdapter.ViewHolder holder, int position) {
-        Logro logro= listaLogros.get(position);
+        Logro logro = listaLogros.get(position);
 
+        // Configurar nombre y descripción
         holder.txtNombreLogro.setText(logro.getNombre());
         holder.txtDescripcionLogro.setText(logro.getDescripcion());
 
-        String rutaImagen=logro.getRuta();
-        int idImagen=context.getResources().getIdentifier(rutaImagen, "drawable", context.getPackageName());
-        holder.imagenLogro.setImageResource(idImagen);
+        // Obtener la imagen desde recursos
+        String rutaImagen = logro.getRuta();
+        int idImagen = context.getResources().getIdentifier(rutaImagen, "drawable", context.getPackageName());
+
+        // Cargar la imagen en ImageView
+        if (logro.isDesbloqueado()) {
+            // Mostrar a color (normal)
+            holder.imagenLogro.setImageResource(idImagen);
+            holder.imagenLogro.setColorFilter(null);
+
+            // Restauramos opacidad
+            holder.imagenLogro.setAlpha(1.0f);
+            holder.txtDescripcionLogro.setAlpha(1.0f);
+            holder.txtNombreLogro.setAlpha(1.0f);
+
+        } else {
+            // Mostrar en blanco y negro (usando ColorMatrix)
+            holder.imagenLogro.setImageResource(idImagen);
+
+            // Aplicar filtro de escala de grises
+            ColorMatrix matrix = new ColorMatrix();
+            matrix.setSaturation(0); // 0 = blanco y negro
+            ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+            holder.imagenLogro.setColorFilter(filter);
+
+            // Reducimos opacidad
+            holder.imagenLogro.setAlpha(0.5f);
+            holder.txtDescripcionLogro.setAlpha(0.5f);
+            holder.txtNombreLogro.setAlpha(0.5f);
+        }
     }
 
     @Override
