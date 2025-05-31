@@ -26,6 +26,7 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import java.time.LocalDate;
 
 import edu.alfonsaco.codezen.R;
+import edu.alfonsaco.codezen.utils.ArchievementsUnlocks;
 import edu.alfonsaco.codezen.utils.BDD;
 
 public class MeditationActivity extends AppCompatActivity {
@@ -38,6 +39,7 @@ public class MeditationActivity extends AppCompatActivity {
     private boolean contadorActivo=true;
     private CountDownTimer countDown;
     private BDD db;
+    private ArchievementsUnlocks logros;
 
     // Audio
     private MediaPlayer mediaPlayer;
@@ -59,6 +61,7 @@ public class MeditationActivity extends AppCompatActivity {
         setContentView(R.layout.meditate_activity);
 
         db=new BDD();
+        logros=new ArchievementsUnlocks(db);
 
         // BOTÓN DE SALIR DE LA MEDITACIÓN
         btnFinalizarMeditacion=findViewById(R.id.btnFinalizarMeditacion);
@@ -189,7 +192,6 @@ public class MeditationActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                Toast.makeText(MeditationActivity.this, "Meditación terminada", Toast.LENGTH_SHORT).show();
                 contadorActivo=false;
 
                 // Agregamos la meditacion a la BDD
@@ -232,6 +234,8 @@ public class MeditationActivity extends AppCompatActivity {
                         }
                     });
                 }
+
+                logros.logrosMeditaciones(MeditationActivity.this);
             }
         };
 

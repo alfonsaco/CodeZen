@@ -90,12 +90,12 @@ public class ArchievementsUnlocks {
                     Long numMeditaciones=snapshot.getLong("cont_meditaciones");
 
                     if(numMeditaciones == 5) {
-                        mostrarLogroDesbloqueado(context, "Reboot", "logro1", "med_01");
+                        mostrarLogroDesbloqueado(context, "Reboot", "logro4", "med_01");
                     } else if(numMeditaciones == 30) {
-                        mostrarLogroDesbloqueado(context, "Aficionado", "logro1", "med_02");
-                    } else if(numMeditaciones == 100) {
-                        mostrarLogroDesbloqueado(context, "Zen", "logro1", "med_03");
-                    } else if(numMeditaciones == 300) {
+                        mostrarLogroDesbloqueado(context, "Aficionado", "logro5", "med_02");
+                    } else if(numMeditaciones < 100) {
+                        mostrarLogroDesbloqueado(context, "Zen", "logro6", "med_03");
+                    } else if(numMeditaciones < 300) {
                         mostrarLogroDesbloqueado(context, "300", "logro7", "med_04");
                     }
 
