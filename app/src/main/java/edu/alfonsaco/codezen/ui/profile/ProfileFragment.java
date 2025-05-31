@@ -195,26 +195,37 @@ public class ProfileFragment extends Fragment {
 
                     if(snapshot.exists()) {
                         int contLogros=snapshot.getLong("cont_logros").intValue();
+                        int cantidadColoreados=0;
 
                         // NIVEL 0
                         if(contLogros < 2) {
-                            agregarViewsProgressBar(2);
+                            if(contLogros == 0) {
+                                cantidadColoreados=0;
+                            }
+                            if(contLogros == 1) {
+                                cantidadColoreados=1;
+                            }
+                            agregarViewsProgressBar(2, cantidadColoreados);
 
                         // NIVEL 1
                         } else if(contLogros > 1 && contLogros <= 5) {
-                            agregarViewsProgressBar(4);
+                            cantidadColoreados=contLogros - 1;
+                            agregarViewsProgressBar(4, cantidadColoreados);
 
                         // NIVEL 2
                         } else if(contLogros > 5 && contLogros <= 10) {
-                            agregarViewsProgressBar(5);
+                            cantidadColoreados=contLogros - 5;
+                            agregarViewsProgressBar(5, cantidadColoreados);
 
                         // NIVEL 3
                         } else if(contLogros > 10 && contLogros <= 15) {
-                            agregarViewsProgressBar(5);
+                            cantidadColoreados=contLogros - 10;
+                            agregarViewsProgressBar(5, cantidadColoreados);
 
                         // NIVEL 4
                         } else if(contLogros > 15 && contLogros <= 21) {
-                            agregarViewsProgressBar(6);
+                            cantidadColoreados=contLogros - 15;
+                            agregarViewsProgressBar(6, cantidadColoreados);
                         }
                     }
                 })
@@ -223,10 +234,19 @@ public class ProfileFragment extends Fragment {
                 });
     }
 
-    private void agregarViewsProgressBar(int cantidad) {
+    private void agregarViewsProgressBar(int cantidad, int coloreados) {
         progressBarNivel.removeAllViews();
+        int cantidadColorearRestante=coloreados;
+        boolean colorear;
 
         for(int i=0; i < cantidad; i++) {
+            // Determinamos si colorear o no
+            if(cantidadColorearRestante > 0) {
+                cantidadColorearRestante--;
+                colorear=true;
+            } else {
+                colorear=false;
+            }
 
             // Contenedor para cada segmento con fondo y efecto
             FrameLayout frame = new FrameLayout(getContext());
@@ -238,31 +258,35 @@ public class ProfileFragment extends Fragment {
             );
             frame.setLayoutParams(layoutParams);
 
-            frame.setBackgroundResource(R.drawable.fondo_casilla_nivel);
+            frame.setBackgroundResource(R.drawable.fondo_casilla_nivel_no_cumplido);
 
-            // ************* VIEW INTERNO MEJORA EFECTO ***********************
-            View viewInterno=new View(getContext());
+            if(colorear) {
+                frame.setBackgroundResource(R.drawable.fondo_casilla_nivel);
 
-            // Altura
-            int alto20dp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, getResources().getDisplayMetrics());
+                // ************* VIEW INTERNO MEJORA EFECTO ***********************
+                View viewInterno=new View(getContext());
 
-            FrameLayout.LayoutParams internoParams = new FrameLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    alto20dp
-            );
+                // Altura
+                int alto20dp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, getResources().getDisplayMetrics());
 
-            int margenSuperiorDp = 17;
-            int margenSuperiorPx = (int) TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP, margenSuperiorDp, getResources().getDisplayMetrics());
+                FrameLayout.LayoutParams internoParams = new FrameLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        alto20dp
+                );
 
-            internoParams.setMargins(0, margenSuperiorPx, 0, 0);
-            viewInterno.setLayoutParams(internoParams);
+                int margenSuperiorDp = 17;
+                int margenSuperiorPx = (int) TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP, margenSuperiorDp, getResources().getDisplayMetrics());
 
-            viewInterno.setBackgroundColor(Color.WHITE);
-            viewInterno.setAlpha(0.3f);
+                internoParams.setMargins(0, margenSuperiorPx, 0, 0);
+                viewInterno.setLayoutParams(internoParams);
 
-            frame.addView(viewInterno);
-            // *+***************************************************************
+                viewInterno.setBackgroundColor(Color.WHITE);
+                viewInterno.setAlpha(0.3f);
+
+                frame.addView(viewInterno);
+                // *+***************************************************************
+            }
 
             // Añadir el frame al progressBarNivel
             progressBarNivel.addView(frame);

@@ -75,11 +75,10 @@
                 android:background="#BFBFBF"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <edu.alfonsaco.codezen.ui.profile.profile_utils.CircularProgressLayout
                     android:id="@+id/progressBarNivel"
                     android:layout_width="230dp"
                     android:layout_height="40dp"
-                    android:background="@drawable/borde_boton_auth_select"
                     android:layout_gravity="center"
                     android:orientation="horizontal"
                     android:clipChildren="true"
@@ -87,7 +86,7 @@
 
                     <!--Aquí van los Views de cada progreso-->
 
-                </LinearLayout>
+                </edu.alfonsaco.codezen.ui.profile.profile_utils.CircularProgressLayout>
 
             </LinearLayout>
 
