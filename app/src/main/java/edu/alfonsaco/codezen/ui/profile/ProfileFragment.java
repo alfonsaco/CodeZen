@@ -6,9 +6,11 @@ import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -176,7 +178,7 @@ public class ProfileFragment extends Fragment {
                     } else if(nivel == 3) {
                         imagenNivel.setImageResource(R.drawable.lvl3);
                     } else if(nivel >= 4) {
-
+                        imagenNivel.setImageResource(R.drawable.lvl4);
                     }
                 })
                 .addOnFailureListener(e -> {
@@ -200,19 +202,19 @@ public class ProfileFragment extends Fragment {
 
                         // NIVEL 1
                         } else if(contLogros > 1 && contLogros <= 5) {
-
+                            agregarViewsProgressBar(4);
 
                         // NIVEL 2
-                        } else if(contLogros > 5 && contLogros <= 9) {
-
+                        } else if(contLogros > 5 && contLogros <= 10) {
+                            agregarViewsProgressBar(5);
 
                         // NIVEL 3
-                        } else if(contLogros > 9 && contLogros <= 14) {
-
+                        } else if(contLogros > 10 && contLogros <= 15) {
+                            agregarViewsProgressBar(5);
 
                         // NIVEL 4
-                        } else if(contLogros > 14 && contLogros <= 21) {
-
+                        } else if(contLogros > 15 && contLogros <= 21) {
+                            agregarViewsProgressBar(6);
                         }
                     }
                 })
@@ -225,19 +227,45 @@ public class ProfileFragment extends Fragment {
         progressBarNivel.removeAllViews();
 
         for(int i=0; i < cantidad; i++) {
-            View view=new View(getContext());
+
+            // Contenedor para cada segmento con fondo y efecto
+            FrameLayout frame = new FrameLayout(getContext());
 
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                    0, // Ancho
-                    LinearLayout.LayoutParams.MATCH_PARENT, // Alto
-                    1f // Peso de 1 para cada sección
+                    0,
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    1f
+            );
+            frame.setLayoutParams(layoutParams);
+
+            frame.setBackgroundResource(R.drawable.fondo_casilla_nivel);
+
+            // ************* VIEW INTERNO MEJORA EFECTO ***********************
+            View viewInterno=new View(getContext());
+
+            // Altura
+            int alto20dp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, getResources().getDisplayMetrics());
+
+            FrameLayout.LayoutParams internoParams = new FrameLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    alto20dp
             );
 
-            view.setLayoutParams(layoutParams);
+            int margenSuperiorDp = 17;
+            int margenSuperiorPx = (int) TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP, margenSuperiorDp, getResources().getDisplayMetrics());
 
-            view.setBackgroundResource(R.drawable.borde_boton_auth_select);
+            internoParams.setMargins(0, margenSuperiorPx, 0, 0);
+            viewInterno.setLayoutParams(internoParams);
 
-            progressBarNivel.addView(view);
+            viewInterno.setBackgroundColor(Color.WHITE);
+            viewInterno.setAlpha(0.3f);
+
+            frame.addView(viewInterno);
+            // *+***************************************************************
+
+            // Añadir el frame al progressBarNivel
+            progressBarNivel.addView(frame);
         }
     }
     // *********************************************************************************************

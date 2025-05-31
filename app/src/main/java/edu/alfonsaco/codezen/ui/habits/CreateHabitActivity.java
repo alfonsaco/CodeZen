@@ -140,9 +140,11 @@ public class CreateHabitActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(switchRecordatorios.isChecked()) {
                     btnGestionarRecordatorio.setEnabled(true);
+                    btnGestionarRecordatorio.setAlpha(1.0f);
                     nuevaHoraRecordatorio=btnGestionarRecordatorio.getText().toString();
                 } else {
                     btnGestionarRecordatorio.setEnabled(false);
+                    btnGestionarRecordatorio.setAlpha(0.3f);
                     nuevaHoraRecordatorio="";
                 }
             }

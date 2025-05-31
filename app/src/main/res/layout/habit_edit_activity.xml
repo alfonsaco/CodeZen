@@ -362,6 +362,8 @@
                     android:textStyle="bold"
                     android:enabled="false"
                     android:padding="0dp"
+                    android:textColor="?attr/colorPrimary"
+                    android:alpha="0.3"
                     android:gravity="left|center_vertical"
                     android:text="00:00" />
 

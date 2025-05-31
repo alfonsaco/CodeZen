@@ -27,8 +27,6 @@ public class ArchievementsUnlocks {
 
     // ****************************** MENSAJE LOGRO DESBLOQUEADO ***********************************
     public void mostrarLogroDesbloqueado(Context context, String nombre, String ruta, String id) {
-        boolean borrar=false;
-
         db.verificarExistenciaLogroBDD(id, existe -> {
             if(!existe) {
                 // ********************** MOSTRAR ALERTA LOGRO ***************************

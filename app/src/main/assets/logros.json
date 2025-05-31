@@ -51,60 +51,48 @@
     "id": "sup_02",
     "nombre": "Supporter v.2",
     "descripcion": "Siguenos en Instagram",
-    "ruta": "logro7"
-  },
-  {
-    "id": "pop_01",
-    "nombre": "Popular",
-    "descripcion": "Ten 100 seguidores",
-    "ruta": "logro7"
-  },
-  {
-    "id": "pop_02",
-    "nombre": "Ultra-Popular",
-    "descripcion": "Ten 1000 seguidores",
-    "ruta": "logro7"
+    "ruta": "logro9"
   },
   {
     "id": "git_01",
     "nombre": "GitHead",
     "descripcion": "Haz 1000 commits en GitHub",
-    "ruta": "logro7"
+    "ruta": "logro10"
   },
   {
     "id": "git_02",
     "nombre": "Commit Beast",
     "descripcion": "Haz 5000 commits en GitHub",
-    "ruta": "logro7"
+    "ruta": "logro11"
   },
   {
     "id": "heisen",
     "nombre": "Heisenberg",
     "descripcion": "Ten un porcentaje de éxito del 99%",
-    "ruta": "logro7"
+    "ruta": "logro12"
   },
   {
-    "id": "pop_02",
+    "id": "saul",
     "nombre": "Better Call CodeZen",
     "descripcion": "Consigue que un amigo se registre a través de tu enlace",
-    "ruta": "logro7"
+    "ruta": "logro13"
   },
   {
     "id": "rac_01",
-    "nombre": "",
-    "descripcion": "Ten 1000 seguidores",
-    "ruta": "logro7"
+    "nombre": "Tu nuevo yo",
+    "descripcion": "Usa la app 5 días seguidos",
+    "ruta": "logro14"
   },
   {
     "id": "rac_02",
     "nombre": "Michael Jordan",
-    "descripcion": "Usar la app 23 días seguidos",
-    "ruta": "logro7"
+    "descripcion": "Usa la app 23 días seguidos",
+    "ruta": "logro15"
   },
   {
     "id": "rac_03",
-    "nombre": "",
-    "descripcion": "TUsar la app 100 días seguidos",
-    "ruta": "logro7"
+    "nombre": "Club de los 100",
+    "descripcion": "Usa la app 100 días seguidos",
+    "ruta": "logro16"
   }
 ]
