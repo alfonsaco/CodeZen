@@ -51,7 +51,7 @@ public class ArchievementsUnlocks {
                 layout.setAlpha(0f);
                 decorView.addView(layout, params);
 
-                layout.animate().translationY(0f).alpha(1f).setDuration(600).setStartDelay(2000).start();
+                layout.animate().translationY(0f).alpha(1f).setDuration(600).setStartDelay(1000).start();
                 new Handler(Looper.getMainLooper()).postDelayed(() -> {
                     layout.animate()
                             .translationY(-300f).alpha(0f).setDuration(500).withEndAction(() ->

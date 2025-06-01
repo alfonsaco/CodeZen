@@ -20,5 +20,7 @@
 
         <item name="android:statusBarColor">@color/statusBar</item>
         <item name="android:windowLightStatusBar">false</item>
+
+        <item name="botonesRojo">#C64242</item>
     </style>
 </resources>

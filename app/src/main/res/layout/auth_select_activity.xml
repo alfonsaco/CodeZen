@@ -20,17 +20,6 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="-251dp" />
 
-    <ImageView
-        android:id="@+id/iconoAppAuth"
-        android:layout_width="157dp"
-        android:layout_height="175dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5"
-        app:srcCompat="@mipmap/ic_launcher" />
-
     <Button
         android:id="@+id/btnIrIniciarSesion"
         android:layout_width="0dp"
@@ -57,5 +46,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="-40dp"
+        android:layout_marginEnd="45dp"
+        android:alpha="0.8"
+        android:gravity="center"
+        android:maxLines="3"
+        android:text="&quot;La mejor app de desarrollo personal para programadores&quot;"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="25sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -68,9 +68,6 @@ public class AuthSelectActivity extends AppCompatActivity {
         // Firebase
         firebaseAuth=FirebaseAuth.getInstance();
 
-        iconoAppAuth=findViewById(R.id.iconoAppAuth);
-        Glide.with(this).load(R.mipmap.ic_launcher).circleCrop().into(iconoAppAuth);
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

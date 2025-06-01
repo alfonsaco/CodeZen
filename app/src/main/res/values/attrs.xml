@@ -2,6 +2,7 @@
 <resources>
     <attr name="colorSecondaryTransparent" format="color" />
     <attr name="colorBordeImagen" format="color" />
+    <attr name="botonesRojo" format="color" />
 
     <!--Para la progress bar-->
     <declare-styleable name="CircularProgressLayout">

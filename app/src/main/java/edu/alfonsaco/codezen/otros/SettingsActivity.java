@@ -11,6 +11,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,8 +59,13 @@ public class SettingsActivity extends AppCompatActivity {
     private TextView txtUsername;
     private ImageView imagenUsuario;
     private ImageView irAAvatar;
-    private Button btnPlayStore;
+    private LinearLayout btnPlayStore;
+    private LinearLayout linearInstagram;
+    private LinearLayout btnEnlaceReferido;
 
+    private ActivityResultLauncher<Intent> instagramLauncher;
+    private ActivityResultLauncher<Intent> playLauncher;
+    private ActivityResultLauncher<Intent> referidoLauncher;
 
     private String username= MainActivity.username;
     private String email=MainActivity.email;
@@ -161,21 +167,70 @@ public class SettingsActivity extends AppCompatActivity {
 
 
         // Desbloquear logro Play Store
-        btnPlayStore=findViewById(R.id.btnPlayStore);
+        btnPlayStore=findViewById(R.id.linearPlayStore);
+        playLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    logros.mostrarLogroDesbloqueado(SettingsActivity.this, "Supporter", "logro8", "sup_01");
+                }
+        );
         btnPlayStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String nombrePaquete=getPackageName();
-
                 try {
                     Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="+nombrePaquete));
-                    startActivity(intent);
-
-                    logros.mostrarLogroDesbloqueado(SettingsActivity.this, "Supporter", "logro8", "sup_01");
+                    playLauncher.launch(intent);
 
                 } catch (android.content.ActivityNotFoundException e) {
                     startActivity(new Intent(Intent.ACTION_VIEW,
                             Uri.parse("https://play.google.com/store/apps/details?id=" + nombrePaquete)));
+                }
+            }
+        });
+
+        // Desbloquear Supporter V.2
+        linearInstagram=findViewById(R.id.linearInstagram);
+        instagramLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    logros.mostrarLogroDesbloqueado(SettingsActivity.this, "Supporter v.2", "logro9", "sup_02");
+                }
+        );
+        linearInstagram.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.instagram.com"));
+                    instagramLauncher.launch(intent);
+
+                } catch (android.content.ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://www.instagram.com")));
+                }
+            }
+        });
+
+        // Logro de Better Call Codezen
+        btnEnlaceReferido=findViewById(R.id.btnEnlaceReferido);
+        referidoLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    logros.mostrarLogroDesbloqueado(SettingsActivity.this, "Better Call CodeZen", "logro13", "saul");
+                }
+        );
+        btnEnlaceReferido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String link="https://codezen.com/invite/3kI8skl";
+                String mensaje="¡Descarga esta aplicación! "+link;
+
+                Intent intent=new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, mensaje);
+
+                if(intent.resolveActivity(getPackageManager())!=null) {
+                    referidoLauncher.launch(Intent.createChooser(intent, "Compartir vía"));
                 }
             }
         });
