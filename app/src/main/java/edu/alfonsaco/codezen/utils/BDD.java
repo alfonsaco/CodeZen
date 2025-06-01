@@ -64,6 +64,13 @@ public class BDD {
     public CollectionReference getUsuariosCollection() {
         return db.collection("usuarios");
     }
+
+    public void eliminarUsuarioBDD() {
+        db.collection("usuarios")
+                .document(firebaseAuth.getCurrentUser().getUid())
+                .delete()
+                .addOnSuccessListener(aVoid -> Log.d("Eliminar usuario (Clase BDD)", "Usuario eliminado de Firestore"));
+    }
     // ****************************************************************************
 
 

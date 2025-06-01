@@ -21,6 +21,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.AttrRes;
 import androidx.annotation.ColorInt;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
@@ -32,10 +33,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.firebase.auth.FirebaseUser;
 
 import edu.alfonsaco.codezen.AuthSelectActivity;
 import edu.alfonsaco.codezen.MainActivity;
 import edu.alfonsaco.codezen.R;
+import edu.alfonsaco.codezen.ui.meditation.focus.BlockActivity;
 import edu.alfonsaco.codezen.utils.ArchievementsUnlocks;
 import edu.alfonsaco.codezen.utils.BDD;
 import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation;
@@ -51,6 +54,7 @@ public class SettingsActivity extends AppCompatActivity {
     public String temaGuardado;
 
     private Button btnCerrarSesion;
+    private Button btnBorrarCuenta;
     private FirebaseAuth firebaseAuth;
     private GoogleSignInClient googleSignInClient;
 
@@ -141,6 +145,14 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        // Borrar cuenta en FireBase
+        btnBorrarCuenta=findViewById(R.id.btnBorrarCuenta);
+        btnBorrarCuenta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                borrarCuenta();
+            }
+        });
 
         // Obtener los datos del Usuario
         txtUsername=findViewById(R.id.txtUsername);
@@ -239,6 +251,50 @@ public class SettingsActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+    }
+
+    private void borrarCuenta() {
+        AlertDialog.Builder builder=new AlertDialog.Builder(SettingsActivity.this);
+        View viewAlert=getLayoutInflater().inflate(R.layout.dialog_finalizar_meditacion, null);
+        builder.setView(viewAlert);
+
+        AlertDialog dialog=builder.create();
+        dialog.show();
+
+        TextView txtTitulo=dialog.findViewById(R.id.txtTitulo);
+        TextView txtTexto=dialog.findViewById(R.id.txtTexto);
+        Button btnCancelar=dialog.findViewById(R.id.btnCancelar);
+        Button btnFinalizar=dialog.findViewById(R.id.btnFinalizar);
+
+        txtTitulo.setText("ELIMINAR CUENTA");
+        txtTexto.setText("¿Estás seguro de que quieres eliminar la cuenta? Una vez lo hayas hecho, no podrás recuperarla");
+        btnFinalizar.setText("ELIMINAR");
+
+        btnCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        btnFinalizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseUser usuario=FirebaseAuth.getInstance().getCurrentUser();
+                db.eliminarUsuarioBDD();
+
+                usuario.delete()
+                        .addOnCompleteListener(a -> {
+                            Log.d("USUARIO ELIMINADO", "Usuario eliminado correctamente");
+                        })
+                        .addOnFailureListener(e ->  {
+                            Log.e("ERROR ELIMINANDO USUARIO", "Error al eliminar el usuario");
+                        });
+
+                firebaseAuth.signOut();
+                volverAInicio();
+            }
         });
     }
 
