@@ -26,8 +26,11 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/colorSecondary"
-                android:padding="20dp"
+                android:background="?attr/colorPrimary"
+                android:paddingTop="0dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="16dp"
                 android:orientation="vertical">
 
                 <ImageView
@@ -46,7 +49,7 @@
                     android:layout_width="40dp"
                     android:layout_height="35dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginStart="50dp"
+                    android:layout_marginStart="55dp"
                     android:layout_marginTop="135dp"
                     app:layout_constraintBottom_toBottomOf="@+id/avatarUsuario"
                     app:layout_constraintStart_toEndOf="@+id/avatarUsuario"
@@ -57,10 +60,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="160dp"
+                    android:layout_marginTop="170dp"
                     android:textSize="30sp"
                     android:textStyle="bold"
-                    android:textColor="?attr/colorPrimary"
+                    android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/avatarUsuario"
@@ -95,7 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="20dp"
-                android:background="?attr/colorSecondary"
+                android:background="?attr/fondoProgressBar"
                 android:orientation="vertical">
 
                 <edu.alfonsaco.codezen.ui.profile.profile_utils.CircularProgressLayout

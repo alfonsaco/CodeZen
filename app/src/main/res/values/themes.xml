@@ -10,7 +10,9 @@
         <!--Hint color-->
         <item name="colorSecondary">#893271A4</item>
         <item name="colorOnSecondary">@color/black</item>
-        <item name="colorSecondaryContainer">#FFFFFF</item>
+
+        <!--Color del fondo de los items del Bar de abajo-->
+        <item name="colorSecondaryContainer">#00F20000</item>
 
         <!--Fondo de los formularios-->
         <item name="colorSecondaryTransparent">#2B449B7E</item>
@@ -23,5 +25,11 @@
 
         <item name="botonesRojo">#C64242</item>
         <item name="habitoFondo">#FBFBFD</item>
+        <item name="fondoProgressBar">#3A5166</item>
+
+        <!--Barra inferior y barra de opciones (atrás, minimizas etc.)-->
+        <item name="barraInferior">#F5F5FB</item>
+        <item name="android:navigationBarColor">#F5F5FB</item>
+        <item name="android:windowLightNavigationBar">true</item>
     </style>
 </resources>

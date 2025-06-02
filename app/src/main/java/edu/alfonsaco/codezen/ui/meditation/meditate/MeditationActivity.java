@@ -1,6 +1,8 @@
 package edu.alfonsaco.codezen.ui.meditation.meditate;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -249,7 +251,9 @@ public class MeditationActivity extends AppCompatActivity {
         builder.setView(dialogView);
 
         AlertDialog dialog=builder.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
+
 
         Button btnCancelar=dialog.findViewById(R.id.btnCancelar);
         Button btnFinalizar=dialog.findViewById(R.id.btnFinalizar);

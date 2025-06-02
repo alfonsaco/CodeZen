@@ -37,7 +37,7 @@ public class CircularProgressLayout extends LinearLayout {
 
         // Valores por defecto
         borderWidth = 3f;
-        borderColor = Color.BLACK;
+        borderColor = Color.WHITE;
 
         // Obtener atributos personalizados si los hay
         if (attrs != null) {

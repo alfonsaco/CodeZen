@@ -305,7 +305,7 @@ public class ProfileFragment extends Fragment {
                         alto20dp
                 );
 
-                int margenSuperiorDp = 17;
+                int margenSuperiorDp = 23;
                 int margenSuperiorPx = (int) TypedValue.applyDimension(
                         TypedValue.COMPLEX_UNIT_DIP, margenSuperiorDp, getResources().getDisplayMetrics());
 
