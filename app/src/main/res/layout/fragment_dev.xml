@@ -13,7 +13,7 @@
         android:id="@+id/btnInicioSesionGithub"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#000"
+        android:background="@drawable/fondo_github_boton"
         android:orientation="horizontal"
         android:padding="10dp"
         android:paddingStart="20dp"
