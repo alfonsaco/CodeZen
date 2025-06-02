@@ -182,8 +182,13 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        if(nombreUsuario.length() < 5) {
-            Toast.makeText(this, "El nombre de usuario debe contener al menos 5 caracteres", Toast.LENGTH_SHORT).show();
+        if(nombreUsuario.length() < 3) {
+            Toast.makeText(this, "El nombre de usuario debe contener al menos 3 caracteres", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(nombreUsuario.length() > 20) {
+            Toast.makeText(this, "El nombre de usuario es demasiado largo", Toast.LENGTH_SHORT).show();
             return;
         }
 

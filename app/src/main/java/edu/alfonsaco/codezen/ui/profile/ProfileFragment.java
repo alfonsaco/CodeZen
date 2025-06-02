@@ -85,7 +85,7 @@ public class ProfileFragment extends Fragment {
         avatarUsuario=binding.avatarUsuario;
 
         // Avatar
-        txtNombreUsuario.setText(MainActivity.username);
+        obtenerUsername();
         obtenerAvatar();
 
         // ProgressBar de nivel
@@ -248,6 +248,20 @@ public class ProfileFragment extends Fragment {
                 })
                 .addOnFailureListener(e -> {
                     Log.e("Error", "Error fatal al obtener el número de logros");
+                });
+    }
+
+    private void obtenerUsername() {
+        db.getDb()
+                .collection("usuarios")
+                .document(db.getUsuarioID())
+                .get()
+                .addOnSuccessListener(snapshot -> {
+                    String username=snapshot.getString("username");
+                    txtNombreUsuario.setText(username);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("ERROR", "No se pudo cargar el avatar");
                 });
     }
 

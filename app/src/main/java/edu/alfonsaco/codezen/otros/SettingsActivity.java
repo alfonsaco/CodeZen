@@ -157,6 +157,7 @@ public class SettingsActivity extends AppCompatActivity {
         // Obtener los datos del Usuario
         txtUsername=findViewById(R.id.txtUsername);
         txtEmail=findViewById(R.id.txtEmail);
+        obtenerUsername();
 
         // IR A CAMBIAR AVATAR
         launcherAvatar = registerForActivityResult(
@@ -164,6 +165,7 @@ public class SettingsActivity extends AppCompatActivity {
                 result -> {
                     if (result.getResultCode() == RESULT_OK) {
                         obtenerAvatar();
+                        obtenerUsername();
                     }
                 }
         );
@@ -296,6 +298,20 @@ public class SettingsActivity extends AppCompatActivity {
                 volverAInicio();
             }
         });
+    }
+
+    private void obtenerUsername() {
+        db.getDb()
+                .collection("usuarios")
+                .document(db.getUsuarioID())
+                .get()
+                .addOnSuccessListener(snapshot -> {
+                    String username=snapshot.getString("username");
+                    txtUsername.setText(username);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("ERROR", "No se pudo cargar el avatar");
+                });
     }
 
     private void obtenerAvatar() {

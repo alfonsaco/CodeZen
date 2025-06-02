@@ -7,7 +7,9 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.AttrRes;
@@ -37,11 +39,13 @@ public class AvatarActivity extends AppCompatActivity {
     private ImageView avatar5;
     private ImageView avatar6;
     private Button btnGuardarNuevoAvatar;
+    private EditText etxtUsername;
 
     // Variables
     private int idImagen;
     private ImageView[] avatares;
     private String nombreImagen;
+    private String nuevoUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,9 +101,14 @@ public class AvatarActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 guardarAvatar();
+                guardarUsername();
             }
         });
 
+        // *****************************+ CAMBIO USERNAME *********************************
+        etxtUsername=findViewById(R.id.etxtUsername);
+        obtenerUsername();
+        // *******************************************************************************
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -169,6 +178,43 @@ public class AvatarActivity extends AppCompatActivity {
                 .update("avatar", nombreImagen)
                 .addOnSuccessListener(aVoid -> {
                     Log.d("AVATAR", "Avatar actualizado correctamente");
+                });
+    }
+
+    // CAMBIOS DE USERNAME
+    private void obtenerUsername() {
+        db.getDb()
+                .collection("usuarios")
+                .document(db.getUsuarioID())
+                .get()
+                .addOnSuccessListener(snapshot -> {
+                    String username=snapshot.getString("username");
+                    etxtUsername.setText(username);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("ERROR", "No se pudo cargar el avatar");
+                });
+    }
+
+    private void guardarUsername() {
+        nuevoUsername=String.valueOf(etxtUsername.getText());
+
+        // Verificaciones
+        if(nuevoUsername.length() < 3) {
+            Toast.makeText(this, "El nombre de usuario debe contener al menos 3 caracteres", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(nuevoUsername.length() > 20) {
+            Toast.makeText(this, "El nombre de usuario es demasiado largo", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        db.getDb().collection("usuarios")
+                .document(db.getUsuarioID())
+                .update("username", nuevoUsername)
+                .addOnSuccessListener(aVoid -> {
+                    Log.d("USERNAME", "Username actualizado correctamente");
                     setResult(RESULT_OK);
                     finish();
                 });
