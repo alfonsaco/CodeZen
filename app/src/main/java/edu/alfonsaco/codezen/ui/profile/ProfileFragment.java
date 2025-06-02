@@ -305,15 +305,15 @@ public class ProfileFragment extends Fragment {
                         alto20dp
                 );
 
-                int margenSuperiorDp = 23;
+                int margenSuperiorDp = 19;
                 int margenSuperiorPx = (int) TypedValue.applyDimension(
                         TypedValue.COMPLEX_UNIT_DIP, margenSuperiorDp, getResources().getDisplayMetrics());
 
                 internoParams.setMargins(0, margenSuperiorPx, 0, 0);
                 viewInterno.setLayoutParams(internoParams);
 
-                viewInterno.setBackgroundColor(Color.WHITE);
-                viewInterno.setAlpha(0.3f);
+                viewInterno.setBackgroundColor(Color.BLACK);
+                viewInterno.setAlpha(0.2f);
 
                 frame.addView(viewInterno);
                 // *+***************************************************************

@@ -3,7 +3,9 @@ package edu.alfonsaco.codezen.ui.dev;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,6 +57,11 @@ public class DevFragment extends Fragment {
         btnInicioSesionGithub.setOnClickListener(v -> conectarConOAuth());
 
         checkLoginStatus();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requireActivity().getWindow().setStatusBarColor(Color.RED);
+            requireActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
     }
 
     public void checkLoginStatus() {

@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
     <!-- Permisos de notificaciones -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" /> <!-- PERMISOS MODO FOCUS (Device Owner) -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission
-        android:name="android.permission.MANAGE_DEVICE_ADMINS"
+        android:name="android.permission.MANAGE_DEVICE_ADMIN"
         tools:ignore="ProtectedPermissions" />
     <uses-permission
         android:name="android.permission.BIND_DEVICE_ADMIN"
@@ -24,6 +24,7 @@
         tools:targetApi="33">
         <activity
             android:name=".otros.AvatarActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.meditation.focus.BlockActivity"
@@ -57,11 +58,11 @@
         <activity
             android:name=".ui.habits.CreateHabitActivity"
             android:exported="false"
-            android:screenOrientation="portrait" /> <!-- Notificaciones -->
+            android:screenOrientation="portrait" />
         <receiver
             android:name=".utils.NotificacionBroadcaster"
             android:enabled="true"
-            android:exported="false" /> <!-- Device Owner -->
+            android:exported="false" />
         <receiver
             android:name=".utils.DeviceAdminReceiver"
             android:exported="true"

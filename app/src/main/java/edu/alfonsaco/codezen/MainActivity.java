@@ -3,6 +3,7 @@ package edu.alfonsaco.codezen;
 import android.app.ComponentCaller;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
