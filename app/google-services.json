@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "220780883024-9ursq5io5plqpl5tsbss237fjpghbmvg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.alfonsaco.codezen",
+            "certificate_hash": "fef1450d765df2cf93288011f1fa298bf7050cb7"
+          }
+        },
+        {
+          "client_id": "220780883024-hp87tve5c24hjgeflld3lioa4rb3acob.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.alfonsaco.codezen",
+            "certificate_hash": "48a2e417d2f9af69c157426a0ade91002d4f50b7"
+          }
+        },
+        {
           "client_id": "220780883024-tnot9fq4ufs3ghkejptfs6cqsm2cbrl0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

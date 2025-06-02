@@ -32,7 +32,14 @@ public class BDD {
     }
 
     public String getUsuarioID() {
-        return firebaseAuth.getCurrentUser().getUid();
+        FirebaseUser usuario=firebaseAuth.getCurrentUser();
+
+        if (usuario != null) {
+            return usuario.getUid();
+        } else {
+            Log.e("BDD", "Usuario es null");
+            return null;
+        }
     }
 
     // ******************* MÉTODOS DE FIRESTORE PARA EL REGISTRO ******************
@@ -66,10 +73,27 @@ public class BDD {
     }
 
     public void eliminarUsuarioBDD() {
+        eliminarSubcoleccion("usuarios/"+getUsuarioID()+"/habitos");
+        eliminarSubcoleccion("usuarios/"+getUsuarioID()+"/logros");
+        eliminarSubcoleccion("usuarios/"+getUsuarioID()+"/meditaciones");
+
         db.collection("usuarios")
                 .document(firebaseAuth.getCurrentUser().getUid())
                 .delete()
                 .addOnSuccessListener(aVoid -> Log.d("Eliminar usuario (Clase BDD)", "Usuario eliminado de Firestore"));
+    }
+
+    private void eliminarSubcoleccion(String path) {
+        db.collection(path)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
+                        doc.getReference().delete()
+                                .addOnSuccessListener(aVoid -> Log.d("Eliminar subcolección", "Documento eliminado: " + doc.getId()))
+                                .addOnFailureListener(e -> Log.e("Eliminar subcolección", "Error eliminando documento", e));
+                    }
+                })
+                .addOnFailureListener(e -> Log.e("Eliminar subcolección", "Error al obtener documentos", e));
     }
     // ****************************************************************************
 

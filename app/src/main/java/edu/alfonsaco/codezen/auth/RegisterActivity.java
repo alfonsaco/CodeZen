@@ -228,15 +228,26 @@ public class RegisterActivity extends AppCompatActivity {
                 UserProfileChangeRequest cambioDatos= new UserProfileChangeRequest.Builder().setDisplayName(nombreUsuario).build();
 
                 usuario.updateProfile(cambioDatos).addOnCompleteListener(taskPerfil -> {
-                    if(taskPerfil.isSuccessful()) {
-                        // Agregamos el usuario a FireStore
-                        baseDeDatos.guardarUsuarioEnFirebase(nombreUsuario, email);
+                    if (taskPerfil.isSuccessful()) {
+                        // Enviar verificación de email
+                        usuario.sendEmailVerification().addOnCompleteListener(taskEmail -> {
+                            if (taskEmail.isSuccessful()) {
+                                Toast.makeText(this, "Cuenta creada. Verifica tu email antes de continuar.", Toast.LENGTH_LONG).show();
 
-                        Intent intent=new Intent(this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
+                                // Guardamos el usuario en Firestore
+                                baseDeDatos.guardarUsuarioEnFirebase(nombreUsuario, email);
+
+                                // Cerrar sesión y volver al login
+                                firebaseAuth.signOut();
+                                Intent intent = new Intent(this, LoginActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(this, "Error al enviar email de verificación", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     } else {
-                        Toast.makeText(this, "Error al crear la cuenta y agregar el Display Name", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Error al crear el perfil de usuario", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -254,7 +265,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onStart();
 
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        if (currentUser != null) {
+        if (currentUser != null && currentUser.isEmailVerified()) {
             startActivity(new Intent(RegisterActivity.this, MainActivity.class));
             finish();
         }

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
@@ -15,6 +16,9 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Transaction;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,12 +34,25 @@ import androidx.navigation.ui.NavigationUI;
 import edu.alfonsaco.codezen.databinding.ActivityMainBinding;
 import edu.alfonsaco.codezen.otros.SettingsActivity;
 import edu.alfonsaco.codezen.ui.dev.DevFragment;
+import edu.alfonsaco.codezen.utils.ArchievementsUnlocks;
+import edu.alfonsaco.codezen.utils.BDD;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.WindowInsetsControllerCompat;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private BDD db;
+    private ArchievementsUnlocks logros;
 
     private SharedPreferences preferencesTema;
 
@@ -50,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        db=new BDD();
+        logros=new ArchievementsUnlocks(db);
 
         // Se aplica el tema antes de realizar cualquier otra acción
         aplicarTema();
@@ -114,6 +134,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        actualizarRacha();
     }
 
     // PARA OBTENER LOS DATOS AL INICIAR SESIÓN EN GITHUB
@@ -179,5 +201,71 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void actualizarRacha() {
+        String hoy = obtenerHoy();
+        String ayer = obtenerAyer();
+
+        String usuarioId = db.getUsuarioID();
+
+        DocumentReference hoyRef = db.getDb().collection("usuarios")
+                .document(usuarioId)
+                .collection("rachas")
+                .document(hoy);
+
+        DocumentReference ayerRef = db.getDb().collection("usuarios")
+                .document(usuarioId)
+                .collection("rachas")
+                .document(ayer);
+
+        db.getDb().runTransaction((Transaction.Function<Integer>) transaction -> {
+            DocumentSnapshot hoySnap = transaction.get(hoyRef);
+
+            // Verificamos si ya se hizo antes la operación
+            if (hoySnap.exists()) {
+                Long rachaHoy = hoySnap.getLong("dias_racha");
+                return (rachaHoy != null) ? rachaHoy.intValue() : 1;
+            }
+
+            int nuevaRacha = 1;
+
+            // Ver si ayer hay documento con racha
+            DocumentSnapshot ayerSnap = transaction.get(ayerRef);
+            if (ayerSnap.exists()) {
+                Long rachaAyer = ayerSnap.getLong("dias_racha");
+                if (rachaAyer != null) {
+                    nuevaRacha = rachaAyer.intValue() + 1;
+                }
+            }
+
+            Map<String, Object> datosHoy = new HashMap<>();
+            datosHoy.put("dias_racha", nuevaRacha);
+            datosHoy.put("fecha_ultima", hoy);
+
+            transaction.set(hoyRef, datosHoy);
+            return nuevaRacha;
+
+        }).addOnSuccessListener(nuevaRacha -> {
+            Log.d("Racha", "Racha registrada correctamente en documento del día");
+            logros.logrosRacha(nuevaRacha , MainActivity.this);
+
+        }).addOnFailureListener(e -> {
+            Log.e("Racha", "Error registrando racha del día", e);
+        });
+    }
+
+    private String obtenerHoy() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        return sdf.format(new Date());
+    }
+
+    private String obtenerAyer() {
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        calendar.add(Calendar.DATE, -1);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        return sdf.format(calendar.getTime());
+    }
 
 }

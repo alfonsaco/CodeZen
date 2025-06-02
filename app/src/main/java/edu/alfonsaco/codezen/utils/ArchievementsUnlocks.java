@@ -105,5 +105,15 @@ public class ArchievementsUnlocks {
                     Log.e("EROR MEDITACIONES", "Error al obtener el número de meditaciones");
                 });
     }
+
+    public void logrosRacha(int racha, Context context) {
+        if(racha == 5) {
+            mostrarLogroDesbloqueado(context, "Tu nuevo yo", "logro14", "rac_01");
+        } else if(racha == 23) {
+            mostrarLogroDesbloqueado(context, "Michael Jordan", "logro15", "rac_02");
+        } else if(racha == 100) {
+            mostrarLogroDesbloqueado(context, "Club de los 100", "logro16", "rac_03");
+        }
+    }
     // *********************************************************************************************
 }

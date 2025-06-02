@@ -10,8 +10,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="10dp"
-        android:background="?attr/colorOnPrimary"
+        android:padding="17dp"
+        android:background="@drawable/borde_dialog"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,6 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="#C80000"
+                android:textColor="?attr/colorOnPrimary"
                 android:text="FINALIZAR" />
         </LinearLayout>
 

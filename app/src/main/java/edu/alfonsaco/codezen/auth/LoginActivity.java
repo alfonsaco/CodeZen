@@ -197,15 +197,30 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         // Iniciar sesión
-        firebaseAuth.signInWithEmailAndPassword(email, contra).addOnCompleteListener(task -> {
-            if(task.isSuccessful()) {
-                Intent intent=new Intent(this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            } else {
-                Toast.makeText(this, "Email o contraseña incorrectos", Toast.LENGTH_SHORT).show();
-            }
-        });
+        firebaseAuth.signInWithEmailAndPassword(email, contra)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = firebaseAuth.getCurrentUser();
+                        if (user != null) {
+                            if (user.isEmailVerified()) {
+                                // Email verificado
+                                startActivity(new Intent(this, MainActivity.class));
+                                finish();
+                            } else {
+                                // Email no verificado → Forzar logout y mostrar aviso
+                                firebaseAuth.signOut();
+                                Toast.makeText(this,
+                                        "Debes verificar tu email",
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    } else {
+                        // Error de autenticación
+                        Toast.makeText(this,
+                                "Credenciales incorrectas o usuario no registrado",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
     // ***************************************************************************************************
 
@@ -215,7 +230,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser usuarioActual= firebaseAuth.getCurrentUser();
 
-        if(usuarioActual != null) {
+        if(usuarioActual != null && usuarioActual.isEmailVerified()) {
             Intent intent=new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();

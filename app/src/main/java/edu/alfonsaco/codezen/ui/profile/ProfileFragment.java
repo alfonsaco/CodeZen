@@ -27,7 +27,9 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.common.reflect.TypeToken;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Transaction;
 import com.google.gson.Gson;
 
 import org.checkerframework.checker.units.qual.A;
@@ -35,8 +37,16 @@ import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.lang.reflect.Type;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TimeZone;
+import java.util.Locale;
+
 
 import edu.alfonsaco.codezen.MainActivity;
 import edu.alfonsaco.codezen.R;
@@ -56,6 +66,7 @@ public class ProfileFragment extends Fragment {
     private ImageView avatarUsuario;
     private ImageView imagenNivel;
     private LinearLayout progressBarNivel;
+    private TextView txtRachaActual;
 
     // Recycler de logros
     private RecyclerView recyclerLogros;
@@ -94,6 +105,12 @@ public class ProfileFragment extends Fragment {
         adapterLogros=new LogrosAdapter(listaLogros, this.getContext());
         recyclerLogros.setAdapter(adapterLogros);
         cargarLogros();
+
+
+        // ******************** RACHA DE DÍAS *********************
+        txtRachaActual=binding.txtRachaActual;
+        obtenerRacha();
+        // ********************************************************
 
         return root;
     }
@@ -294,9 +311,33 @@ public class ProfileFragment extends Fragment {
     }
     // *********************************************************************************************
 
+    // ************************** OBTENER LA RACA *************************
+    private String obtenerHoy() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        return sdf.format(new Date());
+    }
+
+    private void obtenerRacha() {
+        String hoy=obtenerHoy();
+
+        db.getDb().collection("usuarios")
+                .document(db.getUsuarioID())
+                .collection("rachas")
+                .document(hoy)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    int racha=documentSnapshot.getLong("dias_racha").intValue();
+                    txtRachaActual.setText(String.valueOf(racha));
+                });
+    }
+    // *********************************************************************************************
+
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
         binding = null;
     }
 }

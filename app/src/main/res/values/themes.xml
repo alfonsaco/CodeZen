@@ -22,5 +22,6 @@
         <item name="android:windowLightStatusBar">false</item>
 
         <item name="botonesRojo">#C64242</item>
+        <item name="habitoFondo">#FBFBFD</item>
     </style>
 </resources>

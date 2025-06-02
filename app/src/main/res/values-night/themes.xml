@@ -17,5 +17,6 @@
         <!-- Customize your theme here. -->
 
         <item name="botonesRojo">#C64242</item>
+        <item name="habitoFondo">#2C3D4D</item>
     </style>
 </resources>

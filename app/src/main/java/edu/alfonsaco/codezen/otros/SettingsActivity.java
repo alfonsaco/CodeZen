@@ -281,9 +281,9 @@ public class SettingsActivity extends AppCompatActivity {
         btnFinalizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseUser usuario=FirebaseAuth.getInstance().getCurrentUser();
                 db.eliminarUsuarioBDD();
 
+                FirebaseUser usuario=FirebaseAuth.getInstance().getCurrentUser();
                 usuario.delete()
                         .addOnCompleteListener(a -> {
                             Log.d("USUARIO ELIMINADO", "Usuario eliminado correctamente");
