@@ -10,9 +10,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowInsetsController;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -55,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
     private BDD db;
     private ArchievementsUnlocks logros;
 
+    private TextView txtRachaToolbar;
+
     private SharedPreferences preferencesTema;
 
     // Datos del Intent
@@ -71,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
 
         db=new BDD();
         logros=new ArchievementsUnlocks(db);
+
+        txtRachaToolbar=findViewById(R.id.txtRachaToolbar);
 
         // Se aplica el tema antes de realizar cualquier otra acción
         aplicarTema();
@@ -108,8 +114,32 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+
+        MenuItem rachaItem = menu.findItem(R.id.menu_racha);
+        View actionView = rachaItem.getActionView();
+        txtRachaToolbar = actionView.findViewById(R.id.txtRachaToolbar);
+
+        // Inicializar con el valor actual
+        obtenerRachaDesdeFirebase();
+
         return super.onCreateOptionsMenu(menu);
     }
+    private void obtenerRachaDesdeFirebase() {
+        String hoy = obtenerHoy();
+
+        db.getDb().collection("usuarios")
+                .document(db.getUsuarioID())
+                .collection("rachas")
+                .document(hoy)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        int racha = documentSnapshot.getLong("dias_racha").intValue();
+                        txtRachaToolbar.setText(String.valueOf(racha));
+                    }
+                });
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -247,8 +277,12 @@ public class MainActivity extends AppCompatActivity {
 
         }).addOnSuccessListener(nuevaRacha -> {
             Log.d("Racha", "Racha registrada correctamente en documento del día");
-            logros.logrosRacha(nuevaRacha , MainActivity.this);
+            logros.logrosRacha(nuevaRacha, MainActivity.this);
 
+            // Actualizar el TextView si está inicializado
+            if (txtRachaToolbar != null) {
+                txtRachaToolbar.setText(String.valueOf(nuevaRacha));
+            }
         }).addOnFailureListener(e -> {
             Log.e("Racha", "Error registrando racha del día", e);
         });

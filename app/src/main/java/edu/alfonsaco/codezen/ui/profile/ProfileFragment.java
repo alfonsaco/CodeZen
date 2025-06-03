@@ -66,7 +66,6 @@ public class ProfileFragment extends Fragment {
     private ImageView avatarUsuario;
     private ImageView imagenNivel;
     private LinearLayout progressBarNivel;
-    private TextView txtRachaActual;
 
     // Recycler de logros
     private RecyclerView recyclerLogros;
@@ -105,12 +104,6 @@ public class ProfileFragment extends Fragment {
         adapterLogros=new LogrosAdapter(listaLogros, this.getContext());
         recyclerLogros.setAdapter(adapterLogros);
         cargarLogros();
-
-
-        // ******************** RACHA DE DÍAS *********************
-        txtRachaActual=binding.txtRachaActual;
-        obtenerRacha();
-        // ********************************************************
 
         return root;
     }
@@ -322,28 +315,6 @@ public class ProfileFragment extends Fragment {
             // Añadir el frame al progressBarNivel
             progressBarNivel.addView(frame);
         }
-    }
-    // *********************************************************************************************
-
-    // ************************** OBTENER LA RACA *************************
-    private String obtenerHoy() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-        return sdf.format(new Date());
-    }
-
-    private void obtenerRacha() {
-        String hoy=obtenerHoy();
-
-        db.getDb().collection("usuarios")
-                .document(db.getUsuarioID())
-                .collection("rachas")
-                .document(hoy)
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    int racha=documentSnapshot.getLong("dias_racha").intValue();
-                    txtRachaActual.setText(String.valueOf(racha));
-                });
     }
     // *********************************************************************************************
 

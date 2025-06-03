@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -262,6 +263,7 @@ public class SettingsActivity extends AppCompatActivity {
         builder.setView(viewAlert);
 
         AlertDialog dialog=builder.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
 
         TextView txtTitulo=dialog.findViewById(R.id.txtTitulo);

@@ -2,10 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item
+        android:id="@+id/menu_racha"
+        android:title=""
+        app:actionLayout="@layout/item_racha"
+        app:showAsAction="always"
+        android:orderInCategory="1"
+        android:layout_gravity="start" />
+
     <item android:id="@+id/btnAjustes"
         android:icon="@drawable/settings"
         android:title="Notificaciones"
         app:showAsAction="always"
         android:tooltipText="Ajustes"
-        android:layout_gravity="end" />
+        android:layout_gravity="end"
+        android:orderInCategory="2" />
+
 </menu>

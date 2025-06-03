@@ -1,6 +1,8 @@
 package edu.alfonsaco.codezen.ui.meditation.focus;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -139,6 +141,7 @@ public class BlockActivity extends AppCompatActivity {
         builder.setView(viewAlert);
 
         AlertDialog dialog=builder.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
 
         TextView txtTitulo=dialog.findViewById(R.id.txtTitulo);

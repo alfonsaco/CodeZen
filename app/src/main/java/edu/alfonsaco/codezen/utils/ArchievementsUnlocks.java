@@ -75,9 +75,9 @@ public class ArchievementsUnlocks {
         if(listaHabitos.isEmpty()) {
             mostrarLogroDesbloqueado(context, "Primeros pasos", "logro1", "hab_01");
         } else if(listaHabitos.size() == 4) {
-            mostrarLogroDesbloqueado(context, "Level Up", "logro7", "hab_02");
+            mostrarLogroDesbloqueado(context, "Level Up", "logro2", "hab_02");
         } else if(listaHabitos.size() == 14) {
-            mostrarLogroDesbloqueado(context, "GigaChad", "logro8", "hab_03");
+            mostrarLogroDesbloqueado(context, "GigaChad", "logro3", "hab_03");
         }
     }
 
@@ -93,9 +93,9 @@ public class ArchievementsUnlocks {
                         mostrarLogroDesbloqueado(context, "Reboot", "logro4", "med_01");
                     } else if(numMeditaciones == 30) {
                         mostrarLogroDesbloqueado(context, "Aficionado", "logro5", "med_02");
-                    } else if(numMeditaciones < 100) {
+                    } else if(numMeditaciones == 100) {
                         mostrarLogroDesbloqueado(context, "Zen", "logro6", "med_03");
-                    } else if(numMeditaciones < 300) {
+                    } else if(numMeditaciones == 300) {
                         mostrarLogroDesbloqueado(context, "300", "logro7", "med_04");
                     }
 
