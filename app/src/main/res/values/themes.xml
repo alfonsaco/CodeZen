@@ -20,7 +20,7 @@
         <!--Fondo de los avatares-->
         <item name="colorBordeImagen">#9ECFDA</item>
 
-        <item name="android:statusBarColor">#FF0000</item>
+        <item name="android:statusBarColor">#20303E</item>
         <item name="android:windowLightStatusBar">false</item>
 
         <item name="botonesRojo">#C64242</item>

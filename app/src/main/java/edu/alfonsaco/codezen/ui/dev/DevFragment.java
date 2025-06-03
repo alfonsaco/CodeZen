@@ -57,11 +57,6 @@ public class DevFragment extends Fragment {
         btnInicioSesionGithub.setOnClickListener(v -> conectarConOAuth());
 
         checkLoginStatus();
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requireActivity().getWindow().setStatusBarColor(Color.RED);
-            requireActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
     }
 
     public void checkLoginStatus() {
