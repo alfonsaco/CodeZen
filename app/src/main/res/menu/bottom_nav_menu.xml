@@ -12,6 +12,11 @@
         android:title="@string/title_meditate" />
 
     <item
+        android:id="@+id/navigation_ranking"
+        android:icon="@drawable/ranking"
+        android:title="@string/title_rank" />
+
+    <item
         android:id="@+id/navigation_dev"
         android:icon="@drawable/dev_icon"
         android:title="@string/title_dev" />

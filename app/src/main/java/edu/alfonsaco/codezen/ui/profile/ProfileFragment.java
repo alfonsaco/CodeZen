@@ -209,7 +209,7 @@ public class ProfileFragment extends Fragment {
                     long nivel=snapshot.getLong("nivel");
 
                     if(nivel == 0) {
-
+                        imagenNivel.setImageResource(R.drawable.lvl0);
                     } else if(nivel == 1) {
                         imagenNivel.setImageResource(R.drawable.lvl1);
                     } else if(nivel == 2) {

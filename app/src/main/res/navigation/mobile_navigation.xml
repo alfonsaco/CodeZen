@@ -18,6 +18,12 @@
         tools:layout="@layout/fragment_meditate" />
 
     <fragment
+        android:id="@+id/navigation_ranking"
+        android:name="edu.alfonsaco.codezen.ui.ranking.RankingFragment"
+        android:label="@string/title_rank"
+        tools:layout="@layout/fragment_ranking" />
+
+    <fragment
         android:id="@+id/navigation_dev"
         android:name="edu.alfonsaco.codezen.ui.dev.DevFragment"
         android:label="@string/title_dev"

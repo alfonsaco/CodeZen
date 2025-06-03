@@ -6,6 +6,7 @@
     <string name="title_Habits">Hábitos</string>
     <string name="title_dev">Dev</string>
     <string name="title_profile">Perfil</string>
+    <string name="title_rank">Ranking</string>
 
     <!-- Firebase -->
     <string name="id_toke_firebase_auth">220780883024-t1j7ejdjgll35bqt5omgtk88gp1hv8am.apps.googleusercontent.com</string>
