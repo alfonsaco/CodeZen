@@ -66,6 +66,8 @@ public class ProfileFragment extends Fragment {
     private ImageView avatarUsuario;
     private ImageView imagenNivel;
     private LinearLayout progressBarNivel;
+    private TextView txtContadorLogros;
+    private TextView txtContadorMeditaciones;
 
     // Recycler de logros
     private RecyclerView recyclerLogros;
@@ -94,6 +96,13 @@ public class ProfileFragment extends Fragment {
         // Nivel
         imagenNivel=binding.imagenNivel;
         verificarNivelUsuario();
+
+        // Estadísticas
+        txtContadorMeditaciones=binding.txtContadorMeditacion;
+        txtContadorLogros=binding.txtContadorLogros;
+
+        obtenerCantidadLogros();
+        obtenerCantidadMeditaciones();
         // ***************************************************************************
 
 
@@ -106,6 +115,26 @@ public class ProfileFragment extends Fragment {
         cargarLogros();
 
         return root;
+    }
+
+    private void obtenerCantidadLogros() {
+        db.getDb().collection("usuarios")
+                .document(db.getUsuarioID())
+                .get()
+                .addOnSuccessListener(snapshot -> {
+                    int contLogros=snapshot.getLong("cont_logros").intValue();
+                    txtContadorLogros.setText(String.valueOf(contLogros));
+                });
+    }
+
+    private void obtenerCantidadMeditaciones() {
+        db.getDb().collection("usuarios")
+                .document(db.getUsuarioID())
+                .get()
+                .addOnSuccessListener(snapshot -> {
+                    int contMed=snapshot.getLong("cont_meditaciones").intValue();
+                    txtContadorMeditaciones.setText(String.valueOf(contMed));
+                });
     }
 
     // ******************************** CARGAR DATOS INICIALES *************************************
