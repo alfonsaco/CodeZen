@@ -55,6 +55,20 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.ViewHold
         holder.txtPosicion.setText(String.valueOf(position+1));
         holder.txtCantidadLogros.setText(String.valueOf(usuario.getContLogros()));
         holder.txtUsernameRanking.setText(usuario.getUsername());
+
+        int nivel=usuario.getNivel();
+
+        if(nivel == 0) {
+            holder.imagenMedalla.setImageResource(R.drawable.lvl0);
+        } else if(nivel == 1) {
+            holder.imagenMedalla.setImageResource(R.drawable.lvl1);
+        } else if(nivel == 2) {
+            holder.imagenMedalla.setImageResource(R.drawable.lvl2);
+        } else if(nivel == 3) {
+            holder.imagenMedalla.setImageResource(R.drawable.lvl3);
+        } else if(nivel == 4) {
+            holder.imagenMedalla.setImageResource(R.drawable.lvl4);
+        }
     }
 
     @Override
