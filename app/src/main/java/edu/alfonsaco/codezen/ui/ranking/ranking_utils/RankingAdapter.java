@@ -52,7 +52,7 @@ public class RankingAdapter extends RecyclerView.Adapter<RankingAdapter.ViewHold
         Usuario usuario=listaUsuarios.get(position);
 
         // Datos
-        holder.txtPosicion.setText(String.valueOf(position+1));
+        holder.txtPosicion.setText(String.valueOf(position+1)+".");
         holder.txtCantidadLogros.setText(String.valueOf(usuario.getContLogros()));
         holder.txtUsernameRanking.setText(usuario.getUsername());
 
