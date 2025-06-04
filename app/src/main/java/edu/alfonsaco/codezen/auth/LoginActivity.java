@@ -2,6 +2,7 @@ package edu.alfonsaco.codezen.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -174,22 +175,36 @@ public class LoginActivity extends AppCompatActivity {
                         FirebaseUser user = firebaseAuth.getCurrentUser();
 
                         if(user != null) {
-                            // VERIFICAR EXISTENCIA NOMBRE USUARIO
-                            String nombreCortado=firebaseAuth.getCurrentUser().getDisplayName();
-                            int random=(int) (1000 + Math.random() * 100000);
+                            db.getDb().collection("usuarios")
+                                    .whereEqualTo("email", user.getEmail())
+                                    .get()
+                                    .addOnCompleteListener(a -> {
+                                        if (a.isSuccessful()) {
+                                            if (a.getResult().isEmpty()) {
+                                                // Usuario no existe
+                                                String nombreCortado = user.getDisplayName();
+                                                int random = (int) (1000 + Math.random() * 100000);
 
-                            if(nombreCortado.equals("") || nombreCortado == null) {
-                                nombreCortado="usuario"+random;
-                            } else {
-                                if(nombreCortado.length() > 20) {
-                                    nombreCortado=nombreCortado.substring(0, 20);
-                                }
-                            }
+                                                if(nombreCortado == null || nombreCortado.isEmpty()) {
+                                                    nombreCortado = "usuario"+random;
+                                                } else {
+                                                    if(nombreCortado.length() > 20) {
+                                                        nombreCortado = nombreCortado.substring(0, 20);
+                                                    }
+                                                }
 
-                            db.guardarUsuarioEnFirebase(nombreCortado, firebaseAuth.getCurrentUser().getEmail());
+                                                db.guardarUsuarioEnFirebase(nombreCortado, user.getEmail());
+                                            }
 
-                            startActivity(new Intent(this, MainActivity.class));
-                            finish();
+                                            startActivity(new Intent(this, MainActivity.class));
+                                            finish();
+                                        } else {
+                                            Toast.makeText(this, "Error al verificar usuario", Toast.LENGTH_SHORT).show();
+                                        }
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Log.e("ERROR", "Error verificando usuario");
+                                    });
                         }
 
                     } else {
