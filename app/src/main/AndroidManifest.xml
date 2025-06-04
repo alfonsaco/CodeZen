@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <!-- Permisos de notificaciones -->
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission
@@ -24,8 +26,8 @@
         tools:targetApi="33">
         <activity
             android:name=".otros.AvatarActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.meditation.focus.BlockActivity"
             android:exported="false"
@@ -59,6 +61,7 @@
             android:name=".ui.habits.CreateHabitActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+
         <receiver
             android:name=".utils.NotificacionBroadcaster"
             android:enabled="true"
@@ -107,16 +110,13 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait">
-
-            <!-- Para redirigir tras iniciar sesión con GitHub -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
-                <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="codezen" android:host="callback" />
 
                 <data
                     android:host="callback"

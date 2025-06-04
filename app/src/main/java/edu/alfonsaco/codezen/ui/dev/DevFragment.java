@@ -3,15 +3,14 @@ package edu.alfonsaco.codezen.ui.dev;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,11 +35,15 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class DevFragment extends Fragment {
 
     private FragmentDevBinding binding;
-    private LinearLayout btnInicioSesionGithub;
 
+    // GitHub
     static String ID_Cliente = BuildConfig.GITHUB_CLIENTE;
     static String ID_Cliente_Secret = BuildConfig.GITHUB_CLIENTE_SECRET;
     static String URL_REDIRECT = "codezen://callback";
+
+    // Componentes
+    private TextView txtNombreGitHub;
+    private LinearLayout btnInicioSesionGithub;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -54,22 +57,38 @@ public class DevFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         btnInicioSesionGithub = binding.btnInicioSesionGithub;
-        btnInicioSesionGithub.setOnClickListener(v -> conectarConOAuth());
+        btnInicioSesionGithub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                conectarConOAuth();
+            }
+        });
 
-        checkLoginStatus();
+        // Elementos para ocultar
+        txtNombreGitHub=binding.txtNombreGitHub;
+
+        txtNombreGitHub.setVisibility(View.GONE);
+
+        verificarSesionIniciada();
     }
 
-    public void checkLoginStatus() {
+    // Método para verificar si se ha iniciado sesión o no
+    public void verificarSesionIniciada() {
         SharedPreferences preferences = requireContext().getSharedPreferences("auth", Context.MODE_PRIVATE);
         String token = preferences.getString("token", null);
 
+        // Ocultar y mostrar componentes
+        //      - Ocultar
         btnInicioSesionGithub.setVisibility(token == null ? View.VISIBLE : View.GONE);
+        //      - Mostrar
+        txtNombreGitHub.setVisibility(token != null ? View.VISIBLE : View.GONE);
 
         if (token != null) {
-            Toast.makeText(getContext(), "USUARIO VERIFICADO", Toast.LENGTH_SHORT).show();
+            Log.d("USUARIO ESTÁ VERIFICADO", "El usuario está verificado en GitHub");
         }
     }
 
+    // ******************************* CONECTAR CON API DE GITHUB **********************************
     private void conectarConOAuth() {
         String URL = "https://github.com/login/oauth/authorize"
                 + "?client_id=" + ID_Cliente
@@ -78,10 +97,11 @@ public class DevFragment extends Fragment {
 
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(URL)));
     }
-
+    
     public static void obtenerToken(String codigo, Context context) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://github.com/")
+                .addConverterFactory(GsonConverterFactory.create())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
 
@@ -93,27 +113,33 @@ public class DevFragment extends Fragment {
                         if (response.isSuccessful() && response.body() != null) {
                             String tokenAcceso = response.body().get("access_token").getAsString();
                             storeTokenAndFetchUser(tokenAcceso, context);
+                            Log.d("DevFragment", "Token obtenido: " + tokenAcceso);
                         } else {
-                            Toast.makeText(context, "Error al obtener token", Toast.LENGTH_SHORT).show();
+                            String errorBody = "";
+                            try {
+                                if (response.errorBody() != null) {
+                                    errorBody = response.errorBody().string();
+                                }
+                            } catch (Exception e) {
+                                Log.e("GITHUB_OAUTH", "Error al leer el cuerpo del error: ", e);
+                            }
+                            Log.e("GITHUB_OAUTH", "Error al obtener token: " + response.code() + " - " + errorBody);
                         }
                     }
 
                     @Override
                     public void onFailure(Call<JsonObject> call, Throwable t) {
                         Toast.makeText(context, "Error de conexión", Toast.LENGTH_SHORT).show();
-                        Log.e("GITHUB_OAUTH", "Error: ", t);
                     }
                 });
     }
-
+    
     private static void storeTokenAndFetchUser(String token, Context context) {
-        // Store token
         context.getSharedPreferences("auth", Context.MODE_PRIVATE)
                 .edit()
                 .putString("token", token)
                 .apply();
 
-        // Fetch user info
         obtenerUsuario(token, context);
     }
 
@@ -132,7 +158,6 @@ public class DevFragment extends Fragment {
                     String username = user.get("login").getAsString();
                     Toast.makeText(context, "Bienvenido " + username, Toast.LENGTH_SHORT).show();
 
-                    // Notify fragment to update UI
                     if (context instanceof MainActivity) {
                         ((MainActivity) context).updateDevFragmentUI();
                     }
@@ -145,4 +170,5 @@ public class DevFragment extends Fragment {
             }
         });
     }
+    // *********************************************************************************************
 }

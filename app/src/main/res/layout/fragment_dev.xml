@@ -41,4 +41,16 @@
             android:text="Iniciar sesión con GitHub"
             android:textColor="#E4E4E4" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtNombreGitHub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        tools:text="RealWalterWhite"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

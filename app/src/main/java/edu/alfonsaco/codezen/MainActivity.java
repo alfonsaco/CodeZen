@@ -1,21 +1,14 @@
 package edu.alfonsaco.codezen;
 
-import android.app.ComponentCaller;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowInsetsController;
-import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,7 +19,6 @@ import com.google.firebase.firestore.Transaction;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -41,7 +33,6 @@ import edu.alfonsaco.codezen.utils.ArchievementsUnlocks;
 import edu.alfonsaco.codezen.utils.BDD;
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.WindowInsetsControllerCompat;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -227,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
                     .getPrimaryNavigationFragment();
 
             if (fragment instanceof DevFragment) {
-                ((DevFragment) fragment).checkLoginStatus();
+                ((DevFragment) fragment).verificarSesionIniciada();
             }
         }
     }
