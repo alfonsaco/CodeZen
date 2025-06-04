@@ -161,10 +161,26 @@ public class RegisterActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser user = firebaseAuth.getCurrentUser();
-                        baseDeDatos.guardarUsuarioEnFirebase(firebaseAuth.getCurrentUser().getDisplayName(), firebaseAuth.getCurrentUser().getEmail());
 
-                        startActivity(new Intent(this, MainActivity.class));
-                        finish();
+                        if(user != null) {
+                            // VERIFICAR EXISTENCIA NOMBRE USUARIO
+                            String nombreCortado=firebaseAuth.getCurrentUser().getDisplayName();
+                            int random=(int) (1000 + Math.random() * 100000);
+
+                            if(nombreCortado.equals("") || nombreCortado == null) {
+                                nombreCortado="usuario"+random;
+                            } else {
+                                if(nombreCortado.length() > 20) {
+                                    nombreCortado=nombreCortado.substring(0, 20);
+                                }
+                            }
+
+                            baseDeDatos.guardarUsuarioEnFirebase(nombreCortado, firebaseAuth.getCurrentUser().getEmail());
+
+                            startActivity(new Intent(this, MainActivity.class));
+                            finish();
+                        }
+
                     } else {
                         Toast.makeText(this, "Error en la autenticación", Toast.LENGTH_SHORT).show();
                     }
