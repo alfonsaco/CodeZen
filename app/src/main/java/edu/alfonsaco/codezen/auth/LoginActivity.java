@@ -32,6 +32,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import edu.alfonsaco.codezen.MainActivity;
 import edu.alfonsaco.codezen.R;
+import edu.alfonsaco.codezen.utils.BDD;
 import edu.alfonsaco.codezen.utils.Verifications;
 
 public class LoginActivity extends AppCompatActivity {
@@ -55,6 +56,8 @@ public class LoginActivity extends AppCompatActivity {
     // Verificar email
     private Verifications verifications;
 
+    private BDD db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.auth_login_activity);
 
         verifications=new Verifications();
+        db=new BDD();
 
         iconoApp=findViewById(R.id.iconoApp);
         Glide.with(this).load(R.mipmap.ic_launcher).circleCrop().into(iconoApp);
@@ -169,10 +173,24 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         FirebaseUser user = firebaseAuth.getCurrentUser();
 
-                        String emailUsuario=firebaseAuth.getCurrentUser().getEmail();
-                        String nombreUsuario=firebaseAuth.getCurrentUser().getDisplayName();
-                        Intent intent=new Intent(this, MainActivity.class);
-                        finish();
+                        if(user != null) {
+                            // VERIFICAR EXISTENCIA NOMBRE USUARIO
+                            String nombreCortado=firebaseAuth.getCurrentUser().getDisplayName();
+                            int random=(int) (1000 + Math.random() * 100000);
+
+                            if(nombreCortado.equals("") || nombreCortado == null) {
+                                nombreCortado="usuario"+random;
+                            } else {
+                                if(nombreCortado.length() > 20) {
+                                    nombreCortado=nombreCortado.substring(0, 20);
+                                }
+                            }
+
+                            db.guardarUsuarioEnFirebase(nombreCortado, firebaseAuth.getCurrentUser().getEmail());
+
+                            startActivity(new Intent(this, MainActivity.class));
+                            finish();
+                        }
 
                     } else {
                         Toast.makeText(this, "Error en la autenticación", Toast.LENGTH_SHORT).show();

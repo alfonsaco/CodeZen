@@ -64,7 +64,7 @@ public class RankingFragment extends Fragment {
         recyclerRanking.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         listaUsuarios=new ArrayList<>();
-        adapter=new RankingAdapter(listaUsuarios, this.getContext());
+        adapter=new RankingAdapter(listaUsuarios, requireContext());
         recyclerRanking.setAdapter(adapter);
 
         cargarUsuarios();
@@ -92,6 +92,17 @@ public class RankingFragment extends Fragment {
 
                         adapter.notifyDataSetChanged();
                     }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("RANKING ERROR", "No se pudieron agregar los usuarios al ranking");
                 });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        recyclerRanking.setAdapter(null);
+        binding=null;
     }
 }
