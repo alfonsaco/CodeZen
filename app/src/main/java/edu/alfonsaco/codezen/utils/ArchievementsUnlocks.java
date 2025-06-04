@@ -62,8 +62,38 @@ public class ArchievementsUnlocks {
                 // ***************** AGREGAR LOGRO A LA BASE DE DATOS ******************
                 db.agregarLogroABDD(id, nombre);
 
+                verificarNivel();
             }
         });
+    }
+
+    private void verificarNivel() {
+        db.getDb().collection("usuarios")
+                .document(db.getUsuarioID())
+                .get()
+                .addOnSuccessListener(snapshot -> {
+                    int contLogro=snapshot.getLong("cont_logros").intValue();
+
+                    if(contLogro < 2) {
+                        cambiarNivel(0);
+                    } else if(contLogro >= 2 && contLogro < 6) {
+                        cambiarNivel(1);
+                    } else if(contLogro >= 6 && contLogro < 11) {
+                        cambiarNivel(2);
+                    } else if(contLogro >= 11 && contLogro < 16) {
+                        cambiarNivel(3);
+                    } else if(contLogro >= 16 && contLogro <= 21) {
+                        cambiarNivel(4);
+                    }
+                });
+    }
+    private void cambiarNivel(int nuevoNivel) {
+        db.getDb().collection("usuarios")
+                .document(db.getUsuarioID())
+                .update("nivel", nuevoNivel)
+                .addOnSuccessListener(a -> {
+                    Log.d("ACTUALIZADO", "Nivel actualizado");
+                });
     }
     // *********************************************************************************************
 
@@ -89,13 +119,16 @@ public class ArchievementsUnlocks {
                 .addOnSuccessListener(snapshot -> {
                     Long numMeditaciones=snapshot.getLong("cont_meditaciones");
 
-                    if(numMeditaciones == 5) {
+                    if(numMeditaciones >= 5) {
                         mostrarLogroDesbloqueado(context, "Reboot", "logro4", "med_01");
-                    } else if(numMeditaciones == 30) {
+                    }
+                    if(numMeditaciones >= 30) {
                         mostrarLogroDesbloqueado(context, "Aficionado", "logro5", "med_02");
-                    } else if(numMeditaciones == 100) {
+                    }
+                    if(numMeditaciones >= 100) {
                         mostrarLogroDesbloqueado(context, "Zen", "logro6", "med_03");
-                    } else if(numMeditaciones == 300) {
+                    }
+                    if(numMeditaciones >= 300) {
                         mostrarLogroDesbloqueado(context, "300", "logro7", "med_04");
                     }
 

@@ -37,7 +37,6 @@ import edu.alfonsaco.codezen.utils.BDD;
 import retrofit2.converter.gson.GsonConverterFactory;
 import edu.alfonsaco.codezen.BuildConfig;
 
-
 public class RankingFragment extends Fragment {
 
     private FragmentRankingBinding binding;
@@ -77,6 +76,7 @@ public class RankingFragment extends Fragment {
 
         db.getDb().collection("usuarios")
                 .orderBy("cont_logros", Query.Direction.DESCENDING)
+                .limit(50)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
