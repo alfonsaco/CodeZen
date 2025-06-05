@@ -210,16 +210,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void updateDevFragmentUI() {
-        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.nav_host_fragment_activity_main);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
 
-        if (navHostFragment != null) {
-            Fragment fragment = navHostFragment.getChildFragmentManager()
-                    .getPrimaryNavigationFragment();
-
-            if (fragment instanceof DevFragment) {
-                ((DevFragment) fragment).verificarSesionIniciada();
-            }
+        if (currentFragment != null && currentFragment.getChildFragmentManager().getPrimaryNavigationFragment() instanceof DevFragment) {
+            DevFragment devFragment = (DevFragment) currentFragment.getChildFragmentManager().getPrimaryNavigationFragment();
+            devFragment.verificarSesionIniciada();
+            return;
         }
     }
 

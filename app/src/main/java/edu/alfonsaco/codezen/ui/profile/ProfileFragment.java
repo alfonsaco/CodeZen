@@ -354,4 +354,14 @@ public class ProfileFragment extends Fragment {
 
         binding = null;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        obtenerUsername();
+        obtenerAvatar();
+        cargarLogros();
+        llenarProgressBar();
+    }
 }
