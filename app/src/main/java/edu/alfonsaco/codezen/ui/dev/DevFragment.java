@@ -21,9 +21,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import edu.alfonsaco.codezen.MainActivity;
+import edu.alfonsaco.codezen.utils.ArchievementsUnlocks;
+import edu.alfonsaco.codezen.utils.BDD;
 import retrofit2.converter.gson.GsonConverterFactory;
 import edu.alfonsaco.codezen.BuildConfig;
 
@@ -39,6 +43,8 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class DevFragment extends Fragment {
 
     private FragmentDevBinding binding;
+    private ArchievementsUnlocks logros;
+    private BDD db;
 
     // GitHub
     static String ID_Cliente = BuildConfig.GITHUB_CLIENTE;
@@ -50,7 +56,11 @@ public class DevFragment extends Fragment {
     private ImageView avatarGitHub;
     private LinearLayout btnInicioSesionGithub;
     private Button btnCerrarSesionGitHub;
-
+    private TextView txtSeguidos;
+    private TextView txtSeguidores;
+    private TextView txtOcultar2;
+    private TextView txtOcultar1;
+    private TextView txtTotalCommits;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -62,6 +72,9 @@ public class DevFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        db=new BDD();
+        logros=new ArchievementsUnlocks(db);
 
         btnInicioSesionGithub = binding.btnInicioSesionGithub;
         btnInicioSesionGithub.setOnClickListener(new View.OnClickListener() {
@@ -75,10 +88,20 @@ public class DevFragment extends Fragment {
         txtNombreGitHub=binding.txtNombreGitHub;
         avatarGitHub=binding.avatarGitHub;
         btnCerrarSesionGitHub=binding.btnCerrarSesionGitHub;
+        txtSeguidores=binding.txtSeguidores;
+        txtSeguidos=binding.txtSiguiendo;
+        txtOcultar1=binding.txtOcultar1;
+        txtOcultar2=binding.txtOcultar2;
+        txtTotalCommits=binding.txtTotalCommits;
 
         btnCerrarSesionGitHub.setVisibility(View.GONE);
         txtNombreGitHub.setVisibility(View.GONE);
         avatarGitHub.setVisibility(View.GONE);
+        txtSeguidores.setVisibility(View.GONE);
+        txtSeguidos.setVisibility(View.GONE);
+        txtOcultar1.setVisibility(View.GONE);
+        txtOcultar2.setVisibility(View.GONE);
+        txtTotalCommits.setVisibility(View.GONE);
 
         verificarSesionIniciada();
 
@@ -96,12 +119,19 @@ public class DevFragment extends Fragment {
         });
     }
 
+
+
     private void ocultarComponentes() {
         btnInicioSesionGithub.setVisibility(View.VISIBLE);
 
         txtNombreGitHub.setVisibility(View.GONE);
         avatarGitHub.setVisibility(View.GONE);
         btnCerrarSesionGitHub.setVisibility(View.GONE);
+        txtSeguidores.setVisibility(View.GONE);
+        txtSeguidos.setVisibility(View.GONE);
+        txtOcultar1.setVisibility(View.GONE);
+        txtOcultar2.setVisibility(View.GONE);
+        txtTotalCommits.setVisibility(View.GONE);
     }
 
     // Método para verificar si se ha iniciado sesión o no
@@ -115,6 +145,10 @@ public class DevFragment extends Fragment {
         String token = preferences.getString("token", null);
         String username = preferences.getString("username", null);
         String avatar=preferences.getString("avatar", null);
+        int seguidos=preferences.getInt("seguidos", 0);
+        int seguidores=preferences.getInt("seguidores", 0);
+
+        obtenerTotalCommits(token, username, requireContext());
 
         Log.e("URL", "Avatar: "+avatar);
         requireActivity().runOnUiThread(() -> {
@@ -124,7 +158,12 @@ public class DevFragment extends Fragment {
                 btnInicioSesionGithub.setVisibility(token == null ? View.VISIBLE : View.GONE);
                 // Mostrar
                 txtNombreGitHub.setVisibility(token != null ? View.VISIBLE : View.GONE);
-
+                btnCerrarSesionGitHub.setVisibility(token != null ? View.VISIBLE : View.GONE);
+                txtSeguidores.setVisibility(token != null ? View.VISIBLE : View.GONE);
+                txtSeguidos.setVisibility(token != null ? View.VISIBLE : View.GONE);
+                txtOcultar2.setVisibility(token != null ? View.VISIBLE : View.GONE);
+                txtOcultar1.setVisibility(token != null ? View.VISIBLE : View.GONE);
+                txtTotalCommits.setVisibility(token != null ? View.VISIBLE : View.GONE);
 
                 if (username != null) {
                     txtNombreGitHub.setText(username);
@@ -139,13 +178,89 @@ public class DevFragment extends Fragment {
                     Glide.with(requireContext()).load(avatar).circleCrop().into(avatarGitHub);
                 }
 
-                btnCerrarSesionGitHub.setVisibility(View.VISIBLE);
+                txtSeguidores.setText(String.valueOf(seguidores));
+                txtSeguidos.setText(String.valueOf(seguidos));
 
             } catch (Exception e) {
                 Log.e("DevFragment", "Error en runOnUiThread", e);
             }
         });
     }
+
+    // ************************************* OBTENER DATOS *****************************************
+    private void obtenerTotalCommits(String token, String username, Context context) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.github.com/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
+
+        GitHubApi api = retrofit.create(GitHubApi.class);
+
+        api.listRepos(username, "Bearer " + token).enqueue(new Callback<JsonArray>() {
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                if (!response.isSuccessful() || response.body() == null) {
+                    Log.e("GitHubAPI", "Error al obtener repos: " + response.code());
+                    return;
+                }
+
+                JsonArray repos = response.body();
+                int[] totalCommits = {0};
+                int[] pendingCalls = {repos.size()};
+
+                for (JsonElement repoElement : repos) {
+                    JsonObject repo = repoElement.getAsJsonObject();
+                    String repoName = repo.get("name").getAsString();
+                    String owner = repo.get("owner").getAsJsonObject().get("login").getAsString();
+
+                    api.listContributors(owner, repoName, "Bearer " + token)
+                            .enqueue(new Callback<JsonArray>() {
+                                @Override
+                                public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                                    pendingCalls[0]--;
+                                    if (response.isSuccessful() && response.body() != null) {
+                                        for (JsonElement contributor : response.body()) {
+                                            JsonObject contributorObj = contributor.getAsJsonObject();
+                                            if (contributorObj.get("login").getAsString().equals(username)) {
+                                                totalCommits[0] += contributorObj.get("contributions").getAsInt();
+                                                break;
+                                            }
+                                        }
+
+                                    }
+                                    if (pendingCalls[0] == 0) {
+                                        Log.d("TOTAL_COMMITS", "Total commits: " + totalCommits[0]);
+                                    }
+
+                                    // Evitamos que de error
+                                    if (isAdded()) {
+                                        SharedPreferences prefs = requireActivity().getSharedPreferences("auth", Context.MODE_PRIVATE);
+                                        prefs.edit().putInt("cont_commits", totalCommits[0]).apply();
+
+                                        requireActivity().runOnUiThread(() -> {
+                                            txtTotalCommits.setText(String.valueOf(totalCommits[0]));
+                                        });
+                                    }
+
+                                    txtTotalCommits.setText(String.valueOf(totalCommits[0]));
+                                    logros.logrosGitHub(context, totalCommits[0]);
+                                }
+
+                                @Override
+                                public void onFailure(Call<JsonArray> call, Throwable t) {
+                                    pendingCalls[0]--;
+                                    Log.e("GitHubAPI", "Error al obtener contribs", t);
+                                }
+                            });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+                Log.e("GitHubAPI", "Error al obtener repos", t);
+            }
+        });
+    }
+
 
     // ******************************* CONECTAR CON API DE GITHUB **********************************
     private void conectarConOAuth() {
@@ -243,6 +358,8 @@ public class DevFragment extends Fragment {
                     SharedPreferences.Editor editor = context.getSharedPreferences("auth", Context.MODE_PRIVATE).edit();
                     editor.putString("username", username);
                     editor.putString("avatar", avatar);
+                    editor.putInt("seguidores", seguidores);
+                    editor.putInt("seguidos", seguidos);
                     editor.apply();
 
                     activity.runOnUiThread(() -> {

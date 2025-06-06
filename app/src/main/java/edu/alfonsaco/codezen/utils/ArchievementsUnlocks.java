@@ -104,9 +104,11 @@ public class ArchievementsUnlocks {
     public void logrosHabitos(List listaHabitos, Context context) {
         if(listaHabitos.isEmpty()) {
             mostrarLogroDesbloqueado(context, "Primeros pasos", "logro1", "hab_01");
-        } else if(listaHabitos.size() == 4) {
+        }
+        if(listaHabitos.size() == 4) {
             mostrarLogroDesbloqueado(context, "Level Up", "logro2", "hab_02");
-        } else if(listaHabitos.size() == 14) {
+        }
+        if(listaHabitos.size() == 14) {
             mostrarLogroDesbloqueado(context, "GigaChad", "logro3", "hab_03");
         }
     }
@@ -142,10 +144,24 @@ public class ArchievementsUnlocks {
     public void logrosRacha(int racha, Context context) {
         if(racha == 5) {
             mostrarLogroDesbloqueado(context, "Tu nuevo yo", "logro14", "rac_01");
-        } else if(racha == 23) {
+        }
+        if(racha == 23) {
             mostrarLogroDesbloqueado(context, "Michael Jordan", "logro15", "rac_02");
-        } else if(racha == 100) {
+        }
+        if(racha == 100) {
             mostrarLogroDesbloqueado(context, "Club de los 100", "logro16", "rac_03");
+        }
+    }
+
+    public void logrosGitHub(Context context, int contCommits) {
+        if(contCommits >= 500) {
+            mostrarLogroDesbloqueado(context, "GitHead", "logro10", "git_01");
+        }
+        if(contCommits >= 1000) {
+            mostrarLogroDesbloqueado(context, "Commit Beast", "logro11", "git_02");
+        }
+        if(contCommits >= 3000) {
+            mostrarLogroDesbloqueado(context, "Commiter", "logro17", "git_03");
         }
     }
     // *********************************************************************************************

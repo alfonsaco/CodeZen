@@ -56,14 +56,20 @@
   {
     "id": "git_01",
     "nombre": "GitHead",
-    "descripcion": "Haz 1000 commits en GitHub",
+    "descripcion": "Haz 500 commits en GitHub",
     "ruta": "logro10"
   },
   {
     "id": "git_02",
     "nombre": "Commit Beast",
-    "descripcion": "Haz 5000 commits en GitHub",
+    "descripcion": "Haz 1000 commits en GitHub",
     "ruta": "logro11"
+  },
+  {
+    "id": "git_03",
+    "nombre": "Commiter",
+    "descripcion": "Haz 3000 commits en GitHub",
+    "ruta": "logro17"
   },
   {
     "id": "heisen",
