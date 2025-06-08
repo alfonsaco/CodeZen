@@ -33,6 +33,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import edu.alfonsaco.codezen.R;
 import edu.alfonsaco.codezen.databinding.FragmentHabitsBinding;
 import edu.alfonsaco.codezen.ui.habits.habit_utils.Day;
 import edu.alfonsaco.codezen.ui.habits.habit_utils.Habit;

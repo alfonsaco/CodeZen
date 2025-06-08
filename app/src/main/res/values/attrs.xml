@@ -7,6 +7,8 @@
     <attr name="fondoProgressBar" format="color" />
     <attr name="barraInferior" format="color" />
 
+    <attr name="botonesOscuros" format="color" />
+
     <!--Para la progress bar-->
     <declare-styleable name="CircularProgressLayout">
         <attr name="borderWidth" format="dimension"/>

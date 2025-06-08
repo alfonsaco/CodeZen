@@ -1,6 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.CodeZen" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <!--StatusBar-->
+        <item name="android:statusBarColor">#20303E</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!--Barra inferior y barra de opciones (atrás, minimizas etc.)-->
+        <item name="barraInferior">#F5F5FB</item>
+        <item name="android:navigationBarColor">#F5F5FB</item>
+        <item name="android:windowLightNavigationBar">true</item>
+
         <!--Color botones y eso-->
         <item name="colorPrimary">#20303E</item>
         <!--Color fondo y textos-->
@@ -11,6 +21,10 @@
         <item name="colorSecondary">#893271A4</item>
         <item name="colorOnSecondary">@color/black</item>
 
+        <!--No definidos-->
+        <item name="colorPrimaryVariant">#20303E</item>
+        <item name="colorSecondaryVariant">@color/teal_200</item>
+
         <!--Color del fondo de los items del Bar de abajo-->
         <item name="colorSecondaryContainer">#00F20000</item>
 
@@ -20,16 +34,11 @@
         <!--Fondo de los avatares-->
         <item name="colorBordeImagen">#9ECFDA</item>
 
-        <item name="android:statusBarColor">#20303E</item>
-        <item name="android:windowLightStatusBar">true</item>
-
+        <!--Botones-->
         <item name="botonesRojo">#C64242</item>
+        <item name="botonesOscuros">#20303E</item>
+
         <item name="habitoFondo">#FBFBFD</item>
         <item name="fondoProgressBar">#3A5166</item>
-
-        <!--Barra inferior y barra de opciones (atrás, minimizas etc.)-->
-        <item name="barraInferior">#F5F5FB</item>
-        <item name="android:navigationBarColor">#F5F5FB</item>
-        <item name="android:windowLightNavigationBar">true</item>
     </style>
 </resources>
