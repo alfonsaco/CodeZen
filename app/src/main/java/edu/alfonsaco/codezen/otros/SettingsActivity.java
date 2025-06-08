@@ -1,5 +1,6 @@
 package edu.alfonsaco.codezen.otros;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
@@ -141,6 +142,9 @@ public class SettingsActivity extends AppCompatActivity {
                 firebaseAuth.signOut();
                 // Cerrar cliente, para poder seleccionar otra cuenta distinta
                 googleSignInClient.signOut().addOnCompleteListener(task -> {
+                    SharedPreferences prefs = getSharedPreferences("auth", Context.MODE_PRIVATE);
+                    prefs.edit().clear().apply();
+
                     volverAInicio();
                 });
             }
@@ -151,6 +155,9 @@ public class SettingsActivity extends AppCompatActivity {
         btnBorrarCuenta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences prefs = getSharedPreferences("auth", Context.MODE_PRIVATE);
+                prefs.edit().clear().apply();
+
                 borrarCuenta();
             }
         });

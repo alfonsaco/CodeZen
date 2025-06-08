@@ -282,27 +282,23 @@ public class MeditationActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        if(mediaPlayer != null) {
+        if (mediaPlayer != null) {
             try {
-                if(mediaPlayer.isPlaying()) {
-                    mediaPlayer.stop();
-                }
-                mediaPlayer.release();
-
-            }catch (IllegalStateException e) {
+                mediaPlayer.stop();
+            } catch (IllegalStateException e) {
                 e.printStackTrace();
             }
+            mediaPlayer.release();
+            mediaPlayer = null;
         }
 
         if (alarma != null) {
             try {
-                if (alarma.isPlaying()) {
-                    alarma.stop();
-                }
-                alarma.release();
+                alarma.stop();
             } catch (IllegalStateException e) {
                 e.printStackTrace();
             }
+            alarma.release();
             alarma = null;
         }
     }

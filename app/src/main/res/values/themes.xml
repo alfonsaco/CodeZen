@@ -21,7 +21,7 @@
         <item name="colorBordeImagen">#9ECFDA</item>
 
         <item name="android:statusBarColor">#20303E</item>
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightStatusBar">true</item>
 
         <item name="botonesRojo">#C64242</item>
         <item name="habitoFondo">#FBFBFD</item>

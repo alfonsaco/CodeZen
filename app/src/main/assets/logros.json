@@ -72,6 +72,18 @@
     "ruta": "logro17"
   },
   {
+    "id": "star_01",
+    "nombre": "Popular",
+    "descripcion": "Ten un total de 50 stars en repositorios",
+    "ruta": "logro18"
+  },
+  {
+    "id": "star_02",
+    "nombre": "Ultra-Popular",
+    "descripcion": "Ten un total de 150 stars en repositorios",
+    "ruta": "logro19"
+  },
+  {
     "id": "heisen",
     "nombre": "Heisenberg",
     "descripcion": "Ten un porcentaje de éxito del 99%",
