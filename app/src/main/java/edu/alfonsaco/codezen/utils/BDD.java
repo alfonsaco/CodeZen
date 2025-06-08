@@ -76,6 +76,7 @@ public class BDD {
         eliminarSubcoleccion("usuarios/"+getUsuarioID()+"/habitos");
         eliminarSubcoleccion("usuarios/"+getUsuarioID()+"/logros");
         eliminarSubcoleccion("usuarios/"+getUsuarioID()+"/meditaciones");
+        eliminarSubcoleccion("usuarios/"+getUsuarioID()+"/rachas");
 
         db.collection("usuarios")
                 .document(firebaseAuth.getCurrentUser().getUid())

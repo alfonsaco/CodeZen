@@ -225,7 +225,7 @@ public class MeditationActivity extends AppCompatActivity {
                 if(hayAlarma) {
                     alarma=MediaPlayer.create(MeditationActivity.this, R.raw.alarma);
                     alarma.setLooping(true);
-                    alarma.setVolume(0.7f, 0.7f);
+                    alarma.setVolume(0.4f, 0.4f);
                     alarma.start();
 
                     alarma.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -306,9 +306,6 @@ public class MeditationActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if(mediaPlayer != null && mediaPlayer.isPlaying()) {
-            mediaPlayer.start();
-        }
         if(alarma != null && alarma.isPlaying()) {
             alarma.stop();
             alarma.release();

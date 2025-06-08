@@ -291,7 +291,7 @@ public class DevFragment extends Fragment {
                                     }
 
                                     if (pendingCalls[0] == 0) {
-                                        Log.d("TOTAL", "Commits: " + totalCommits[0] + ", Stars: " + totalStars[0]);
+                                        Log.e("TOTAL", "Se acabaron los intentos de la API DE GITHUB.");
 
                                         if (isAdded()) {
                                             SharedPreferences prefs = requireActivity().getSharedPreferences("auth", Context.MODE_PRIVATE);
@@ -334,7 +334,7 @@ public class DevFragment extends Fragment {
 
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(URL)));
     }
-    
+
     public static void obtenerToken(String codigo, Context context) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://github.com/")
@@ -409,6 +409,14 @@ public class DevFragment extends Fragment {
                 if (!response.isSuccessful() || response.body() == null) {
                     Log.e("GitHubAPI", "Error: " + response.code());
                     return;
+                }
+
+                if (!response.isSuccessful()) {
+                    if (response.code() == 403) {
+                        Log.e("GitHubAPI", "Límite de tasa excedido");
+                        Toast.makeText(context.getApplicationContext(), "Límite de peticiones excedido", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                 }
 
                 try {

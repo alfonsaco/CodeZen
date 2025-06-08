@@ -303,6 +303,7 @@ public class SettingsActivity extends AppCompatActivity {
                             Log.e("ERROR ELIMINANDO USUARIO", "Error al eliminar el usuario");
                         });
 
+                googleSignInClient.signOut();
                 firebaseAuth.signOut();
                 volverAInicio();
             }

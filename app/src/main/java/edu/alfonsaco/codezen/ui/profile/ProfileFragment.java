@@ -361,6 +361,8 @@ public class ProfileFragment extends Fragment {
 
         obtenerUsername();
         obtenerAvatar();
+
+        obtenerCantidadLogros();
         cargarLogros();
         llenarProgressBar();
     }
