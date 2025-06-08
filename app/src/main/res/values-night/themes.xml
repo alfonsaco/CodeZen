@@ -4,10 +4,10 @@
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor">#20303E</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
 
-        <item name="barraInferior">#F5F5FB</item>
-        <item name="android:navigationBarColor">#F5F5FB</item>
+        <item name="barraInferior">#20303E</item>
+        <item name="android:navigationBarColor">#20303E</item>
         <item name="android:windowLightNavigationBar">true</item>
 
         <!--Botones-->
@@ -35,9 +35,12 @@
 
         <!--Botones-->
         <item name="botonesRojo">#C64242</item>
-        <item name="botonesOscuros">#131F27</item>
+        <item name="botonesOscuros">#111C24</item>
 
         <item name="habitoFondo">#2C3D4D</item>
         <item name="fondoProgressBar">#3A5166</item>
+
+        <!--Para el toolbar y profile-->
+        <item name="seccionesOscuras">#16212B</item>
     </style>
 </resources>

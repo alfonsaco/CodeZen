@@ -31,6 +31,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import org.w3c.dom.Text;
+
 import edu.alfonsaco.codezen.MainActivity;
 import edu.alfonsaco.codezen.R;
 import edu.alfonsaco.codezen.ui.meditation.meditate.MeditationActivity;
@@ -145,6 +147,12 @@ public class DevFragment extends Fragment {
         Button btnCancelar=dialog.findViewById(R.id.btnCancelar);
         Button btnFinalizar=dialog.findViewById(R.id.btnFinalizar);
         btnFinalizar.setText("CERRAR SESIÓN");
+
+        TextView txtTitulo=dialog.findViewById(R.id.txtTitulo);
+        TextView txtDescripcion=dialog.findViewById(R.id.txtTexto);
+        txtTitulo.setText("CERRAR SESIÓN");
+        txtDescripcion.setText("¿Seguro que quieres cerrar sesión en GitHub?");
+
 
         btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override

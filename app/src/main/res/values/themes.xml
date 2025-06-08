@@ -40,5 +40,8 @@
 
         <item name="habitoFondo">#FBFBFD</item>
         <item name="fondoProgressBar">#3A5166</item>
+
+        <!--Para el toolbar y profile-->
+        <item name="seccionesOscuras">#20303E</item>
     </style>
 </resources>

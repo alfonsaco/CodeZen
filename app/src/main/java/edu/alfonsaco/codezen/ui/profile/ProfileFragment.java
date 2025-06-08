@@ -144,6 +144,9 @@ public class ProfileFragment extends Fragment {
                 .document(db.getUsuarioID())
                 .get()
                 .addOnSuccessListener(snapshot -> {
+                    // Evitamos errores
+                    if (!isAdded()) return;
+
                     String avatar=snapshot.getString("avatar");
 
                     int idImagen=getResources().getIdentifier(avatar, "drawable", getActivity().getPackageName());

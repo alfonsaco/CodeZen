@@ -62,6 +62,6 @@
         android:src="@android:drawable/ic_input_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:tint="?attr/colorOnPrimary" />
+        app:tint="#FBFBFF" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

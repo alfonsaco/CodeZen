@@ -9,6 +9,8 @@
 
     <attr name="botonesOscuros" format="color" />
 
+    <attr name="seccionesOscuras" format="color" />
+
     <!--Para la progress bar-->
     <declare-styleable name="CircularProgressLayout">
         <attr name="borderWidth" format="dimension"/>

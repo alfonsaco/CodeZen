@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="#C80000"
-                android:textColor="?attr/colorOnPrimary"
+                android:textColor="#FBFBFF"
                 android:text="BORRAR" />
         </LinearLayout>
 

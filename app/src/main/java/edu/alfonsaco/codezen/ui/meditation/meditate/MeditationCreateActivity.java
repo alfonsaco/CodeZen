@@ -147,7 +147,7 @@ public class MeditationCreateActivity extends AppCompatActivity {
         int segundos=segundosPicker.getValue();
 
         // Verificamos que sea una meditación válida
-        if(minutos < 0) {
+        if(minutos < 1) {
             Toast.makeText(this, "Esa meditación es muy corta, ¿No crees?", Toast.LENGTH_SHORT).show();
             return;
         }
