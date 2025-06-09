@@ -1,6 +1,7 @@
 package edu.alfonsaco.codezen.ui.profile.profile_utils;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -10,6 +11,8 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.LinearLayout;
+
+import androidx.annotation.ColorInt;
 
 import edu.alfonsaco.codezen.R;
 
@@ -36,8 +39,15 @@ public class CircularProgressLayout extends LinearLayout {
         boundsRect = new RectF();
 
         // Valores por defecto
-        borderWidth = 3f;
-        borderColor = Color.BLACK;
+        borderWidth = 2f;
+
+        // Obtenemos el color ColorPrimary
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(androidx.appcompat.R.attr.colorPrimary, typedValue, true);
+        @ColorInt int color = typedValue.data;
+
+        borderColor = color;
 
         // Obtener atributos personalizados si los hay
         if (attrs != null) {
