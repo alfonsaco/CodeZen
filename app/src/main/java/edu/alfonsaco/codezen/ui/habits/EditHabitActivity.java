@@ -1,9 +1,12 @@
 package edu.alfonsaco.codezen.ui.habits;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -13,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -99,7 +103,16 @@ public class EditHabitActivity extends AppCompatActivity {
                     }
 
                     FrameLayout contenedor=(FrameLayout) color.getParent();
-                    contenedor.setBackgroundColor(Color.BLACK);
+
+                    // Obtenemos el color ColorPrimary
+                    TypedValue typedValue = new TypedValue();
+                    Context context = contenedor.getContext();
+                    Resources.Theme theme = context.getTheme();
+
+                    theme.resolveAttribute(androidx.appcompat.R.attr.colorPrimary, typedValue, true);
+
+                    @ColorInt int color = typedValue.data;
+                    contenedor.setBackgroundColor(color);
                 }
             });
         }
@@ -120,7 +133,16 @@ public class EditHabitActivity extends AppCompatActivity {
         for(View color : listaColores) {
             if(color.getTag().toString().equals(colorSeleccionado)) {
                 FrameLayout contenedor=(FrameLayout) color.getParent();
-                contenedor.setBackgroundColor(Color.BLACK);
+
+                // Obtenemos el color ColorPrimary
+                TypedValue typedValue = new TypedValue();
+                Context context = contenedor.getContext();
+                Resources.Theme theme = context.getTheme();
+
+                theme.resolveAttribute(androidx.appcompat.R.attr.colorPrimary, typedValue, true);
+
+                @ColorInt int colorSeleccionado = typedValue.data;
+                contenedor.setBackgroundColor(colorSeleccionado);
             }
         }
 

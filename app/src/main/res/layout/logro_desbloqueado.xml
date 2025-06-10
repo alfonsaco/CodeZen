@@ -45,6 +45,7 @@
                 android:id="@+id/txtLogroDesbloqueado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="?attr/colorPrimary"
                 android:textStyle="bold"
                 android:textSize="15sp"
                 android:text="LOGRO DESBLOQUEADO" />
@@ -53,6 +54,7 @@
                 android:id="@+id/txtNombreLogroDesbloqueado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="16sp"
                 android:text="TextView" />
         </LinearLayout>

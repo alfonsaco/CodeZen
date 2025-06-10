@@ -68,6 +68,8 @@ public class ProfileFragment extends Fragment {
     private LinearLayout progressBarNivel;
     private TextView txtContadorLogros;
     private TextView txtContadorMeditaciones;
+    private ImageView medallaInicial;
+    private ImageView medallaFinal;
 
     // Recycler de logros
     private RecyclerView recyclerLogros;
@@ -90,7 +92,10 @@ public class ProfileFragment extends Fragment {
         obtenerAvatar();
 
         // ProgressBar de nivel
+        medallaFinal=binding.medallaFinal;
+        medallaInicial=binding.medallaInicial;
         progressBarNivel=binding.progressBarNivel;
+
         llenarProgressBar();
 
         // Nivel
@@ -144,6 +149,9 @@ public class ProfileFragment extends Fragment {
                 .document(db.getUsuarioID())
                 .get()
                 .addOnSuccessListener(snapshot -> {
+                    // Evitamos errores
+                    if (!isAdded()) return;
+
                     String avatar=snapshot.getString("avatar");
 
                     int idImagen=getResources().getIdentifier(avatar, "drawable", getActivity().getPackageName());
@@ -245,26 +253,38 @@ public class ProfileFragment extends Fragment {
                                 cantidadColoreados=1;
                             }
                             agregarViewsProgressBar(2, cantidadColoreados);
+                            medallaInicial.setImageResource(R.drawable.lvl0);
+                            medallaFinal.setImageResource(R.drawable.lvl1);
 
                         // NIVEL 1
                         } else if(contLogros > 1 && contLogros <= 5) {
-                            cantidadColoreados=contLogros - 1;
+                            cantidadColoreados=contLogros - 2;
                             agregarViewsProgressBar(4, cantidadColoreados);
+                            medallaInicial.setImageResource(R.drawable.lvl1);
+                            medallaFinal.setImageResource(R.drawable.lvl2);
 
                         // NIVEL 2
                         } else if(contLogros > 5 && contLogros <= 10) {
-                            cantidadColoreados=contLogros - 5;
+                            cantidadColoreados=contLogros - 6;
                             agregarViewsProgressBar(5, cantidadColoreados);
+                            medallaInicial.setImageResource(R.drawable.lvl2);
+                            medallaFinal.setImageResource(R.drawable.lvl3);
 
                         // NIVEL 3
                         } else if(contLogros > 10 && contLogros <= 15) {
-                            cantidadColoreados=contLogros - 10;
+                            cantidadColoreados=contLogros - 11;
                             agregarViewsProgressBar(5, cantidadColoreados);
+                            medallaInicial.setImageResource(R.drawable.lvl3);
+                            medallaFinal.setImageResource(R.drawable.lvl4);
 
                         // NIVEL 4
                         } else if(contLogros > 15 && contLogros <= 21) {
-                            cantidadColoreados=contLogros - 15;
+                            cantidadColoreados=contLogros - 16;
                             agregarViewsProgressBar(6, cantidadColoreados);
+                            medallaInicial.setImageResource(0);
+                            medallaFinal.setImageResource(0);
+                            medallaFinal.setForeground(null);
+                            medallaInicial.setForeground(null);
                         }
                     }
                 })
@@ -361,6 +381,8 @@ public class ProfileFragment extends Fragment {
 
         obtenerUsername();
         obtenerAvatar();
+
+        obtenerCantidadLogros();
         cargarLogros();
         llenarProgressBar();
     }

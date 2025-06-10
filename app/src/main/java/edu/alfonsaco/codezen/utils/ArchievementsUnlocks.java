@@ -82,7 +82,7 @@ public class ArchievementsUnlocks {
                         cambiarNivel(2);
                     } else if(contLogro >= 11 && contLogro < 16) {
                         cambiarNivel(3);
-                    } else if(contLogro >= 16 && contLogro <= 21) {
+                    } else if(contLogro >= 16) {
                         cambiarNivel(4);
                     }
                 });
@@ -162,6 +162,15 @@ public class ArchievementsUnlocks {
         }
         if(contCommits >= 3000) {
             mostrarLogroDesbloqueado(context, "Commiter", "logro17", "git_03");
+        }
+    }
+
+    public void logrosStars(Context context, int contStars) {
+        if(contStars >= 50) {
+            mostrarLogroDesbloqueado(context, "Popular", "logro18", "star_01");
+        }
+        if(contStars >= 150) {
+            mostrarLogroDesbloqueado(context, "Ultra-Popular", "logro19", "star_02");
         }
     }
     // *********************************************************************************************
