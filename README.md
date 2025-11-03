@@ -9,8 +9,8 @@
 
 ## 🚀 Descarga
 ### Requisitos
-Para poder probarlo, debes disponer de un dispositivo móvil Android. Descárgalo dentro a través de este enlace *(FlappyParfums.apk)*.
-- [Descargar desde GitHub releases](https://github.com/alfonsaco/Flappy-Parfums/releases/tag/1.0.0)
+Para poder probarlo, debes disponer de un dispositivo móvil Android. Descárgalo dentro a través de este enlace *(CodeZen.apk)*.
+- [Descargar desde GitHub releases](https://github.com/alfonsaco/CodeZen/releases/tag/1.0.1)
 
 > ⚠️ **NOTA:** Es posible que Android muestre un aviso de seguridad al tratarse de una instalación externa a Play Store. Esto es completamente normal.
 
