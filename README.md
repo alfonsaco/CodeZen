@@ -16,33 +16,16 @@ Para poder probarlo, debes disponer de un dispositivo móvil Android. Descárgal
   <br>
 
 ## ⚙️ Funcionalidades
-Esta aplicación contiene las diferentes funcionalidades:
-- Agregar clientes, junto con sus CUPS y direcciones de sumistro de Gas, Luz, Telefonía, Internet y Alarmas. Se permiten agregar varias direcciones por clientes.
-- Gestión de usuarios con diferentes roles y permisos.
-- Calendario para crear tareas para los ténicos
-- Pestaña que muestra las renovaciones de los clientes
-- Listado general con todos los clientes y sus datos, para mostrarlo de una forma más ordenada
-- Sección de admin para añadir nuevos colaboradores y usuarios
-- Sección para añadir nuevos empleados
-
-<br>
-
-### Requisitos
-- IntelliJ o cualquier programa para ejecutar y crear aplicaciones Java
-- Java
-- MySQL
-
-### Enlaces
-Aptoide
-[Descargar desde Aptoide](https://github.com/alfonsaco)
-
-GitHub releases
-[Descargar desde GitHub releases](https://github.com/alfonsaco)
-
-<br>
-
-> ⚠ **ADDONS NO AGUANTA MÁS DE 5 CONEXIONES A LA VEZ** ⚠  
-> Cuando pasas más de unos minutos sin realizar ninguna acción en la aplicación, la base de datos se cierra automáticamente y hay que reiniciar la App. Esto se debe a que se ha utilizado **Addons Clever Cloud** para realizarla, la cual tiene esta limitación.
+🔐 **Autenticación completa de usuarios:** inicio de sesión y registro mediante Google o correo electrónico.
+🧾 **Gestión de cuenta:** cierre de sesión, recuperación de contraseña, verificación de email y eliminación de cuenta.
+📆 **Gestión de hábitos:** creación y seguimiento de hábitos diarios con recordatorios personalizados.
+🧘‍♂️ Sesiones de meditación guiada para mejorar la concentración y reducir el estrés.
+⏳ **Modo enfoque:** bloquea el dispositivo temporalmente para optimizar la productividad.
+🏆 Sistema de logros y medallas que motiva al usuario a mantener sus objetivos.
+🌍 Ranking global basado en la cantidad de logros obtenidos por cada usuario.
+💻 Integración con GitHub para visualizar estadísticas personales de programación.
+🎨 Modo claro y oscuro, adaptable a la preferencia del usuario.
+🧑‍🎨 **Personalización del perfil:** posibilidad de cambiar el avatar y nombre de usuario.
 
 <br>
 
@@ -50,13 +33,6 @@ GitHub releases
 <div align="center">
   <img src="https://github.com/alfonsaco/ConsultoriaCRM/blob/main/src/main/resources/images/CAP1%20(1).PNG" alt="Captura" width="400px">
   <img src="https://github.com/alfonsaco/ConsultoriaCRM/blob/main/src/main/resources/images/CAP1%20(2).PNG" alt="Captura" width="400px">
-</div>
-<div align="center">
-  <img src="https://github.com/alfonsaco/ConsultoriaCRM/blob/main/src/main/resources/images/CAP1%20(3).PNG" alt="Captura" width="400px">
-  <img src="https://github.com/alfonsaco/ConsultoriaCRM/blob/main/src/main/resources/images/CAP1%20(4).PNG" alt="Captura" width="400px">
-</div>
-<div align="center">
-  <img src="https://github.com/alfonsaco/ConsultoriaCRM/blob/main/src/main/resources/images/CAP1%20(5).PNG" alt="Captura" width="400px">
 </div>
 
 <br>
