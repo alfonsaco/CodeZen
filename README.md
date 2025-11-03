@@ -1,6 +1,6 @@
 <div align="center">
-  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/codezen.png" alt="CodeZen logo" width="600px" />
-  CodeZen
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/codezen.png" alt="CodeZen logo" width="100px" />
+  # CodeZen
 </div>
 
 **CRM** desarrollado en Java con JavaFX y MySQL, realizado junto con un compañeros durante las prácticas de DAM. Permite gestionar usuarios, clientes y tareas con una interfaz sencilla y funcional. El proyecto es educativo y demostrativo, sin referencias a empresas reales, y muestra las habilidades adquiridas en programación y bases de datos.
