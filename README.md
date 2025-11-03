@@ -38,8 +38,8 @@ Para poder probarlo, debes disponer de un dispositivo móvil Android. Descárgal
 
 <br>
 
-## 🎯 Logros
-# Insignias
+# 🎯 Logros
+## 🏆 Insignias
 La aplicación cuenta con un sistema de logros, para motivar al usuario a utilizarla y cumplir con los hábitos que se ha propuesto. Estos son algunos de ellos:
 <div align="center">
   <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/logro17.png" alt="Captura" width="70px">
@@ -60,7 +60,7 @@ La aplicación cuenta con un sistema de logros, para motivar al usuario a utiliz
   <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/logro2.png" alt="Captura" width="70px">
 </div>
 
-# Medallas
+## 🎖️ Medallas
 Además, el sistema incluye medallas de distintos rangos, que se desbloquean en función del número total de logros obtenidos.
 Cada medalla representa un nuevo nivel de progreso dentro de la aplicación.
 <div align="center">
