@@ -32,8 +32,22 @@ Para poder probarlo, debes disponer de un dispositivo móvil Android. Descárgal
 
 ## 🖼 Capturas
 <div align="center">
-  <img src="https://github.com/alfonsaco/ConsultoriaCRM/blob/main/src/main/resources/images/CAP1%20(1).PNG" alt="Captura" width="400px">
-  <img src="https://github.com/alfonsaco/ConsultoriaCRM/blob/main/src/main/resources/images/CAP1%20(2).PNG" alt="Captura" width="400px">
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/cap1.jpg" alt="Captura" width="400px">
+  &nbsp;&nbsp;
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/cap2.jpg" alt="Captura" width="400px">
+  &nbsp;&nbsp;
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/cap3.jpg" alt="Captura" width="400px">
+  &nbsp;&nbsp;
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/cap4.jpg" alt="Captura" width="400px">
+</div>
+<div align="center">
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/cap5.jpg" alt="Captura" width="400px">
+  &nbsp;&nbsp;
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/cap6.jpg" alt="Captura" width="400px">
+  &nbsp;&nbsp;
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/cap7.jpg" alt="Captura" width="400px">
+  &nbsp;&nbsp;
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/cap8.jpg" alt="Captura" width="400px">
 </div>
 
 <br>
