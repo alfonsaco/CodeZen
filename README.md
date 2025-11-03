@@ -1,15 +1,23 @@
 <div align="center">
-  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/codezen.png" alt="CodeZen logo" width="100px" />
-  # CodeZen
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/codezen.png" alt="CodeZen logo" width="80px" />
+  <h1>CodeZen</h1>
 </div>
 
-**CRM** desarrollado en Java con JavaFX y MySQL, realizado junto con un compañeros durante las prácticas de DAM. Permite gestionar usuarios, clientes y tareas con una interfaz sencilla y funcional. El proyecto es educativo y demostrativo, sin referencias a empresas reales, y muestra las habilidades adquiridas en programación y bases de datos.
+**CodeZen** es una aplicación móvil diseñada para programadores que busca mejorar su productividad, bienestar y hábitos diarios. Integra herramientas de seguimiento de hábitos, gestión de proyectos, meditación y un sistema de logros que motiva el crecimiento personal y profesional de los desarrolladores.
 
 <br>
 
-## ⚙️ Funcionalidades
+## 🚀 Descarga
+### Requisitos
+Para poder probarlo, debes disponer de un dispositivo móvil Android. Descárgalo dentro a través de este enlace *(FlappyParfums.apk)*.
+- [Descargar desde GitHub releases](https://github.com/alfonsaco/Flappy-Parfums/releases/tag/1.0.0)
 
-El CRM permite:
+> ⚠️ **NOTA:** Es posible que Android muestre un aviso de seguridad al tratarse de una instalación externa a Play Store. Esto es completamente normal.
+
+  <br>
+
+## ⚙️ Funcionalidades
+Esta aplicación contiene las diferentes funcionalidades:
 - Agregar clientes, junto con sus CUPS y direcciones de sumistro de Gas, Luz, Telefonía, Internet y Alarmas. Se permiten agregar varias direcciones por clientes.
 - Gestión de usuarios con diferentes roles y permisos.
 - Calendario para crear tareas para los ténicos
@@ -20,48 +28,22 @@ El CRM permite:
 
 <br>
 
-## 🚀 Instalación
-
 ### Requisitos
 - IntelliJ o cualquier programa para ejecutar y crear aplicaciones Java
 - Java
 - MySQL
 
-### Pasos
-1. Clonar el repositorio:
-```
-git clone https://github.com/alfonsaco/ConsultoriaCRM.git
-```
+### Enlaces
+Aptoide
+[Descargar desde Aptoide](https://github.com/alfonsaco)
 
-2. Crea la base de datos en tu servidor MySQL.
-3. Importa la estructura de la base de datos. La encontrarás en un .txt en la carpeta DB dentro del proyecto (database.txt).
-4. Configura el archivo .env con las credenciales y parámetros de conexión a tu base de datos. El archivo debe contener variables como:
-```
-DB_URL=jdbc:mysql://tu_servidor:puerto/tu_base_de_datos
-DB_USER=tu_usuario
-DB_PASS=tu_contraseña
-CLAVE_ENCRIPT=1234567891234567
-```
-La clave del encriptado debe ser **1234567891234567**.
-
-5. Abre el proyecto en tu IDE (Ej: IntelliJ) y ejecuta la aplicación.
+GitHub releases
+[Descargar desde GitHub releases](https://github.com/alfonsaco)
 
 <br>
 
 > ⚠ **ADDONS NO AGUANTA MÁS DE 5 CONEXIONES A LA VEZ** ⚠  
 > Cuando pasas más de unos minutos sin realizar ninguna acción en la aplicación, la base de datos se cierra automáticamente y hay que reiniciar la App. Esto se debe a que se ha utilizado **Addons Clever Cloud** para realizarla, la cual tiene esta limitación.
-
-
-<br>
-
-## 🙍‍♂️ Usuarios por defecto
-
-El sistema incluye dos usuarios preconfigurados para facilitar las pruebas y el acceso inicial:
-
-| Usuario | Contraseña | Rol      |
-|---------|------------|----------|
-| `user`  | `user`     | Técnico  |
-| `admin` | `admin`    | Administrador |
 
 <br>
 
@@ -82,18 +64,12 @@ El sistema incluye dos usuarios preconfigurados para facilitar las pruebas y el 
 
 ## 🛠 Tecnologías utilizadas
 
-- Java 23
-- JavaFX 23
-- MySQL
-- Maven
-- Dotenv para manejo de variables de entorno
-- Addons Clever Cloud (Base de datos en la nube)
-
-<br>
-
-## 📄 Licencia
-
-Este proyecto está protegido bajo una licencia personalizada para uso exclusivamente educativo y demostrativo. Puedes revisar los detalles en el archivo [LICENSE](LICENSE).
+- Android Studio
+- Java
+- XML
+- JSON
+- Firebase + Firestore
+- GitHub
 
 <br>
 
