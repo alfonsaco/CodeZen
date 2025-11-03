@@ -1,6 +1,5 @@
 <div align="center">
-  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/codezen.png" alt="CodeZen logo" width="80px" />
-  <h1>CodeZen</h1>
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/codezen-logo.png" alt="CodeZen logo" width="80px" />
 </div>
 
 **CodeZen** es una aplicación móvil diseñada para programadores que busca mejorar su productividad, bienestar y hábitos diarios. Integra herramientas de seguimiento de hábitos, gestión de proyectos, meditación y un sistema de logros que motiva el crecimiento personal y profesional de los desarrolladores.
