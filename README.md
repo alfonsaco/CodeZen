@@ -42,38 +42,40 @@ Para poder probarlo, debes disponer de un dispositivo móvil Android. Descárgal
 ## 🏆 Insignias
 La aplicación cuenta con un sistema de logros, para motivar al usuario a utilizarla y cumplir con los hábitos que se ha propuesto. Estos son algunos de ellos:
 <div align="center">
-  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/logro17.png" alt="Captura" width="70px">
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/logro17.png" alt="Captura" width="60px">
   &nbsp;&nbsp;&nbsp;
-  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/logro13.png" alt="Captura" width="70px">
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/logro13.png" alt="Captura" width="60px">
   &nbsp;&nbsp;&nbsp;
-  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/logro12.png" alt="Captura" width="70px">
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/logro12.png" alt="Captura" width="60px">
   &nbsp;&nbsp;&nbsp;
-  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/logro15.png" alt="Captura" width="70px">
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/logro15.png" alt="Captura" width="60px">
 </div>
 <div align="center">
-  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/logro9.png" alt="Captura" width="70px">
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/logro9.png" alt="Captura" width="60px">
   &nbsp;&nbsp;&nbsp;
-  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/logro7.png" alt="Captura" width="70px">
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/logro7.png" alt="Captura" width="60px">
   &nbsp;&nbsp;&nbsp;
-  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/logro3.png" alt="Captura" width="70px">
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/logro3.png" alt="Captura" width="60px">
   &nbsp;&nbsp;&nbsp;
-  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/logro2.png" alt="Captura" width="70px">
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/logro2.png" alt="Captura" width="60px">
 </div>
 
 ## 🎖️ Medallas
 Además, el sistema incluye medallas de distintos rangos, que se desbloquean en función del número total de logros obtenidos.
 Cada medalla representa un nuevo nivel de progreso dentro de la aplicación.
 <div align="center">
-  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/lvl0.png" alt="Captura" width="70px">
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/lvl0.png" alt="Captura" width="60px">
   &nbsp;&nbsp;&nbsp;
-  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/lvl1.png" alt="Captura" width="70px">
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/lvl1.png" alt="Captura" width="60px">
   &nbsp;&nbsp;&nbsp;
-  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/lvl2.png" alt="Captura" width="70px">
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/lvl2.png" alt="Captura" width="60px">
   &nbsp;&nbsp;&nbsp;
-  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/lvl3.png" alt="Captura" width="70px">
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/lvl3.png" alt="Captura" width="60px">
   &nbsp;&nbsp;&nbsp;
-  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/lvl4.png" alt="Captura" width="70px">
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/lvl4.png" alt="Captura" width="60px">
 </div>
+
+<br>
 
 ## 🛠 Tecnologías utilizadas
 
