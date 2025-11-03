@@ -33,20 +33,21 @@ Para poder probarlo, debes disponer de un dispositivo móvil Android. Descárgal
 ## 🖼 Capturas
 <div align="center">
   <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/cap1.jpg" alt="Captura" width="150px">
-  &nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;
   <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/cap2.jpg" alt="Captura" width="150px">
-  &nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;
   <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/cap3.jpg" alt="Captura" width="150px">
-  &nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;
   <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/cap4.jpg" alt="Captura" width="150px">
 </div>
+<br>
 <div align="center">
   <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/cap5.jpg" alt="Captura" width="150px">
-  &nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;
   <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/cap6.jpg" alt="Captura" width="150px">
-  &nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;
   <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/cap7.jpg" alt="Captura" width="150px">
-  &nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;
   <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/cap8.jpg" alt="Captura" width="150px">
 </div>
 
