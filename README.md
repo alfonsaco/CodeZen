@@ -16,16 +16,16 @@ Para poder probarlo, debes disponer de un dispositivo móvil Android. Descárgal
   <br>
 
 ## ⚙️ Funcionalidades
-🔐 **Autenticación completa de usuarios:** inicio de sesión y registro mediante Google o correo electrónico.
-🧾 **Gestión de cuenta:** cierre de sesión, recuperación de contraseña, verificación de email y eliminación de cuenta.
-📆 **Gestión de hábitos:** creación y seguimiento de hábitos diarios con recordatorios personalizados.
-🧘‍♂️ Sesiones de meditación guiada para mejorar la concentración y reducir el estrés.
-⏳ **Modo enfoque:** bloquea el dispositivo temporalmente para optimizar la productividad.
-🏆 Sistema de logros y medallas que motiva al usuario a mantener sus objetivos.
-🌍 Ranking global basado en la cantidad de logros obtenidos por cada usuario.
-💻 Integración con GitHub para visualizar estadísticas personales de programación.
-🎨 Modo claro y oscuro, adaptable a la preferencia del usuario.
-🧑‍🎨 **Personalización del perfil:** posibilidad de cambiar el avatar y nombre de usuario.
+- 🔐 **Autenticación completa de usuarios:** inicio de sesión y registro mediante Google o correo electrónico.
+- 🧾 **Gestión de cuenta:** cierre de sesión, recuperación de contraseña, verificación de email y eliminación de cuenta.
+- 📆 **Gestión de hábitos:** creación y seguimiento de hábitos diarios con recordatorios personalizados.
+- 🧘‍♂️ Sesiones de meditación guiada para mejorar la concentración y reducir el estrés.
+- ⏳ **Modo enfoque:** bloquea el dispositivo temporalmente para optimizar la productividad.
+- 🏆 Sistema de logros y medallas que motiva al usuario a mantener sus objetivos.
+- 🌍 Ranking global basado en la cantidad de logros obtenidos por cada usuario.
+- 💻 Integración con GitHub para visualizar estadísticas personales de programación.
+- 🎨 Modo claro y oscuro, adaptable a la preferencia del usuario.
+- 🧑‍🎨 **Personalización del perfil:** posibilidad de cambiar el avatar y nombre de usuario.
 
 <br>
 
