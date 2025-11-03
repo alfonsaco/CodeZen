@@ -49,6 +49,8 @@ La aplicación cuenta con un sistema de logros, para motivar al usuario a utiliz
   <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/logro12.png" alt="Captura" width="60px">
   &nbsp;&nbsp;&nbsp;
   <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/logro15.png" alt="Captura" width="60px">
+  &nbsp;&nbsp;&nbsp;
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/logro11.png" alt="Captura" width="60px">
 </div>
 <div align="center">
   <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/logro9.png" alt="Captura" width="60px">
@@ -58,6 +60,8 @@ La aplicación cuenta con un sistema de logros, para motivar al usuario a utiliz
   <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/logro3.png" alt="Captura" width="60px">
   &nbsp;&nbsp;&nbsp;
   <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/logro2.png" alt="Captura" width="60px">
+  &nbsp;&nbsp;&nbsp;
+  <img src="https://github.com/alfonsaco/CodeZen/blob/master/app/src/main/res/drawable/logro8.png" alt="Captura" width="60px">
 </div>
 
 ## 🎖️ Medallas
